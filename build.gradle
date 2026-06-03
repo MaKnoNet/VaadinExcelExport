@@ -1,0 +1,81 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'com.vaadin'
+    id 'jacoco'
+    id 'com.diffplug.spotless' version '6.25.0'
+}
+
+group = 'de.makno.vaadinexcelexport'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// UTF-8 erzwingen: Quellen enthalten Umlaute (ä/ö/ü) in Kommentaren und String-Literalen.
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// Java-Quellcode wird mit palantir-java-format formatiert (über Spotless).
+spotless {
+    java {
+        palantirJavaFormat('2.39.0')
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
+
+    // xlsbuilder wird per Composite Build (settings.gradle 'includeBuild') aus dem Quellbaum gebaut;
+    // transitive Abhängigkeiten (Apache POI, Log4j2) kommen automatisch vom eingebundenen Build.
+    implementation 'de.makno.xlsbuilder:xlsbuilder:1.0.0'
+
+    // JUnit 5 (Version vom Spring-Boot-BOM verwaltet) zum Testen des Export-Codes.
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // POI zum Rücklesen/Verifizieren der erzeugten .xlsx im Test.
+    testImplementation 'org.apache.poi:poi-ooxml:5.4.0'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:$vaadinVersion"
+    }
+    dependencies {
+        // Log4j2 auf die im Projekt vorhandene Version festlegen (die xlsbuilder ebenfalls nutzt),
+        // statt der vom Spring-Boot-BOM verwalteten älteren Version.
+        dependency 'org.apache.logging.log4j:log4j-api:2.24.3'
+        dependency 'org.apache.logging.log4j:log4j-core:2.24.3'
+    }
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacoco {
+    toolVersion = '0.8.12'
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        html.required = true
+        csv.required = true
+    }
+    // Reine Demo-/Glue-Klassen (Package ...app) werden nicht gemessen; gemessen wird der
+    // wiederverwendbare Bibliotheks-Code (Package ...export).
+    classDirectories.setFrom(files(classDirectories.files.collect {
+        fileTree(dir: it, exclude: 'de/makno/vaadinexcelexport/app/**')
+    }))
+}

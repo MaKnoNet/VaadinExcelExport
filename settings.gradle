@@ -1,0 +1,16 @@
+pluginManagement {
+    repositories {
+        maven { url = 'https://maven.vaadin.com/vaadin-prereleases' }
+        gradlePluginPortal()
+    }
+    plugins {
+        id 'com.vaadin' version "${vaadinVersion}"
+    }
+}
+
+rootProject.name = 'VaadinExcelExport'
+
+// Composite Build: bindet die Schwester-Bibliothek xlsbuilder direkt aus dem Quellbaum ein.
+// Gradle substituiert dadurch die Abhängigkeit 'de.makno.xlsbuilder:xlsbuilder' automatisch und
+// löst deren transitive Abhängigkeiten (Apache POI, Log4j2) mit auf – kein separates Publish nötig.
+includeBuild '../xlsbuilder'

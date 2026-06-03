@@ -1,0 +1,34 @@
+# --- Gradle / Build ---
+.gradle/
+build/
+bin/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- Vaadin (generierte Frontend-Artefakte) ---
+node_modules/
+package.json
+package-lock.json
+pnpm-lock.yaml
+tsconfig.json
+types.d.ts
+vite.generated.ts
+vite.config.ts
+src/main/frontend/
+src/main/bundles/
+frontend/generated/
+
+# --- Eclipse ---
+.project
+.classpath
+.settings/
+
+# --- IDEA ---
+.idea/
+*.iml
+
+# --- Sonstiges ---
+*.xlsx
+
+# --- Persönliche Claude-Code-Einstellungen (NIEMALS ins Repo) ---
+.claude/
+CLAUDE.md
