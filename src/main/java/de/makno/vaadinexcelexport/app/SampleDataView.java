@@ -6,6 +6,7 @@ import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
@@ -16,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -48,10 +50,23 @@ public class SampleDataView extends VerticalLayout {
         Grid<SampleRow> grid = new Grid<>();
         columns.forEach(column -> grid.addColumn(column.gridValueProvider())
                 .setHeader(column.header())
-                .setAutoWidth(true));
+                .setAutoWidth(true)
+                .setComparator(naturalComparator(column.gridValueProvider())));
         grid.setItems(dataProvider);
         grid.setSizeFull();
         return grid;
+    }
+
+    /**
+     * Erzeugt einen natürlichen Komparator für eine Grid-Spalte. Der Rückgabewert des
+     * {@link ValueProvider} muss {@link Comparable} implementieren – das gilt für alle hier
+     * verwendeten Typen (String, Number-Subtypen, LocalDate, LocalDateTime, LocalTime, Boolean).
+     * Null-Werte werden an den Anfang einsortiert.
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> Comparator<T> naturalComparator(ValueProvider<T, ?> provider) {
+        return Comparator.comparing(
+                row -> (Comparable<Object>) provider.apply(row), Comparator.nullsFirst(Comparator.naturalOrder()));
     }
 
     /**
