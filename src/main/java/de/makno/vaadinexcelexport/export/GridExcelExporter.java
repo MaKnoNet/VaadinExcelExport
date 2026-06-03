@@ -1,5 +1,6 @@
 package de.makno.vaadinexcelexport.export;
 
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.Query;
 import de.makno.xlsbuilder.builder.DataProviders;
@@ -8,7 +9,10 @@ import de.makno.xlsbuilder.builder.WorkbookBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -18,6 +22,11 @@ import java.util.stream.Stream;
  * <p>Bewusst entkoppelt (Dependency Inversion): hängt nur von der schlanken {@link ExcelColumn}-
  * Abstraktion und Vaadins {@link DataProvider}-Interface ab – nicht von der konkreten
  * {@code Grid}-Komponente. Dadurch ist der Export für beliebige Datenquellen wiederverwendbar.
+ *
+ * <p>Für den typischen Anwendungsfall, bei dem ein {@link Grid} bereits existiert, steht die
+ * Factory-Methode {@link #from(String, Grid, List)} bereit: Sie liest die aktuelle Spaltenreihenfolge
+ * und -sichtbarkeit direkt aus dem Grid heraus (Brücke über {@link Grid.Column#getKey()}) und
+ * erspart die manuelle Übergabe der {@link ExcelColumn}-Liste in der richtigen Reihenfolge.
  *
  * <p>Die Daten werden über {@link DataProvider#fetch(Query)} gestreamt und via
  * {@link DataProviders#ofStream(Stream)} out-of-core an den xlsbuilder weitergereicht.
@@ -40,6 +49,42 @@ public final class GridExcelExporter<T> {
         if (this.columns.isEmpty()) {
             throw new IllegalArgumentException("Mindestens eine Spalte erforderlich");
         }
+    }
+
+    /**
+     * Erzeugt einen Exporter, der die aktuelle Spaltenreihenfolge und -sichtbarkeit des
+     * übergebenen {@link Grid} übernimmt.
+     *
+     * <p>Voraussetzung: Jede {@link Grid.Column} muss über {@code setKey(excelColumn.header())}
+     * mit der zugehörigen {@link ExcelColumn} verknüpft sein. Grid-Spalten ohne passenden Key
+     * (kein Eintrag in {@code columns}) werden im Export übersprungen. Das erlaubt es, einzelne
+     * Grid-Spalten vom Export auszunehmen, indem sie keinen Key bekommen.
+     *
+     * <p>Typische Verwendung in der View:
+     * <pre>{@code
+     * // Beim Aufbau des Grids:
+     * grid.addColumn(col.gridValueProvider())
+     *     .setKey(col.header())   // ← Brücke zu ExcelColumn
+     *     .setHeader(col.header());
+     *
+     * // Beim Aufbau des Exporters:
+     * GridExcelExporter<MyRow> exporter = GridExcelExporter.from("Blatt", grid, columns);
+     * exporter.export(grid.getDataProvider(), outputStream);
+     * }</pre>
+     *
+     * @param sheetName Name des Excel-Tabellenblatts
+     * @param grid      das Vaadin-Grid, dessen aktuelle Spaltenreihenfolge übernommen wird
+     * @param columns   alle verfügbaren {@link ExcelColumn}-Definitionen (als Lookup-Tabelle)
+     */
+    public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid, List<ExcelColumn<T>> columns) {
+        Objects.requireNonNull(grid, "grid");
+        Map<String, ExcelColumn<T>> byKey =
+                columns.stream().collect(Collectors.toMap(ExcelColumn::header, Function.identity()));
+        List<ExcelColumn<T>> ordered = grid.getColumns().stream()
+                .map(col -> byKey.get(col.getKey()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        return new GridExcelExporter<>(sheetName, ordered);
     }
 
     /**

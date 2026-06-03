@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import de.makno.xlsbuilder.builder.ColumnType;
 import java.io.ByteArrayInputStream;
@@ -127,6 +128,56 @@ class GridExcelExporterTest {
     @Test
     void rejectsEmptyColumnList() {
         assertThrows(IllegalArgumentException.class, () -> new GridExcelExporter<Person>("Sheet", List.of()));
+    }
+
+    /**
+     * Prüft, dass {@code from()} die Spaltenreihenfolge aus dem Grid übernimmt. Das Grid wird mit
+     * umgekehrter Spaltenreihenfolge aufgebaut; der Exporter muss dieselbe Reihenfolge ausgeben.
+     */
+    @Test
+    void fromGridRespectsColumnOrder() throws Exception {
+        List<ExcelColumn<Person>> allColumns = columns();
+
+        // Grid mit umgekehrter Spaltenreihenfolge aufbauen.
+        Grid<Person> grid = new Grid<>();
+        List<ExcelColumn<Person>> reversed = allColumns.reversed();
+        reversed.forEach(col -> grid.addColumn(col.gridValueProvider()).setKey(col.header()));
+        grid.setItems(people());
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid, allColumns);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(grid.getDataProvider(), out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Sheet sheet = workbook.getSheetAt(0);
+            // Erste Kopfzellen-Spalte muss dem letzten Element der Original-Liste entsprechen.
+            assertEquals(reversed.get(0).header(), sheet.getRow(0).getCell(0).getStringCellValue());
+        }
+    }
+
+    /** Prüft, dass Grid-Spalten ohne Key (kein Mapping) im Export übersprungen werden. */
+    @Test
+    void fromGridSkipsColumnsWithoutKey() throws Exception {
+        List<ExcelColumn<Person>> allColumns = columns();
+
+        Grid<Person> grid = new Grid<>();
+        // Nur die ersten zwei Spalten mit Key versehen, die anderen ohne.
+        grid.addColumn(allColumns.get(0).gridValueProvider())
+                .setKey(allColumns.get(0).header());
+        grid.addColumn(allColumns.get(1).gridValueProvider())
+                .setKey(allColumns.get(1).header());
+        grid.addColumn(allColumns.get(2).gridValueProvider()); // kein Key → wird übersprungen
+        grid.setItems(people());
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid, allColumns);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(grid.getDataProvider(), out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Sheet sheet = workbook.getSheetAt(0);
+            // Nur 2 Spalten im Export.
+            assertEquals(2, sheet.getRow(0).getLastCellNum());
+        }
     }
 
     @Test

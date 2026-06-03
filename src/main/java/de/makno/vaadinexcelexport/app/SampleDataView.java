@@ -25,8 +25,10 @@ import java.util.List;
  * der die Tabelle per {@link GridExcelExporter} als {@code .xlsx} herunterlädt.
  *
  * <p>Die {@link ExcelColumn}-Liste ({@link SampleColumns}) ist die einzige Quelle der Wahrheit:
- * Sie definiert sowohl die Grid-Spalten als auch die Export-Spalten. Der Export erhält genau diese
- * Spalten und den {@link ListDataProvider} des Grids.
+ * Sie definiert sowohl die Grid-Spalten als auch die Export-Spalten. Jede Grid-Spalte bekommt
+ * per {@code setKey(col.header())} einen Schlüssel – darüber verknüpft
+ * {@link GridExcelExporter#from(String, Grid, List)} Grid und Export, ohne dass der Aufrufer
+ * den {@code DataProvider} oder die Spaltenreihenfolge separat übergeben muss.
  */
 @Route("")
 @PageTitle("Excel-Export Demo")
@@ -40,19 +42,20 @@ public class SampleDataView extends VerticalLayout {
 
     public SampleDataView() {
         List<ExcelColumn<SampleRow>> columns = SampleColumns.all();
-        ListDataProvider<SampleRow> dataProvider = new ListDataProvider<>(SampleData.rows());
+        Grid<SampleRow> grid = createGrid(columns);
 
-        add(createExportButton(columns, dataProvider), createGrid(columns, dataProvider));
+        add(createExportButton(grid, columns), grid);
         setSizeFull();
     }
 
-    private Grid<SampleRow> createGrid(List<ExcelColumn<SampleRow>> columns, ListDataProvider<SampleRow> dataProvider) {
+    private Grid<SampleRow> createGrid(List<ExcelColumn<SampleRow>> columns) {
         Grid<SampleRow> grid = new Grid<>();
         columns.forEach(column -> grid.addColumn(column.gridValueProvider())
+                .setKey(column.header()) // Brücke zu ExcelColumn für GridExcelExporter.from()
                 .setHeader(column.header())
                 .setAutoWidth(true)
                 .setComparator(naturalComparator(column.gridValueProvider())));
-        grid.setItems(dataProvider);
+        grid.setItems(new ListDataProvider<>(SampleData.rows()));
         grid.setSizeFull();
         return grid;
     }
@@ -70,17 +73,17 @@ public class SampleDataView extends VerticalLayout {
     }
 
     /**
-     * Baut den Download-Auslöser: ein {@link Anchor} mit {@code download}-Attribut, der einen Button
-     * umschließt. Die {@link StreamResource} ruft beim Klick den {@link GridExcelExporter} auf und
-     * liefert die erzeugte {@code .xlsx} aus.
+     * Baut den Download-Auslöser. {@link GridExcelExporter#from(String, Grid, List)} liest
+     * Spaltenreihenfolge und {@link Grid#getDataProvider()} direkt aus dem Grid – der Aufrufer
+     * muss weder einen separaten {@code DataProvider} noch die Spaltenreihenfolge übergeben.
      *
-     * <p>Hinweis: In Vaadin 24.5 ist {@link StreamResource} die aktuelle Download-API. Ab Vaadin 24.8
-     * gilt sie als veraltet und wird durch {@code DownloadHandler} ersetzt – beim Upgrade auf 24.8+
-     * ist diese Methode entsprechend umzustellen.
+     * <p>Hinweis: In Vaadin 24.5 ist {@link StreamResource} die aktuelle Download-API. Ab
+     * Vaadin 24.8 gilt sie als veraltet und wird durch {@code DownloadHandler} ersetzt – beim
+     * Upgrade auf 24.8+ ist diese Methode entsprechend umzustellen (siehe UPGRADE-24.10.md).
      */
-    private Anchor createExportButton(List<ExcelColumn<SampleRow>> columns, ListDataProvider<SampleRow> dataProvider) {
-        GridExcelExporter<SampleRow> exporter = new GridExcelExporter<>(SHEET_NAME, columns);
-        StreamResource resource = new StreamResource(FILE_NAME, () -> toExcelStream(exporter, dataProvider));
+    private Anchor createExportButton(Grid<SampleRow> grid, List<ExcelColumn<SampleRow>> columns) {
+        GridExcelExporter<SampleRow> exporter = GridExcelExporter.from(SHEET_NAME, grid, columns);
+        StreamResource resource = new StreamResource(FILE_NAME, () -> toExcelStream(exporter, grid));
         resource.setContentType(XLSX_MIME_TYPE);
 
         Anchor downloadLink = new Anchor(resource, "");
@@ -89,10 +92,10 @@ public class SampleDataView extends VerticalLayout {
         return downloadLink;
     }
 
-    private InputStream toExcelStream(GridExcelExporter<SampleRow> exporter, ListDataProvider<SampleRow> dataProvider) {
+    private InputStream toExcelStream(GridExcelExporter<SampleRow> exporter, Grid<SampleRow> grid) {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         try {
-            exporter.export(dataProvider, buffer);
+            exporter.export(grid.getDataProvider(), buffer);
         } catch (IOException e) {
             throw new UncheckedIOException("Excel-Export fehlgeschlagen", e);
         }
