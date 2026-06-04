@@ -66,8 +66,29 @@ dependencyManagement {
 }
 
 test {
-    useJUnitPlatform()
+    // Der Performance-Benchmark (@Tag("benchmark")) läuft NICHT im normalen Testlauf,
+    // damit die Suite schnell bleibt; er wird über die Task 'benchmark' ausgeführt.
+    useJUnitPlatform {
+        excludeTags 'benchmark'
+    }
     finalizedBy jacocoTestReport
+}
+
+// Eigenständige Task nur für den Excel-Export-Benchmark (ohne Jacoco, mit Konsolenausgabe).
+// Zeilenzahl konfigurierbar: ./gradlew benchmark -Prows=50000
+tasks.register('benchmark', Test) {
+    description = 'Vergleicht die Performance der beiden Excel-Exporter (xlsbuilder vs. Flowingcode).'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform {
+        includeTags 'benchmark'
+    }
+    testLogging {
+        showStandardStreams = true
+    }
+    systemProperty 'benchmark.rows', findProperty('rows') ?: '25000'
+    outputs.upToDateWhen { false }
 }
 
 jacoco {

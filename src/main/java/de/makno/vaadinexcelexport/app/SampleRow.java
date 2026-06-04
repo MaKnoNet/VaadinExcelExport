@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * Beispiel-Datensatz, dessen Felder die von Excel unterstützten Datentypen abdecken.
  *
  * <p>Der Excel-Formeltyp benötigt kein eigenes Feld – die Formelspalte wird in
- * {@link SampleColumns} aus dem {@code betrag} abgeleitet.
+ * {@link SampleGrid} aus dem {@code betrag} abgeleitet.
  *
  * @param text          Text (STRING)
  * @param ganzzahl      Ganzzahl (INTEGER)
