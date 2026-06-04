@@ -7,8 +7,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.function.ValueProvider;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 import de.makno.vaadinexcelexport.export.ExcelColumn;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
@@ -21,17 +19,17 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Hauptansicht: zeigt die Beispieldaten in einem {@code Grid} und bietet darüber einen Button,
- * der die Tabelle per {@link GridExcelExporter} als {@code .xlsx} herunterlädt.
+ * Tab-Inhalt für den xlsbuilder-basierten Export: zeigt die Beispieldaten in einem {@code Grid}
+ * und bietet darüber einen Button, der die Tabelle per {@link GridExcelExporter} als {@code .xlsx}
+ * herunterlädt.
  *
- * <p>Die {@link ExcelColumn}-Liste ({@link SampleColumns}) ist die einzige Quelle der Wahrheit:
- * Sie definiert sowohl die Grid-Spalten als auch die Export-Spalten. Jede Grid-Spalte bekommt
- * per {@code setKey(col.header())} einen Schlüssel – darüber verknüpft
+ * <p>Kein eigenes Routing – wird als Inhalt eines {@link com.vaadin.flow.component.tabs.TabSheet}
+ * in {@link MainView} eingebettet. Die {@link ExcelColumn}-Liste ({@link SampleColumns}) ist die
+ * einzige Quelle der Wahrheit: Sie definiert sowohl die Grid-Spalten als auch die Export-Spalten.
+ * Jede Grid-Spalte bekommt per {@code setKey(col.header())} einen Schlüssel – darüber verknüpft
  * {@link GridExcelExporter#from(String, Grid, List)} Grid und Export, ohne dass der Aufrufer
  * den {@code DataProvider} oder die Spaltenreihenfolge separat übergeben muss.
  */
-@Route("")
-@PageTitle("Excel-Export Demo")
 public class SampleDataView extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;

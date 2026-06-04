@@ -30,6 +30,8 @@ spotless {
 
 repositories {
     mavenCentral()
+    // Vaadin Add-ons Repository – wird für Flowingcode Grid Exporter benötigt.
+    maven { url = 'https://maven.vaadin.com/vaadin-addons' }
 }
 
 dependencies {
@@ -38,6 +40,11 @@ dependencies {
     // xlsbuilder wird per Composite Build (settings.gradle 'includeBuild') aus dem Quellbaum gebaut;
     // transitive Abhängigkeiten (Apache POI, Log4j2) kommen automatisch vom eingebundenen Build.
     implementation 'de.makno.xlsbuilder:xlsbuilder:1.0.0'
+
+    // Flowingcode Grid Exporter – Community-Add-on für tabellenbasierten Excel/CSV-Export.
+    // Ausschließlich auf https://maven.vaadin.com/vaadin-addons verfügbar (nicht Maven Central).
+    // Aktuelle stabile Version für Vaadin 24: 2.5.0 (kompiliert gegen Vaadin 24.3.9, kompatibel mit 24.5.x).
+    implementation 'org.vaadin.addons.flowingcode:grid-exporter-addon:2.5.0'
 
     // JUnit 5 (Version vom Spring-Boot-BOM verwaltet) zum Testen des Export-Codes.
     testImplementation 'org.junit.jupiter:junit-jupiter'
