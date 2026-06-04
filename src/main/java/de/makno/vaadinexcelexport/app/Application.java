@@ -1,10 +1,17 @@
 package de.makno.vaadinexcelexport.app;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
+import com.vaadin.flow.component.page.Push;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/** Spring-Boot-Einstiegspunkt der Vaadin-Demo-Anwendung. */
+/**
+ * Spring-Boot-Einstiegspunkt der Vaadin-Demo-Anwendung.
+ *
+ * <p>{@link Push} aktiviert Server-Push (WebSocket): nötig, damit der Test im Hintergrund-Thread
+ * Fortschritt und Ergebnisse an den Browser zurückspielen kann (siehe {@link MainView}).
+ */
+@Push
 @SpringBootApplication
 public class Application implements AppShellConfigurator {
 
