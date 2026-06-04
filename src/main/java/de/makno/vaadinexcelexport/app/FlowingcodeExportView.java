@@ -70,7 +70,7 @@ public class FlowingcodeExportView extends VerticalLayout {
         Anchor downloadLink = new Anchor("", "");
         downloadLink.setHref(exporter.getExcelStreamResource());
         downloadLink.getElement().setAttribute("download", true);
-        downloadLink.add(new Button("Flowingcode Excel-Export", VaadinIcon.DOWNLOAD.create()));
+        downloadLink.add(new Button("Vaadins Export", VaadinIcon.DOWNLOAD.create()));
         return downloadLink;
     }
 }

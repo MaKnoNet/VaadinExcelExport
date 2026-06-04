@@ -66,7 +66,7 @@ public class SampleDataView extends VerticalLayout {
 
         Anchor downloadLink = new Anchor(resource, "");
         downloadLink.getElement().setAttribute("download", true);
-        downloadLink.add(new Button("Excel-Export", VaadinIcon.DOWNLOAD.create()));
+        downloadLink.add(new Button("MaKnos Export", VaadinIcon.DOWNLOAD.create()));
         return downloadLink;
     }
 
