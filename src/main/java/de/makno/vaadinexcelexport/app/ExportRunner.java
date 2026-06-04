@@ -4,6 +4,7 @@ import com.flowingcode.vaadin.addons.gridexporter.GridExporter;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.server.VaadinSession;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
+import java.util.Comparator;
 
 /**
  * Führt beide Excel-Export-Wege für ein Grid vermessen aus und kapselt deren Engine-spezifische
@@ -32,10 +33,12 @@ final class ExportRunner {
         flowExporter.setFileName(VAADINS_FILE_BASE);
     }
 
-    /** Führt den xlsbuilder-Export aus (ignoriert die Grid-Sortierung – exportiert den Rohbestand). */
+    /** Führt den xlsbuilder-Export aus und übernimmt die aktuelle Grid-Sortierung (wie die Tabelle). */
     ExportMeasurement.Result runMaknos(int rowCount) {
         GridExcelExporter<SampleRow> exporter = GridExcelExporter.from(SHEET_NAME, grid);
-        return ExportMeasurement.run(ENGINE_MAKNOS, rowCount, out -> exporter.export(grid.getDataProvider(), out));
+        Comparator<SampleRow> sort = grid.getDataCommunicator().getInMemorySorting();
+        return ExportMeasurement.run(
+                ENGINE_MAKNOS, rowCount, out -> exporter.export(grid.getDataProvider(), sort, out));
     }
 
     /**

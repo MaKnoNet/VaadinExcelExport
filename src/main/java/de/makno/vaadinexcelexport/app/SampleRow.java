@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
  * @param datum         Datum (DATE)
  * @param zeitstempel   Datum mit Uhrzeit (DATETIME)
  * @param kommtSekunden Tageszeit als Sekunden seit Mitternacht (Rohwert für TIME)
+ * @param webseite      URL (im Grid klickbar, in Excel als HYPERLINK-Formel)
  */
 public record SampleRow(
         String text,
@@ -29,4 +30,5 @@ public record SampleRow(
         boolean aktiv,
         LocalDate datum,
         LocalDateTime zeitstempel,
-        int kommtSekunden) {}
+        int kommtSekunden,
+        String webseite) {}

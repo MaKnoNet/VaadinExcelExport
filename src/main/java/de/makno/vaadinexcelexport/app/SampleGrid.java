@@ -2,6 +2,7 @@ package de.makno.vaadinexcelexport.app;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
+import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.function.ValueProvider;
 import de.makno.vaadinexcelexport.export.ExcelMeta;
 import de.makno.xlsbuilder.builder.ColumnType;
@@ -11,9 +12,8 @@ import java.util.Comparator;
 
 /**
  * Richtet ein {@link Grid}{@code <SampleRow>} mit allen Beispielspalten und zugehörigen
- * {@link ExcelMeta}-Exportkonfigurationen ein. Gilt als Referenz-Implementation und wird von
- * {@link SampleDataView} sowie {@link FlowingcodeExportView} gemeinsam genutzt, um doppelte
- * Spaltendefinitionen zu vermeiden.
+ * {@link ExcelMeta}-Exportkonfigurationen ein. Wird von {@link MainView} genutzt, um die eine
+ * Vergleichstabelle aufzubauen.
  *
  * <p>Jede Spalte erhält:
  * <ul>
@@ -50,6 +50,9 @@ final class SampleGrid {
         addColumn(grid, "Zeitstempel", ColumnType.DATETIME, SampleRow::zeitstempel, "dd.mm.yyyy hh:mm");
         addTimeColumn(grid);
         addFormulaColumn(grid);
+        // Hyperlink-Spalte bewusst ALS LETZTE, damit die Spaltenpositionen davor unverändert
+        // bleiben (die VAT-Formel referenziert weiterhin Spalte E = Betrag).
+        addHyperlinkColumn(grid);
     }
 
     /**
@@ -98,6 +101,29 @@ final class SampleGrid {
                 .setComparator(naturalComparator(displayProvider));
         // Export-Provider liefert Formeltext; displayProvider bleibt im Grid.
         ExcelMeta.type(col, ColumnType.FORMULA, row -> VAT_FORMULA).format("#,##0.00 \"€\"");
+    }
+
+    /**
+     * Hyperlink-Spalte: das Grid zeigt einen klickbaren Link ({@link LitRenderer} mit genau einem
+     * Value-Provider {@code url}). Für den Export schreibt xlsbuilder über den expliziten
+     * {@link ExcelMeta}-{@link ValueProvider} eine {@code HYPERLINK(...)}-Formel (in Excel
+     * klickbar). Der LitRenderer mit einem Provider erlaubt auch Flowingcode, die URL zu
+     * extrahieren.
+     */
+    private static void addHyperlinkColumn(Grid<SampleRow> grid) {
+        Column<SampleRow> col = grid.addColumn(LitRenderer.<SampleRow>of(
+                                "<a href=\"${item.url}\" target=\"_blank\" rel=\"noopener\">${item.url}</a>")
+                        .withProperty("url", SampleRow::webseite))
+                .setKey("Webseite")
+                .setHeader("Webseite")
+                .setAutoWidth(true)
+                .setComparator(naturalComparator(SampleRow::webseite));
+        ExcelMeta.type(col, ColumnType.FORMULA, row -> hyperlinkFormula(row.webseite()));
+    }
+
+    /** Baut eine Excel-{@code HYPERLINK}-Formel (ohne führendes {@code =}); Label = URL. */
+    private static String hyperlinkFormula(String url) {
+        return "HYPERLINK(\"" + url + "\",\"" + url + "\")";
     }
 
     /**

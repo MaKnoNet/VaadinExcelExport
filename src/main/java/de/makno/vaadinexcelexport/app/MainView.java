@@ -24,6 +24,8 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import java.io.ByteArrayInputStream;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,9 +64,12 @@ public class MainView extends VerticalLayout {
 
     private static final String PDF_URL = "/excel-export-vergleich.pdf";
     private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    private static final String MAKNOS_FILE = "maknos-export.xlsx";
-    private static final String VAADINS_FILE = "vaadins-export.xlsx";
+    private static final String MAKNOS_FILE_BASE = "maknos-export";
+    private static final String VAADINS_FILE_BASE = "vaadins-export";
     private static final NumberFormat ROW_FORMAT = NumberFormat.getIntegerInstance(Locale.GERMANY);
+
+    /** Zeitstempel ohne {@code :} – gültig als Dateiname auf Windows/Linux/macOS. */
+    private static final DateTimeFormatter FILE_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 
     private final IntegerField rowCountField = new IntegerField();
     private final ProgressBar progressBar = new ProgressBar();
@@ -171,8 +176,8 @@ public class MainView extends VerticalLayout {
             ui.access(() -> {
                 reportMetrics(maknos.metrics());
                 reportMetrics(vaadins.metrics());
-                triggerDownload(anchorMaknos, maknos.bytes(), MAKNOS_FILE);
-                triggerDownload(anchorVaadins, vaadins.bytes(), VAADINS_FILE);
+                triggerDownload(anchorMaknos, maknos.bytes(), testFileName(MAKNOS_FILE_BASE));
+                triggerDownload(anchorVaadins, vaadins.bytes(), testFileName(VAADINS_FILE_BASE));
                 progressBar.setVisible(false);
                 testButton.setEnabled(true);
             });
@@ -214,6 +219,14 @@ public class MainView extends VerticalLayout {
     }
 
     // ─────────────────────────────────────────────────────── Download
+
+    /**
+     * Baut einen eindeutigen Download-Namen {@code Test_<base>_<datum_uhrzeit>.xlsx}. Es ist ein
+     * HTTP-Download-Name (Content-Disposition), kein Dateisystem-Pfad – daher bewusst {@link String}.
+     */
+    private static String testFileName(String base) {
+        return "Test_" + base + "_" + LocalDateTime.now().format(FILE_TIMESTAMP) + ".xlsx";
+    }
 
     private static Anchor hiddenDownloadAnchor() {
         Anchor anchor = new Anchor();

@@ -9,6 +9,7 @@ import de.makno.xlsbuilder.builder.ExcelBuilder;
 import de.makno.xlsbuilder.builder.WorkbookBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -84,16 +85,33 @@ public final class GridExcelExporter<T> {
     }
 
     /**
-     * Schreibt die Tabelle als {@code .xlsx} in den Stream. Der Stream wird <em>nicht</em>
-     * geschlossen – das obliegt dem Aufrufer.
+     * Schreibt die Tabelle <em>unsortiert</em> (in Datenbestand-Reihenfolge) als {@code .xlsx} in
+     * den Stream. Kurzform für {@link #export(DataProvider, Comparator, OutputStream)} mit
+     * {@code null}-Sortierung. Der Stream wird <em>nicht</em> geschlossen.
      */
     public void export(DataProvider<T, ?> dataProvider, OutputStream out) throws IOException {
-        Objects.requireNonNull(dataProvider, "dataProvider");
-        Objects.requireNonNull(out, "out");
-        WorkbookBuilder.create().sheet(buildSheet(dataProvider)).write(out);
+        export(dataProvider, null, out);
     }
 
-    private ExcelBuilder<T> buildSheet(DataProvider<T, ?> dataProvider) {
+    /**
+     * Schreibt die Tabelle als {@code .xlsx} in den Stream und übernimmt dabei die übergebene
+     * In-Memory-Sortierung, sodass die Zeilenreihenfolge der Excel-Datei der sortierten Tabelle
+     * entspricht. xlsbuilder schreibt die Zeilen genau in Stream-Reihenfolge – die Reihenfolge wird
+     * also allein durch den {@code inMemorySort}-Comparator bestimmt.
+     *
+     * @param dataProvider Datenquelle der Tabelle
+     * @param inMemorySort In-Memory-Sortierung (z. B. {@code grid.getDataCommunicator()
+     *                     .getInMemorySorting()}); {@code null} = unsortiert
+     * @param out          Ziel-Stream (wird nicht geschlossen)
+     */
+    public void export(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort, OutputStream out)
+            throws IOException {
+        Objects.requireNonNull(dataProvider, "dataProvider");
+        Objects.requireNonNull(out, "out");
+        WorkbookBuilder.create().sheet(buildSheet(dataProvider, inMemorySort)).write(out);
+    }
+
+    private ExcelBuilder<T> buildSheet(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort) {
         ExcelBuilder<T> sheet = ExcelBuilder.<T>create().sheetName(sheetName).columnHeaders(true);
         ColumnValueExtractor<T> extractor = new ColumnValueExtractor<>();
 
@@ -111,16 +129,17 @@ public final class GridExcelExporter<T> {
                 sheet.convertToColumnType(converter);
             }
         }
-        return sheet.data(DataProviders.ofStream(fetchAll(dataProvider)));
+        return sheet.data(DataProviders.ofStream(fetchAll(dataProvider, inMemorySort)));
     }
 
     /**
-     * Holt alle Zeilen des Vaadin-DataProviders als Stream. Eine unbeschränkte {@link Query}
-     * liefert den gesamten (ungefilterten, unsortierten) Datenbestand. Der rohe Cast überbrückt
-     * den Wildcard-Filtertyp von {@code DataProvider<T, ?>}.
+     * Holt alle Zeilen des Vaadin-DataProviders als Stream. Die {@link Query} überträgt die
+     * In-Memory-Sortierung (offset 0, unbeschränktes Limit, kein Filter); {@code null} = unsortiert.
+     * Der rohe Cast überbrückt den Wildcard-Filtertyp von {@code DataProvider<T, ?>}.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private static <T> Stream<T> fetchAll(DataProvider<T, ?> dataProvider) {
-        return ((DataProvider) dataProvider).fetch(new Query());
+    private static <T> Stream<T> fetchAll(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort) {
+        Query query = new Query(0, Integer.MAX_VALUE, null, inMemorySort, null);
+        return ((DataProvider) dataProvider).fetch(query);
     }
 }

@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -231,6 +232,52 @@ class GridExcelExporterTest {
             Sheet sheet = workbook.getSheetAt(0);
             // Nur 2 Spalten im Export
             assertEquals(2, sheet.getRow(0).getLastCellNum());
+        }
+    }
+
+    /**
+     * Kontrolliert, dass die Excel-Zeilenreihenfolge der übergebenen In-Memory-Sortierung folgt
+     * (= der sortierten Tabelle), nicht der Eingabereihenfolge. Eingabe: Alice (30), Bob (45);
+     * sortiert nach Alter absteigend muss Bob vor Alice stehen.
+     */
+    @Test
+    void exportRespectsProvidedSortOrder() throws Exception {
+        Grid<Person> grid = new Grid<>();
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING);
+        Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
+        ExcelMeta.type(age, ColumnType.INTEGER, Person::age);
+        grid.setItems(people());
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
+        Comparator<Person> byAgeDesc = Comparator.comparingInt(Person::age).reversed();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(grid.getDataProvider(), byAgeDesc, out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Sheet sheet = workbook.getSheetAt(0);
+            // Datenzeilen folgen dem Comparator (Alter absteigend), nicht der Eingabe
+            assertEquals("Bob", sheet.getRow(1).getCell(0).getStringCellValue());
+            assertEquals("Alice", sheet.getRow(2).getCell(0).getStringCellValue());
+        }
+    }
+
+    /** Prüft, dass eine FORMULA-Spalte mit {@code HYPERLINK(...)} als Formelzelle exportiert wird. */
+    @Test
+    void exportsHyperlinkAsFormula() throws Exception {
+        Grid<Person> grid = new Grid<>();
+        Column<Person> link = grid.addColumn(Person::name).setKey("Webseite");
+        ExcelMeta.type(link, ColumnType.FORMULA, p -> "HYPERLINK(\"https://x/" + p.name() + "\",\"" + p.name() + "\")");
+        grid.setItems(people());
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(grid.getDataProvider(), out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Cell cell = workbook.getSheetAt(0).getRow(1).getCell(0);
+            assertEquals(CellType.FORMULA, cell.getCellType());
+            assertTrue(cell.getCellFormula().contains("HYPERLINK"), "Formel: " + cell.getCellFormula());
         }
     }
 }
