@@ -87,11 +87,22 @@ final class SampleData {
         // TIME (Sekunden): Ankunftszeit zwischen 06:00 und 09:59 Uhr
         int kommtSekunden = toSeconds(6 + (i % 4), (i * 13) % 60, (i * 7) % 60);
 
-        // HYPERLINK: deterministische, eindeutige URL je Zeile
+        // HYPERLINK: eindeutige Ziel-URL + sprechender Anzeigename (Linktext)
         String webseite = "https://de.makno.example/eintrag/" + i;
+        String webseiteName = "Eintrag " + i;
 
         return new SampleRow(
-                text, ganzzahl, grosseZahl, gleitkomma, betrag, aktiv, datum, zeitstempel, kommtSekunden, webseite);
+                text,
+                ganzzahl,
+                grosseZahl,
+                gleitkomma,
+                betrag,
+                aktiv,
+                datum,
+                zeitstempel,
+                kommtSekunden,
+                webseite,
+                webseiteName);
     }
 
     private static int toSeconds(int hours, int minutes, int secs) {

@@ -104,26 +104,28 @@ final class SampleGrid {
     }
 
     /**
-     * Hyperlink-Spalte: das Grid zeigt einen klickbaren Link ({@link LitRenderer} mit genau einem
-     * Value-Provider {@code url}). Für den Export schreibt xlsbuilder über den expliziten
-     * {@link ExcelMeta}-{@link ValueProvider} eine {@code HYPERLINK(...)}-Formel (in Excel
-     * klickbar). Der LitRenderer mit einem Provider erlaubt auch Flowingcode, die URL zu
-     * extrahieren.
+     * Hyperlink-Spalte: das Grid zeigt einen klickbaren Link, dessen <b>Anzeigetext der Name</b>
+     * ({@code webseiteName}) ist – nicht die URL. Für den Export schreibt xlsbuilder über den
+     * expliziten {@link ExcelMeta}-{@link ValueProvider} eine {@code HYPERLINK(ziel, name)}-Formel
+     * (in Excel klickbar mit dem Namen als Text). Der {@link LitRenderer} bindet zwei Properties
+     * ({@code url}, {@code name}); Flowingcode nutzt davon das Property {@code name} und exportiert
+     * somit ebenfalls den Anzeigenamen.
      */
     private static void addHyperlinkColumn(Grid<SampleRow> grid) {
         Column<SampleRow> col = grid.addColumn(LitRenderer.<SampleRow>of(
-                                "<a href=\"${item.url}\" target=\"_blank\" rel=\"noopener\">${item.url}</a>")
-                        .withProperty("url", SampleRow::webseite))
+                                "<a href=\"${item.url}\" target=\"_blank\" rel=\"noopener\">${item.name}</a>")
+                        .withProperty("url", SampleRow::webseite)
+                        .withProperty("name", SampleRow::webseiteName))
                 .setKey("Webseite")
                 .setHeader("Webseite")
                 .setAutoWidth(true)
-                .setComparator(naturalComparator(SampleRow::webseite));
-        ExcelMeta.type(col, ColumnType.FORMULA, row -> hyperlinkFormula(row.webseite()));
+                .setComparator(naturalComparator(SampleRow::webseiteName));
+        ExcelMeta.type(col, ColumnType.FORMULA, row -> hyperlinkFormula(row.webseite(), row.webseiteName()));
     }
 
-    /** Baut eine Excel-{@code HYPERLINK}-Formel (ohne führendes {@code =}); Label = URL. */
-    private static String hyperlinkFormula(String url) {
-        return "HYPERLINK(\"" + url + "\",\"" + url + "\")";
+    /** Baut eine Excel-{@code HYPERLINK(ziel, anzeigename)}-Formel (ohne führendes {@code =}). */
+    private static String hyperlinkFormula(String url, String name) {
+        return "HYPERLINK(\"" + url + "\",\"" + name + "\")";
     }
 
     /**
