@@ -9,23 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Generiert 25.000 Beispielzeilen für die Demo-Tabelle.
+ * Generiert deterministisch eine konfigurierbare Anzahl Beispielzeilen für die Demo-Tabelle.
  *
- * <p>Die Zeilen werden einmalig beim Klassenlade-Zeitpunkt berechnet ({@code static final}) und
- * als unveränderliche Liste gehalten ({@link List#copyOf}). Damit ist der Zugriff thread-sicher
- * und das wiederholte Öffnen der UI erzeugt keinen Rechenaufwand.
- *
- * <p>{@link SampleRow} ist ein immutable Record – dieselben Instanzen können gefahrlos von
- * mehreren Vaadin-Sessions gleichzeitig gelesen werden.
+ * <p>Die Generierung ist rein funktional (kein veränderlicher Zustand) und damit thread-sicher.
+ * {@link SampleRow} ist ein immutable Record – die erzeugte Liste ({@link List#copyOf}) kann
+ * gefahrlos von mehreren Vaadin-Sessions gleichzeitig gelesen werden.
  */
 final class SampleData {
 
-    static final int ROW_COUNT = 25_000;
+    /** Vorgabe-Zeilenzahl beim ersten Aufbau der UI. */
+    static final int DEFAULT_ROW_COUNT = 25_000;
 
     // ─── Wertebereiche für die Datengenerierung ────────────────────────────
-    // WICHTIG: Diese Felder müssen VOR ROWS deklariert sein, da Java statische
-    // Felder in Deklarationsreihenfolge initialisiert und ROWS.generateRows()
-    // bereits auf NAMES/DEPARTMENTS/START_DATE zugreift.
 
     private static final String[] NAMES = {
         "Alice", "Bob", "Charlie", "Diana", "Erik", "Franziska",
@@ -40,23 +35,24 @@ final class SampleData {
         "Operations", "Legal", "Research", "Support", "Management"
     };
 
-    /** Startdatum für die Datumsspalte; 25.000 Zeilen decken ca. 5 Jahre ab. */
+    /** Startdatum für die Datumsspalte; größere Zeilenzahlen decken mehrere Jahre ab. */
     private static final LocalDate START_DATE = LocalDate.of(2020, 1, 1);
-
-    /** Unveränderliche, einmalig erzeugte Zeilen-Liste; thread-sicher. */
-    private static final List<SampleRow> ROWS = generateRows();
 
     private SampleData() {}
 
-    static List<SampleRow> rows() {
-        return ROWS;
-    }
-
-    // ─── Generierung ──────────────────────────────────────────────────────
-
-    private static List<SampleRow> generateRows() {
-        List<SampleRow> rows = new ArrayList<>(ROW_COUNT);
-        for (int i = 0; i < ROW_COUNT; i++) {
+    /**
+     * Erzeugt {@code count} deterministische Beispielzeilen.
+     *
+     * @param count Anzahl der zu erzeugenden Zeilen (≥ 0)
+     * @return unveränderliche Liste mit {@code count} Zeilen
+     * @throws IllegalArgumentException wenn {@code count} negativ ist
+     */
+    static List<SampleRow> rows(int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("count darf nicht negativ sein: " + count);
+        }
+        List<SampleRow> rows = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
             rows.add(generateRow(i));
         }
         return List.copyOf(rows);

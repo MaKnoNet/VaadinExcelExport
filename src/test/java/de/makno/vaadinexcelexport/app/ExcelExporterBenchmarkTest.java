@@ -12,7 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -137,13 +136,7 @@ class ExcelExporterBenchmarkTest {
     // ----------------------------------------------------------- Daten & Grid
 
     private static List<SampleRow> generateRows(int count) {
-        List<SampleRow> templates = SampleData.rows();
-        List<SampleRow> rows = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            // SampleRow ist immutable – dieselbe Instanz darf gefahrlos mehrfach verwendet werden.
-            rows.add(templates.get(i % templates.size()));
-        }
-        return rows;
+        return SampleData.rows(count);
     }
 
     private static Grid<SampleRow> buildGrid(List<SampleRow> rows) {
