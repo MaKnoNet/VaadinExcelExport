@@ -1,12 +1,11 @@
 package de.makno.vaadinexcelexport.export;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.component.grid.Grid.Column;
 import de.makno.xlsbuilder.builder.ColumnType;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,13 +21,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 
 /**
- * Verifiziert den {@link GridExcelExporter} end-to-end: Spalten + Vaadin-DataProvider werden
- * exportiert und die erzeugte {@code .xlsx} mit Apache POI zurückgelesen. Geprüft wird, dass jeder
- * Excel-Datentyp als korrekter Zelltyp/-wert landet.
+ * Verifiziert den {@link GridExcelExporter} end-to-end mit der {@link ExcelMeta}-API: Spalten
+ * werden direkt am Grid annotiert, der Exporter liest Typ und {@link
+ * com.vaadin.flow.function.ValueProvider} aus den Spalten-Metadaten. Die erzeugte {@code .xlsx}
+ * wird mit Apache POI zurückgelesen und pro Zelltyp geprüft.
  */
 class GridExcelExporterTest {
 
-    /** Spaltenindizes (0-basiert) – entsprechen den Excel-Spalten A..H. */
+    /** Spaltenindizes (0-basiert) in der Reihenfolge, in der die Spalten zum Grid hinzugefügt werden. */
     private static final int COL_NAME = 0;
 
     private static final int COL_AGE = 1;
@@ -48,20 +48,6 @@ class GridExcelExporterTest {
             LocalDate birthday,
             int checkInSeconds) {}
 
-    private static List<ExcelColumn<Person>> columns() {
-        return List.of(
-                ExcelColumn.of("Name", ColumnType.STRING, Person::name),
-                ExcelColumn.of("Alter", ColumnType.INTEGER, Person::age),
-                ExcelColumn.of("Score", ColumnType.DOUBLE, Person::score).withFormat("0.0"),
-                ExcelColumn.of("Gehalt", ColumnType.DECIMAL, Person::salary).withFormat("#,##0.00"),
-                ExcelColumn.of("Aktiv", ColumnType.BOOLEAN, Person::active),
-                ExcelColumn.of("Geburtstag", ColumnType.DATE, Person::birthday).withFormat("dd.mm.yyyy"),
-                ExcelColumn.<Person>of("Kommt", ColumnType.TIME, Person::checkInSeconds)
-                        .withConverter(s -> LocalTime.ofSecondOfDay(((Number) s).longValue())),
-                // D = Spalte "Gehalt": halbe Steuer auf das Gehalt.
-                ExcelColumn.<Person>of("Steuer", ColumnType.FORMULA, p -> "D{row}*0.5"));
-    }
-
     private static List<Person> people() {
         return List.of(
                 new Person(
@@ -75,14 +61,59 @@ class GridExcelExporterTest {
                 new Person("Bob", 45, 1.0, new BigDecimal("3100.50"), false, LocalDate.of(1981, 11, 2), 9 * 3600));
     }
 
+    /**
+     * Baut ein Grid mit allen Spaltentypen und {@link ExcelMeta}-Annotationen.
+     * Typisierte Spalten übergeben ihren {@link com.vaadin.flow.function.ValueProvider} explizit
+     * an {@link ExcelMeta#type(Column, ColumnType, com.vaadin.flow.function.ValueProvider)}.
+     */
+    private static Grid<Person> buildGrid() {
+        Grid<Person> grid = new Grid<>();
+
+        // STRING – 2-Param-Overload reicht (Fallback liefert String direkt)
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING);
+
+        // Typisierte Spalten: VP explizit übergeben
+        Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
+        ExcelMeta.type(age, ColumnType.INTEGER, Person::age);
+
+        Column<Person> score = grid.addColumn(Person::score).setKey("Score");
+        ExcelMeta.type(score, ColumnType.DOUBLE, Person::score).format("0.0");
+
+        Column<Person> salary = grid.addColumn(Person::salary).setKey("Gehalt");
+        ExcelMeta.type(salary, ColumnType.DECIMAL, Person::salary).format("#,##0.00");
+
+        Column<Person> active = grid.addColumn(Person::active).setKey("Aktiv");
+        ExcelMeta.type(active, ColumnType.BOOLEAN, Person::active);
+
+        Column<Person> birthday = grid.addColumn(Person::birthday).setKey("Geburtstag");
+        ExcelMeta.type(birthday, ColumnType.DATE, Person::birthday).format("dd.mm.yyyy");
+
+        // TIME: Grid zeigt LocalTime; derselbe Provider dient als Export-Wert
+        var timeProvider = (com.vaadin.flow.function.ValueProvider<Person, LocalTime>)
+                p -> LocalTime.ofSecondOfDay(p.checkInSeconds());
+        Column<Person> time = grid.addColumn(timeProvider).setKey("Kommt");
+        ExcelMeta.type(time, ColumnType.TIME, timeProvider);
+
+        // FORMULA: Grid zeigt berechneten Wert; Export-VP liefert Formeltext
+        Column<Person> formula =
+                grid.addColumn(p -> p.salary().multiply(new BigDecimal("0.5"))).setKey("Steuer");
+        ExcelMeta.type(formula, ColumnType.FORMULA, p -> "D{row}*0.5");
+
+        grid.setItems(people());
+        return grid;
+    }
+
     @Test
     void exportsEveryColumnTypeWithCorrectCellTypeAndValue() throws Exception {
-        byte[] bytes = export();
+        Grid<Person> grid = buildGrid();
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Beispieldaten", grid);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(grid.getDataProvider(), out);
 
-        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(bytes))) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
             Sheet sheet = workbook.getSheetAt(0);
             assertEquals("Beispieldaten", sheet.getSheetName());
-
             assertHeaderRow(sheet.getRow(0));
             assertFirstDataRow(sheet.getRow(1));
             assertSecondRowFormulaTracksRowNumber(sheet.getRow(2));
@@ -111,7 +142,7 @@ class GridExcelExporterTest {
                 LocalDate.of(1994, 3, 15),
                 row.getCell(COL_BIRTHDAY).getLocalDateTimeCellValue().toLocalDate());
 
-        // TIME wird als Tagesbruchteil gespeichert: 08:15:00 = 29700 s / 86400 s.
+        // TIME wird als Tagesbruchteil gespeichert: 08:15:00 = 29700 s / 86400 s
         double expectedDayFraction = (8 * 3600 + 15 * 60) / 86_400d;
         assertEquals(expectedDayFraction, row.getCell(COL_TIME).getNumericCellValue(), 1e-9);
 
@@ -121,79 +152,85 @@ class GridExcelExporterTest {
     }
 
     private void assertSecondRowFormulaTracksRowNumber(Row row) {
-        // {row}-Platzhalter muss je Zeile auf die echte Zeilennummer zeigen.
+        // {row}-Platzhalter muss je Zeile auf die echte Zeilennummer zeigen
         assertEquals("D3*0.5", row.getCell(COL_FORMULA).getCellFormula());
     }
 
     @Test
-    void rejectsEmptyColumnList() {
-        assertThrows(IllegalArgumentException.class, () -> new GridExcelExporter<Person>("Sheet", List.of()));
+    void rejectsGridWithoutAnnotatedColumns() {
+        Grid<Person> grid = new Grid<>();
+        grid.addColumn(Person::name).setKey("Name"); // kein ExcelMeta → nicht exportierbar
+        grid.setItems(people());
+
+        assertThrows(IllegalArgumentException.class, () -> GridExcelExporter.from("Sheet", grid));
+    }
+
+    @Test
+    void rejectsGridWithoutKeys() {
+        Grid<Person> grid = new Grid<>();
+        Column<Person> col = grid.addColumn(Person::name); // kein Key → nicht exportierbar
+        ExcelMeta.type(col, ColumnType.STRING);
+        grid.setItems(people());
+
+        assertThrows(IllegalArgumentException.class, () -> GridExcelExporter.from("Sheet", grid));
     }
 
     /**
-     * Prüft, dass {@code from()} die Spaltenreihenfolge aus dem Grid übernimmt. Das Grid wird mit
+     * Prüft, dass die Spaltenreihenfolge aus dem Grid übernommen wird. Das Grid wird mit
      * umgekehrter Spaltenreihenfolge aufgebaut; der Exporter muss dieselbe Reihenfolge ausgeben.
      */
     @Test
-    void fromGridRespectsColumnOrder() throws Exception {
-        List<ExcelColumn<Person>> allColumns = columns();
-
-        // Grid mit umgekehrter Spaltenreihenfolge aufbauen.
+    void respectsColumnOrderFromGrid() throws Exception {
         Grid<Person> grid = new Grid<>();
-        List<ExcelColumn<Person>> reversed = allColumns.reversed();
-        reversed.forEach(col -> grid.addColumn(col.gridValueProvider()).setKey(col.header()));
+
+        // Umgekehrte Reihenfolge: zuerst Score, dann Name
+        Column<Person> score = grid.addColumn(Person::score).setKey("Score");
+        ExcelMeta.type(score, ColumnType.DOUBLE, Person::score);
+
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING);
+
         grid.setItems(people());
 
-        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid, allColumns);
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         exporter.export(grid.getDataProvider(), out);
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
             Sheet sheet = workbook.getSheetAt(0);
-            // Erste Kopfzellen-Spalte muss dem letzten Element der Original-Liste entsprechen.
-            assertEquals(reversed.get(0).header(), sheet.getRow(0).getCell(0).getStringCellValue());
+            // Erste Spalte muss "Score" sein (so wie im Grid)
+            assertEquals("Score", sheet.getRow(0).getCell(0).getStringCellValue());
+            assertEquals("Name", sheet.getRow(0).getCell(1).getStringCellValue());
         }
     }
 
-    /** Prüft, dass Grid-Spalten ohne Key (kein Mapping) im Export übersprungen werden. */
+    /** Prüft, dass Spalten ohne Key oder ohne ExcelMeta beim Export übersprungen werden. */
     @Test
-    void fromGridSkipsColumnsWithoutKey() throws Exception {
-        List<ExcelColumn<Person>> allColumns = columns();
-
+    void skipsColumnsWithoutKeyOrMeta() throws Exception {
         Grid<Person> grid = new Grid<>();
-        // Nur die ersten zwei Spalten mit Key versehen, die anderen ohne.
-        grid.addColumn(allColumns.get(0).gridValueProvider())
-                .setKey(allColumns.get(0).header());
-        grid.addColumn(allColumns.get(1).gridValueProvider())
-                .setKey(allColumns.get(1).header());
-        grid.addColumn(allColumns.get(2).gridValueProvider()); // kein Key → wird übersprungen
+
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING);
+
+        Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
+        ExcelMeta.type(age, ColumnType.INTEGER, Person::age);
+
+        // Diese Spalte hat keinen Key → wird übersprungen
+        grid.addColumn(Person::score);
+
+        // Diese Spalte hat keinen ExcelMeta-Type → wird übersprungen
+        grid.addColumn(Person::active).setKey("Aktiv");
+
         grid.setItems(people());
 
-        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid, allColumns);
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         exporter.export(grid.getDataProvider(), out);
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
             Sheet sheet = workbook.getSheetAt(0);
-            // Nur 2 Spalten im Export.
+            // Nur 2 Spalten im Export
             assertEquals(2, sheet.getRow(0).getLastCellNum());
         }
-    }
-
-    @Test
-    void gridValueProviderFallsBackToExtractor() {
-        ExcelColumn<Person> column = ExcelColumn.of("Name", ColumnType.STRING, Person::name);
-        assertEquals(column.valueExtractor(), column.gridValueProvider());
-
-        ExcelColumn<Person> withDisplay = column.withGridValue(p -> "display");
-        assertFalse(withDisplay.valueExtractor().equals(withDisplay.gridValueProvider()));
-    }
-
-    private byte[] export() throws Exception {
-        GridExcelExporter<Person> exporter = new GridExcelExporter<>("Beispieldaten", columns());
-        ListDataProvider<Person> dataProvider = new ListDataProvider<>(people());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        exporter.export(dataProvider, out);
-        return out.toByteArray();
     }
 }

@@ -6,17 +6,13 @@ import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.server.StreamResource;
-import de.makno.vaadinexcelexport.export.ExcelColumn;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Tab-Inhalt für den xlsbuilder-basierten Export: zeigt die Beispieldaten in einem {@code Grid}
@@ -24,11 +20,14 @@ import java.util.List;
  * herunterlädt.
  *
  * <p>Kein eigenes Routing – wird als Inhalt eines {@link com.vaadin.flow.component.tabs.TabSheet}
- * in {@link MainView} eingebettet. Die {@link ExcelColumn}-Liste ({@link SampleColumns}) ist die
- * einzige Quelle der Wahrheit: Sie definiert sowohl die Grid-Spalten als auch die Export-Spalten.
- * Jede Grid-Spalte bekommt per {@code setKey(col.header())} einen Schlüssel – darüber verknüpft
- * {@link GridExcelExporter#from(String, Grid, List)} Grid und Export, ohne dass der Aufrufer
- * den {@code DataProvider} oder die Spaltenreihenfolge separat übergeben muss.
+ * in {@link MainView} eingebettet.
+ *
+ * <p>Der Grid wird durch {@link SampleGrid#configure(Grid)} aufgebaut, der gleichzeitig die
+ * {@link de.makno.vaadinexcelexport.export.ExcelMeta}-Exportkonfiguration jeder Spalte setzt.
+ * {@link GridExcelExporter#from(String, Grid)} liest Spaltenreihenfolge und Metadaten direkt
+ * aus dem Grid – eine separate Spaltenliste ist nicht mehr nötig.
+ *
+ * <p><b>Thread-Sicherheit:</b> Klasse nicht thread-safe; eine Instanz pro UI-Request.
  */
 public class SampleDataView extends VerticalLayout {
 
@@ -39,48 +38,29 @@ public class SampleDataView extends VerticalLayout {
     private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     public SampleDataView() {
-        List<ExcelColumn<SampleRow>> columns = SampleColumns.all();
-        Grid<SampleRow> grid = createGrid(columns);
-
-        add(createExportButton(grid, columns), grid);
+        Grid<SampleRow> grid = buildGrid();
+        add(buildExportButton(grid), grid);
         setSizeFull();
     }
 
-    private Grid<SampleRow> createGrid(List<ExcelColumn<SampleRow>> columns) {
+    private static Grid<SampleRow> buildGrid() {
         Grid<SampleRow> grid = new Grid<>();
-        columns.forEach(column -> grid.addColumn(column.gridValueProvider())
-                .setKey(column.header()) // Brücke zu ExcelColumn für GridExcelExporter.from()
-                .setHeader(column.header())
-                .setAutoWidth(true)
-                .setComparator(naturalComparator(column.gridValueProvider())));
+        SampleGrid.configure(grid);
         grid.setItems(new ListDataProvider<>(SampleData.rows()));
         grid.setSizeFull();
         return grid;
     }
 
     /**
-     * Erzeugt einen natürlichen Komparator für eine Grid-Spalte. Der Rückgabewert des
-     * {@link ValueProvider} muss {@link Comparable} implementieren – das gilt für alle hier
-     * verwendeten Typen (String, Number-Subtypen, LocalDate, LocalDateTime, LocalTime, Boolean).
-     * Null-Werte werden an den Anfang einsortiert.
-     */
-    @SuppressWarnings("unchecked")
-    private static <T> Comparator<T> naturalComparator(ValueProvider<T, ?> provider) {
-        return Comparator.comparing(
-                row -> (Comparable<Object>) provider.apply(row), Comparator.nullsFirst(Comparator.naturalOrder()));
-    }
-
-    /**
-     * Baut den Download-Auslöser. {@link GridExcelExporter#from(String, Grid, List)} liest
-     * Spaltenreihenfolge und {@link Grid#getDataProvider()} direkt aus dem Grid – der Aufrufer
-     * muss weder einen separaten {@code DataProvider} noch die Spaltenreihenfolge übergeben.
+     * Baut den Download-Auslöser. {@link GridExcelExporter#from(String, Grid)} liest
+     * Spaltenreihenfolge und Metadaten direkt aus dem Grid – der Aufrufer übergibt nur das Grid.
      *
      * <p>Hinweis: In Vaadin 24.5 ist {@link StreamResource} die aktuelle Download-API. Ab
      * Vaadin 24.8 gilt sie als veraltet und wird durch {@code DownloadHandler} ersetzt – beim
      * Upgrade auf 24.8+ ist diese Methode entsprechend umzustellen (siehe UPGRADE-24.10.md).
      */
-    private Anchor createExportButton(Grid<SampleRow> grid, List<ExcelColumn<SampleRow>> columns) {
-        GridExcelExporter<SampleRow> exporter = GridExcelExporter.from(SHEET_NAME, grid, columns);
+    private static Anchor buildExportButton(Grid<SampleRow> grid) {
+        GridExcelExporter<SampleRow> exporter = GridExcelExporter.from(SHEET_NAME, grid);
         StreamResource resource = new StreamResource(FILE_NAME, () -> toExcelStream(exporter, grid));
         resource.setContentType(XLSX_MIME_TYPE);
 
@@ -90,7 +70,7 @@ public class SampleDataView extends VerticalLayout {
         return downloadLink;
     }
 
-    private InputStream toExcelStream(GridExcelExporter<SampleRow> exporter, Grid<SampleRow> grid) {
+    private static InputStream toExcelStream(GridExcelExporter<SampleRow> exporter, Grid<SampleRow> grid) {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         try {
             exporter.export(grid.getDataProvider(), buffer);

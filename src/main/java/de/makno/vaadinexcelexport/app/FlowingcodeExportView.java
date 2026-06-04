@@ -14,12 +14,17 @@ import com.vaadin.flow.data.provider.ListDataProvider;
  * {@link GridExporter} (org.vaadin.addons.flowingcode:grid-exporter-addon).
  *
  * <p>Vergleichspunkte zum xlsbuilder-Ansatz:
+ *
  * <ul>
  *   <li><b>Flowingcode:</b> liest Spalten direkt aus dem Grid – kein explizites Typ-Mapping nötig,
  *       dafür weniger Kontrolle über Zelltypen und Formate.</li>
- *   <li><b>xlsbuilder:</b> explizites Typ-Mapping pro Spalte (STRING, DATE, FORMULA …),
+ *   <li><b>xlsbuilder:</b> explizites Typ-Mapping pro Spalte ({@code ExcelMeta.type(...)}),
  *       volle Kontrolle über Formatcodes und Konvertierungslogik.</li>
  * </ul>
+ *
+ * <p>Der Grid-Aufbau erfolgt über {@link SampleGrid#configure(Grid)} – dieselbe Methode wie in
+ * {@link SampleDataView}. Die {@link de.makno.vaadinexcelexport.export.ExcelMeta}-Metadaten
+ * werden von Flowingcode ignoriert; nur die Anzeigewerte der Spalten werden übernommen.
  *
  * <p>Kein eigenes Routing – wird als Inhalt eines {@link com.vaadin.flow.component.tabs.TabSheet}
  * in {@link MainView} eingebettet.
@@ -32,21 +37,19 @@ public class FlowingcodeExportView extends VerticalLayout {
 
     private static final String FILE_NAME = "flowingcode-export";
     private static final String EXPORT_TITLE = "Beispieldaten";
+    private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     public FlowingcodeExportView() {
         Grid<SampleRow> grid = buildGrid();
-        grid.setItems(new ListDataProvider<>(SampleData.rows()));
-        grid.setSizeFull();
-
         add(buildExportButton(grid), grid);
         setSizeFull();
     }
 
     private static Grid<SampleRow> buildGrid() {
         Grid<SampleRow> grid = new Grid<>();
-        SampleColumns.all().forEach(col -> grid.addColumn(col.gridValueProvider())
-                .setHeader(col.header())
-                .setAutoWidth(true));
+        SampleGrid.configure(grid);
+        grid.setItems(new ListDataProvider<>(SampleData.rows()));
+        grid.setSizeFull();
         return grid;
     }
 
