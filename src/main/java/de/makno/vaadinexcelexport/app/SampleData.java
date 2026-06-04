@@ -22,16 +22,10 @@ final class SampleData {
 
     static final int ROW_COUNT = 25_000;
 
-    /** Unveränderliche, einmalig erzeugte Zeilen-Liste; thread-sicher. */
-    private static final List<SampleRow> ROWS = generateRows();
-
-    private SampleData() {}
-
-    static List<SampleRow> rows() {
-        return ROWS;
-    }
-
     // ─── Wertebereiche für die Datengenerierung ────────────────────────────
+    // WICHTIG: Diese Felder müssen VOR ROWS deklariert sein, da Java statische
+    // Felder in Deklarationsreihenfolge initialisiert und ROWS.generateRows()
+    // bereits auf NAMES/DEPARTMENTS/START_DATE zugreift.
 
     private static final String[] NAMES = {
         "Alice", "Bob", "Charlie", "Diana", "Erik", "Franziska",
@@ -48,6 +42,15 @@ final class SampleData {
 
     /** Startdatum für die Datumsspalte; 25.000 Zeilen decken ca. 5 Jahre ab. */
     private static final LocalDate START_DATE = LocalDate.of(2020, 1, 1);
+
+    /** Unveränderliche, einmalig erzeugte Zeilen-Liste; thread-sicher. */
+    private static final List<SampleRow> ROWS = generateRows();
+
+    private SampleData() {}
+
+    static List<SampleRow> rows() {
+        return ROWS;
+    }
 
     // ─── Generierung ──────────────────────────────────────────────────────
 
