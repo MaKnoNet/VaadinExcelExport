@@ -21,6 +21,13 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// Javadoc-Kontrolle: prüft Referenzen/Syntax/HTML (zerbrochene @link schlagen fehl), ignoriert aber
+// fehlende Kommentare an privaten Members ("-missing"). UTF-8 für Umlaute.
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    options.addStringOption('Xdoclint:all,-missing', '-quiet')
+}
+
 // Java-Quellcode wird mit palantir-java-format formatiert (über Spotless).
 spotless {
     java {
@@ -45,6 +52,10 @@ dependencies {
     // Ausschließlich auf https://maven.vaadin.com/vaadin-addons verfügbar (nicht Maven Central).
     // Aktuelle stabile Version für Vaadin 24: 2.5.0 (kompiliert gegen Vaadin 24.3.9, kompatibel mit 24.5.x).
     implementation 'org.vaadin.addons.flowingcode:grid-exporter-addon:2.5.0'
+
+    // H2: file-basierte SQL-Datenbank für die Testdaten. Reines JDBC via DriverManager
+    // (der Treiber registriert sich via ServiceLoader) – daher genügt runtimeOnly, kein Spring Data.
+    runtimeOnly 'com.h2database:h2:2.3.232'
 
     // JUnit 5 (Version vom Spring-Boot-BOM verwaltet) zum Testen des Export-Codes.
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -88,6 +99,8 @@ tasks.register('benchmark', Test) {
         showStandardStreams = true
     }
     systemProperty 'benchmark.rows', findProperty('rows') ?: '25000'
+    // Etwas Heap-Reserve: Flowingcode lädt alle Zeilen via POI in den Speicher.
+    maxHeapSize = '1g'
     outputs.upToDateWhen { false }
 }
 

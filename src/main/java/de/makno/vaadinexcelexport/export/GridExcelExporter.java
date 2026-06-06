@@ -22,9 +22,10 @@ import java.util.stream.Stream;
  * Grid-Spalten als {@code .xlsx}-Datei.
  *
  * <p>Der Wert jeder Spalte wird durch {@link ColumnValueExtractor} automatisch aus dem
- * Grid-Renderer extrahiert – ein expliziter {@link com.vaadin.flow.function.ValueProvider} ist
- * nicht mehr nötig. Für Sonderfälle (z. B. {@link de.makno.xlsbuilder.builder.ColumnType#FORMULA})
- * kann via {@link ExcelMeta.Builder#valueProvider} ein Override gesetzt werden.
+ * Grid-Renderer extrahiert. Für typisierte Spalten und Sonderfälle (z. B.
+ * {@link de.makno.xlsbuilder.builder.ColumnType#FORMULA}) wird der Export-Wert explizit über
+ * {@link ExcelMeta#type(Column, de.makno.xlsbuilder.builder.ColumnType, com.vaadin.flow.function.ValueProvider)}
+ * gesetzt.
  *
  * <p>Verwendung:
  *
@@ -108,10 +109,33 @@ public final class GridExcelExporter<T> {
             throws IOException {
         Objects.requireNonNull(dataProvider, "dataProvider");
         Objects.requireNonNull(out, "out");
-        WorkbookBuilder.create().sheet(buildSheet(dataProvider, inMemorySort)).write(out);
+        de.makno.xlsbuilder.builder.DataProvider<T> data = DataProviders.ofStream(fetchAll(dataProvider, inMemorySort));
+        export(data, out);
     }
 
-    private ExcelBuilder<T> buildSheet(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort) {
+    /**
+     * Schreibt die Tabelle als {@code .xlsx} und bezieht die Daten direkt aus einer
+     * xlsbuilder-{@link de.makno.xlsbuilder.builder.DataProvider Datenquelle} – etwa einem
+     * gestreamten JDBC-{@code ResultSet} via
+     * {@link DataProviders#ofResultSet(java.sql.ResultSet, de.makno.xlsbuilder.builder.ResultSetRowMapper)}.
+     * So lässt sich <b>out-of-core</b> exportieren, ohne den gesamten Datenbestand in den Speicher
+     * zu laden. Die Spaltendefinitionen stammen weiterhin aus dem {@link Grid}.
+     *
+     * <p>xlsbuilder durchläuft die Quelle genau einmal (forward-only) und schließt sie nach dem
+     * Schreiben ({@link de.makno.xlsbuilder.builder.DataProvider#close()}). Ein gehaltenes
+     * {@code Statement}/{@code Connection} muss der Aufrufer schließen.
+     *
+     * @param data xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
+     * @param out  Ziel-Stream (wird nicht geschlossen)
+     */
+    public void export(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out) throws IOException {
+        Objects.requireNonNull(data, "data");
+        Objects.requireNonNull(out, "out");
+        WorkbookBuilder.create().sheet(newSheetWithColumns().data(data)).write(out);
+    }
+
+    /** Baut das Sheet mit allen Spaltendefinitionen (Header, Typ, Format, Converter) – ohne Daten. */
+    private ExcelBuilder<T> newSheetWithColumns() {
         ExcelBuilder<T> sheet = ExcelBuilder.<T>create().sheetName(sheetName).columnHeaders(true);
         ColumnValueExtractor<T> extractor = new ColumnValueExtractor<>();
 
@@ -129,7 +153,7 @@ public final class GridExcelExporter<T> {
                 sheet.convertToColumnType(converter);
             }
         }
-        return sheet.data(DataProviders.ofStream(fetchAll(dataProvider, inMemorySort)));
+        return sheet;
     }
 
     /**

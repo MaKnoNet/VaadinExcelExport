@@ -17,7 +17,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
@@ -35,26 +34,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Einstiegspunkt der Anwendung: vergleicht beide Excel-Export-Wege auf einer einzigen Tabelle.
+ * Einstiegspunkt der App: vergleicht beide Excel-Export-Wege auf einer Tabelle, deren Testdaten in
+ * einer SQL-Datenbank ({@link TestDataDatabase}) liegen und lazy/seitenweise geladen werden.
  *
- * <p>Aufbau (von oben nach unten):
- * <ul>
- *   <li><b>Steuerleiste:</b> Zeilenzahl-Eingabe, „Daten generieren", „Test starten",
- *       „Vergleich (PDF)".</li>
- *   <li><b>Progressbar</b> (indeterminate), nur während des laufenden Tests sichtbar.</li>
- *   <li><b>Vergleichs-Panel:</b> je Engine das letzte Messergebnis (Zeit, Speicher, Größe,
- *       Zeilen).</li>
- *   <li><b>Eine Tabelle</b> mit Multi-Sort: der Nutzer sortiert interaktiv nach mehreren Spalten.
- *       Die Daten erscheinen zunächst unsortiert.</li>
- * </ul>
+ * <p>Bedienelemente: Zeilenzahl + <b>PageSize</b> (Grid-Page-Size und JDBC-Fetch-Size),
+ * „Daten generieren", die Tests <b>einzeln</b> („MaKnos Test" / „Vaadins Test") oder <b>kombiniert</b>
+ * („Test starten"), sowie „Vergleich (PDF)". Während eines Laufs zeigt eine Status­zeile, <b>welcher
+ * Test gerade läuft</b>; im Kombi-Lauf erscheint das Ergebnis jeder Engine <b>sofort</b> nach deren
+ * Abschluss (Server-Push, {@code @Push} auf {@link Application}).
  *
- * <p>„Test starten" führt beide Exporte in einem Hintergrund-Thread aus, damit die Progressbar
- * sichtbar bleibt; das Ergebnis wird per Server-Push ({@code @Push} auf {@link Application})
- * eingespielt und beide Dateien werden heruntergeladen.
- *
- * <p><b>Thread-Sicherheit:</b> Eine Instanz pro UI. Der Worker ist ein einzelner Daemon-Thread,
- * der in {@link #onDetach(DetachEvent)} beendet wird; der Test-Button ist während des Laufs
- * deaktiviert (kein paralleler Test).
+ * <p><b>Thread-Sicherheit:</b> Eine Instanz pro UI. Tests laufen in einem einzelnen Daemon-Worker
+ * (in {@link #onDetach} beendet); die DB wird dort ebenfalls geschlossen. Während eines Laufs sind
+ * die Bedien-Buttons deaktiviert (kein paralleler Test).
  */
 @Route("")
 @PageTitle("Excel-Export Demo")
@@ -66,30 +57,44 @@ public class MainView extends VerticalLayout {
     private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String MAKNOS_FILE_BASE = "maknos-export";
     private static final String VAADINS_FILE_BASE = "vaadins-export";
+    private static final int DEFAULT_PAGE_SIZE = 1000;
     private static final NumberFormat ROW_FORMAT = NumberFormat.getIntegerInstance(Locale.GERMANY);
 
     /** Zeitstempel ohne {@code :} – gültig als Dateiname auf Windows/Linux/macOS. */
     private static final DateTimeFormatter FILE_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 
-    private final IntegerField rowCountField = new IntegerField();
-    private final ProgressBar progressBar = new ProgressBar();
-    private final Map<String, Span> metricLines = new LinkedHashMap<>();
+    private final transient TestDataDatabase db = new TestDataDatabase();
     private final Grid<SampleRow> grid = new Grid<>();
-    private final ExportRunner runner;
+    private final transient ExportRunner runner;
+
+    private final IntegerField rowCountField = new IntegerField();
+    private final IntegerField pageSizeField = new IntegerField();
+    private final ProgressBar progressBar = new ProgressBar();
+    private final Span statusSpan = new Span();
+    private final Map<String, Span> metricLines = new LinkedHashMap<>();
     private final Anchor anchorMaknos = hiddenDownloadAnchor();
     private final Anchor anchorVaadins = hiddenDownloadAnchor();
-    private final Button testButton = new Button("Test starten", VaadinIcon.PLAY.create(), e -> runTest());
+
+    private final Button generateButton =
+            new Button("Daten generieren", VaadinIcon.REFRESH.create(), e -> regenerateData());
+    private final Button maknosButton =
+            new Button("MaKnos Test", VaadinIcon.PLAY.create(), e -> runSteps(List.of(maknosStep())));
+    private final Button vaadinsButton =
+            new Button("Vaadins Test", VaadinIcon.PLAY.create(), e -> runSteps(List.of(vaadinsStep())));
+    private final Button combinedButton = new Button(
+            "Test starten", VaadinIcon.PLAY_CIRCLE.create(), e -> runSteps(List.of(maknosStep(), vaadinsStep())));
+
     private final ExecutorService worker = Executors.newSingleThreadExecutor(this::newDaemonWorker);
 
-    private int rowCount;
+    private int seededRows;
 
     public MainView() {
         SampleGrid.configure(grid);
         grid.setMultiSort(true, Grid.MultiSortPriority.APPEND);
         grid.setSizeFull();
-        runner = new ExportRunner(grid);
+        runner = new ExportRunner(grid, db);
 
-        add(buildControlBar(), buildProgressBar(), buildMetricsPanel(), grid, anchorMaknos, anchorVaadins);
+        add(buildControlBar(), buildStatusRow(), buildMetricsPanel(), grid, anchorMaknos, anchorVaadins);
         setSizeFull();
         setPadding(true);
         setSpacing(true);
@@ -100,6 +105,7 @@ public class MainView extends VerticalLayout {
     @Override
     protected void onDetach(DetachEvent detachEvent) {
         worker.shutdownNow();
+        db.close();
         super.onDetach(detachEvent);
     }
 
@@ -117,22 +123,33 @@ public class MainView extends VerticalLayout {
         rowCountField.setMin(1);
         rowCountField.setStep(1000);
         rowCountField.setStepButtonsVisible(true);
-        rowCountField.setWidth("12em");
+        rowCountField.setWidth("11em");
 
-        Button generate = new Button("Daten generieren", VaadinIcon.REFRESH.create(), e -> regenerateData());
-        Button showPdf = new Button("Vergleich (PDF)", VaadinIcon.FILE_TEXT_O.create(), e -> openPdfDialog());
+        pageSizeField.setLabel("PageSize");
+        pageSizeField.setValue(DEFAULT_PAGE_SIZE);
+        pageSizeField.setMin(1);
+        pageSizeField.setStep(100);
+        pageSizeField.setStepButtonsVisible(true);
+        pageSizeField.setWidth("9em");
 
-        HorizontalLayout bar = new HorizontalLayout(rowCountField, generate, testButton, showPdf);
+        Button pdfButton = new Button("Vergleich (PDF)", VaadinIcon.FILE_TEXT_O.create(), e -> openPdfDialog());
+
+        HorizontalLayout bar = new HorizontalLayout(
+                rowCountField, pageSizeField, generateButton, maknosButton, vaadinsButton, combinedButton, pdfButton);
         bar.setAlignItems(FlexComponent.Alignment.BASELINE);
         bar.setWidthFull();
+        bar.getStyle().set("flex-wrap", "wrap");
         return bar;
     }
 
-    private ProgressBar buildProgressBar() {
+    private HorizontalLayout buildStatusRow() {
         progressBar.setIndeterminate(true);
         progressBar.setVisible(false);
-        progressBar.setWidthFull();
-        return progressBar;
+        progressBar.setWidth("16em");
+        statusSpan.getStyle().set("font-weight", "600");
+        HorizontalLayout row = new HorizontalLayout(progressBar, statusSpan);
+        row.setAlignItems(FlexComponent.Alignment.CENTER);
+        return row;
     }
 
     private void regenerateData() {
@@ -141,47 +158,101 @@ public class MainView extends VerticalLayout {
             Notification.show("Bitte eine Zeilenzahl ≥ 1 angeben.");
             return;
         }
-        List<SampleRow> data = SampleData.rows(count);
-        rowCount = data.size();
-        grid.setItems(new ListDataProvider<>(data));
-        grid.sort(Collections.<GridSortOrder<SampleRow>>emptyList()); // unsortiert anzeigen
-        Notification.show(ROW_FORMAT.format(count) + " Zeilen geladen (unsortiert).");
+        int pageSize = currentPageSize();
+        db.seed(count);
+        seededRows = count;
+        SampleDataProvider.bind(grid, db);
+        grid.setPageSize(pageSize);
+        grid.sort(Collections.<GridSortOrder<SampleRow>>emptyList()); // unsortiert (Default ORDER BY id)
+        Notification.show(ROW_FORMAT.format(count) + " Zeilen in der DB · PageSize " + pageSize + ".");
     }
 
-    // ─────────────────────────────────────────────────────── Test (Hintergrund + Push)
+    private int currentPageSize() {
+        Integer value = pageSizeField.getValue();
+        return (value == null || value < 1) ? DEFAULT_PAGE_SIZE : value;
+    }
 
-    private void runTest() {
-        if (rowCount == 0) {
+    // ─────────────────────────────────────────────────────── Test-Ausführung
+
+    /** Ein Test-Schritt: misst eine Engine, meldet das Ergebnis und löst den Datei-Download aus. */
+    @FunctionalInterface
+    private interface EngineTask {
+        ExportMeasurement.Result run(VaadinSession session, int pageSize);
+    }
+
+    private record TestStep(String engine, String fileBase, Anchor anchor, EngineTask task) {}
+
+    private TestStep maknosStep() {
+        return new TestStep(
+                ExportRunner.ENGINE_MAKNOS,
+                MAKNOS_FILE_BASE,
+                anchorMaknos,
+                (session, pageSize) -> runner.runMaknos(seededRows, pageSize));
+    }
+
+    private TestStep vaadinsStep() {
+        return new TestStep(
+                ExportRunner.ENGINE_VAADINS,
+                VAADINS_FILE_BASE,
+                anchorVaadins,
+                (session, pageSize) -> runner.runVaadins(seededRows, session));
+    }
+
+    /**
+     * Führt die Schritte nacheinander im Hintergrund-Worker aus. Vor jedem Schritt wird der Status
+     * („Aktueller Test: …") gepusht, nach jedem Schritt sofort dessen Ergebnis + Download – beim
+     * Kombi-Lauf erscheinen die Engines also einzeln, nicht erst am Ende.
+     */
+    private void runSteps(List<TestStep> steps) {
+        if (seededRows == 0) {
             Notification.show("Bitte zuerst Daten generieren.");
             return;
         }
+        int pageSize = currentPageSize();
+        grid.setPageSize(pageSize);
+        setControlsEnabled(false);
         progressBar.setVisible(true);
-        testButton.setEnabled(false);
-        metricLines.forEach((engine, line) -> line.setText(engine + ": wird gemessen …"));
+        steps.forEach(step -> metricLines.get(step.engine()).setText(step.engine() + ": wartet …"));
 
         UI ui = UI.getCurrent();
         VaadinSession session = VaadinSession.getCurrent();
-        int rows = rowCount;
 
         worker.execute(() -> {
-            ExportMeasurement.Result maknos;
-            ExportMeasurement.Result vaadins;
-            session.lock(); // Grid-Zugriff erfordert den Session-Lock
             try {
-                maknos = runner.runMaknos(rows);
-                vaadins = runner.runVaadins(rows, session);
+                for (TestStep step : steps) {
+                    ui.access(() -> {
+                        statusSpan.setText("Aktueller Test: " + step.engine() + " …");
+                        metricLines.get(step.engine()).setText(step.engine() + ": wird gemessen …");
+                    });
+                    ExportMeasurement.Result result;
+                    session.lock(); // Grid-/DB-Zugriff erfordert den Session-Lock
+                    try {
+                        result = step.task().run(session, pageSize);
+                    } finally {
+                        session.unlock();
+                    }
+                    ui.access(() -> {
+                        reportMetrics(result.metrics());
+                        triggerDownload(step.anchor(), result.bytes(), testFileName(step.fileBase()));
+                    });
+                }
+            } catch (RuntimeException ex) {
+                ui.access(() -> Notification.show("Testfehler: " + ex.getMessage()));
             } finally {
-                session.unlock();
+                ui.access(() -> {
+                    progressBar.setVisible(false);
+                    statusSpan.setText("");
+                    setControlsEnabled(true);
+                });
             }
-            ui.access(() -> {
-                reportMetrics(maknos.metrics());
-                reportMetrics(vaadins.metrics());
-                triggerDownload(anchorMaknos, maknos.bytes(), testFileName(MAKNOS_FILE_BASE));
-                triggerDownload(anchorVaadins, vaadins.bytes(), testFileName(VAADINS_FILE_BASE));
-                progressBar.setVisible(false);
-                testButton.setEnabled(true);
-            });
         });
+    }
+
+    private void setControlsEnabled(boolean enabled) {
+        generateButton.setEnabled(enabled);
+        maknosButton.setEnabled(enabled);
+        vaadinsButton.setEnabled(enabled);
+        combinedButton.setEnabled(enabled);
     }
 
     // ─────────────────────────────────────────────────────── Vergleichs-Panel

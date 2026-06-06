@@ -5,15 +5,14 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Generiert deterministisch eine konfigurierbare Anzahl Beispielzeilen für die Demo-Tabelle.
+ * Erzeugt deterministisch einzelne Beispiel-Datensätze ({@link #generateRow(int)}).
  *
- * <p>Die Generierung ist rein funktional (kein veränderlicher Zustand) und damit thread-sicher.
- * {@link SampleRow} ist ein immutable Record – die erzeugte Liste ({@link List#copyOf}) kann
- * gefahrlos von mehreren Vaadin-Sessions gleichzeitig gelesen werden.
+ * <p>Die Daten werden nicht mehr als Liste im Speicher gehalten, sondern von
+ * {@link TestDataDatabase} zeilenweise in die SQL-Datenbank geschrieben. Die Generierung ist rein
+ * funktional (kein veränderlicher Zustand) und damit thread-sicher; {@code generateRow(i)} liefert
+ * für gleiches {@code i} stets dieselbe Zeile.
  */
 final class SampleData {
 
@@ -41,24 +40,13 @@ final class SampleData {
     private SampleData() {}
 
     /**
-     * Erzeugt {@code count} deterministische Beispielzeilen.
+     * Erzeugt die {@code i}-te deterministische Beispielzeile (0-basiert). Wird von
+     * {@link TestDataDatabase#seed(int)} zum Befüllen der Datenbank genutzt.
      *
-     * @param count Anzahl der zu erzeugenden Zeilen (≥ 0)
-     * @return unveränderliche Liste mit {@code count} Zeilen
-     * @throws IllegalArgumentException wenn {@code count} negativ ist
+     * @param i 0-basierter Zeilenindex (≥ 0)
+     * @return die zugehörige {@link SampleRow}
      */
-    static List<SampleRow> rows(int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException("count darf nicht negativ sein: " + count);
-        }
-        List<SampleRow> rows = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            rows.add(generateRow(i));
-        }
-        return List.copyOf(rows);
-    }
-
-    private static SampleRow generateRow(int i) {
+    static SampleRow generateRow(int i) {
         String text = NAMES[i % NAMES.length] + " / " + DEPARTMENTS[(i / NAMES.length) % DEPARTMENTS.length];
 
         // INTEGER: -1000 bis +1000

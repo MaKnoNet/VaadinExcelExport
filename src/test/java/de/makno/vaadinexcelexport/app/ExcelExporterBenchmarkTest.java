@@ -8,39 +8,33 @@ import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.VaadinServletService;
 import com.vaadin.flow.server.VaadinSession;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
-import java.io.ByteArrayInputStream;
+import de.makno.xlsbuilder.builder.DataProviders;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
- * Performance-Vergleich der beiden Excel-Export-Wege auf demselben {@link Grid}:
+ * Performance-Vergleich der beiden Excel-Export-Wege – beide lesen aus der <b>SQL-Datenbank</b>
+ * ({@link TestDataDatabase}, file-basierte H2), genau wie die App:
  *
  * <ul>
- *   <li><b>xlsbuilder</b> – der eigene {@link GridExcelExporter} (typgesteuert via ExcelMeta).</li>
- *   <li><b>Flowingcode</b> – der Community-{@link GridExporter} (grid-introspektiv).</li>
+ *   <li><b>xlsbuilder</b> – {@link GridExcelExporter} streamt out-of-core aus einem forward-only
+ *       JDBC-{@code ResultSet} ({@code DataProviders.ofResultSet}).</li>
+ *   <li><b>Flowingcode</b> – der Community-{@link GridExporter} liest über das lazy, seitenweise
+ *       Grid (das wiederum aus der DB paginiert).</li>
  * </ul>
  *
- * <p>Beide Engines exportieren denselben programmatisch erzeugten Datenbestand und werden mit
- * Warmup- und Messläufen vermessen. Das Ergebnis (Median/Durchschnitt, Durchsatz, Dateigröße)
- * wird als Tabelle ausgegeben – der Test <em>berichtet</em>, welcher Weg schneller ist.
- *
- * <p><b>Bewusst keine Zeit-Assertions:</b> Absolute Laufzeiten sind maschinen- und
- * plattformabhängig; harte Schwellwerte wären flaky und verstießen gegen die Anforderung
- * plattformübergreifender Lauffähigkeit. Geprüft wird ausschließlich die Korrektheit (beide
- * Ausgaben sind valide, vollständige {@code .xlsx}-Dateien).
- *
- * <p>Der Test ist mit {@code @Tag("benchmark")} markiert und läuft daher nicht im normalen
- * {@code test}-Lauf, sondern nur über die Gradle-Task {@code benchmark}. Die Zeilenzahl ist über
- * die System-Property {@code -Dbenchmark.rows=N} konfigurierbar.
+ * <p>Beide Engines werden mit Warmup- und Messläufen vermessen; das Ergebnis (Median/Durchschnitt,
+ * Durchsatz, Dateigröße) wird als Tabelle ausgegeben. <b>Bewusst keine Zeit-Assertions</b> (absolute
+ * Laufzeiten sind maschinen-/plattformabhängig); geprüft wird nur die Korrektheit (valide,
+ * vollständige {@code .xlsx}). Markiert mit {@code @Tag("benchmark")} → läuft nur über die
+ * Gradle-Task {@code benchmark}. Zeilenzahl via {@code -Dbenchmark.rows=N}.
  */
 @Tag("benchmark")
 class ExcelExporterBenchmarkTest {
@@ -52,14 +46,17 @@ class ExcelExporterBenchmarkTest {
     private static final int DEFAULT_ROW_COUNT = 25_000;
     private static final int WARMUP_ITERATIONS = 2;
     private static final int MEASURED_ITERATIONS = 5;
+    private static final int FETCH_SIZE = 1_000;
 
     private static final double NANOS_PER_MILLI = 1_000_000.0;
     private static final double NANOS_PER_SECOND = 1_000_000_000.0;
 
-    /** Eine Export-Engine: schreibt das übergebene Grid als {@code .xlsx} in den Stream. */
+    private static final SampleRowMapper MAPPER = new SampleRowMapper();
+
+    /** Eine Export-Engine: schreibt den aktuellen DB-Inhalt als {@code .xlsx} in den Stream. */
     @FunctionalInterface
     private interface ExportEngine {
-        void export(Grid<SampleRow> grid, OutputStream out) throws IOException;
+        void export(OutputStream out) throws IOException;
     }
 
     /** Messergebnis einer Engine über alle Messläufe. */
@@ -81,23 +78,33 @@ class ExcelExporterBenchmarkTest {
     @Test
     void comparesXlsbuilderAndFlowingcodeExportPerformance() throws Exception {
         int rowCount = Integer.getInteger(ROW_COUNT_PROPERTY, DEFAULT_ROW_COUNT);
-        List<SampleRow> rows = generateRows(rowCount);
 
-        BenchmarkResult xlsbuilder =
-                benchmark(ENGINE_XLSBUILDER, rows, ExcelExporterBenchmarkTest::exportWithXlsbuilder);
-        BenchmarkResult flowingcode =
-                benchmark(ENGINE_FLOWINGCODE, rows, ExcelExporterBenchmarkTest::exportWithFlowingcode);
+        try (TestDataDatabase db = new TestDataDatabase()) {
+            db.seed(rowCount);
+            Grid<SampleRow> grid = buildGrid(db);
 
-        printReport(rowCount, xlsbuilder, flowingcode);
+            ExportEngine xlsbuilderEngine = out -> exportWithXlsbuilder(grid, db, out);
+            ExportEngine flowingcodeEngine = out -> exportWithFlowingcode(grid, out);
 
-        assertValidWorkbook(rows, ExcelExporterBenchmarkTest::exportWithXlsbuilder, rowCount);
-        assertValidWorkbook(rows, ExcelExporterBenchmarkTest::exportWithFlowingcode, rowCount);
+            BenchmarkResult xlsbuilder = benchmark(ENGINE_XLSBUILDER, xlsbuilderEngine);
+            BenchmarkResult flowingcode = benchmark(ENGINE_FLOWINGCODE, flowingcodeEngine);
+
+            printReport(rowCount, xlsbuilder, flowingcode);
+
+            assertValidWorkbook(xlsbuilderEngine);
+            assertValidWorkbook(flowingcodeEngine);
+        }
     }
 
     // ------------------------------------------------------------------ Engines
 
-    private static void exportWithXlsbuilder(Grid<SampleRow> grid, OutputStream out) throws IOException {
-        GridExcelExporter.from("Benchmark", grid).export(grid.getDataProvider(), out);
+    private static void exportWithXlsbuilder(Grid<SampleRow> grid, TestDataDatabase db, OutputStream out)
+            throws IOException {
+        String orderBy = SampleGrid.orderByForKeys(grid.getSortOrder()); // unsortiert → ORDER BY id
+        try (TestDataDatabase.StreamingResult stream = db.openStream(orderBy, FETCH_SIZE)) {
+            GridExcelExporter.from("Benchmark", grid)
+                    .export(DataProviders.ofResultSet(stream.resultSet(), MAPPER), out);
+        }
     }
 
     private static void exportWithFlowingcode(Grid<SampleRow> grid, OutputStream out) throws IOException {
@@ -106,19 +113,16 @@ class ExcelExporterBenchmarkTest {
 
     // ------------------------------------------------------- Benchmark-Maschinerie
 
-    private static BenchmarkResult benchmark(String name, List<SampleRow> rows, ExportEngine engine)
-            throws IOException {
-        Grid<SampleRow> grid = buildGrid(rows);
-
+    private static BenchmarkResult benchmark(String name, ExportEngine engine) throws IOException {
         for (int i = 0; i < WARMUP_ITERATIONS; i++) {
-            runOnce(grid, engine);
+            runOnce(engine);
         }
 
         long[] timings = new long[MEASURED_ITERATIONS];
         int outputBytes = 0;
         for (int i = 0; i < MEASURED_ITERATIONS; i++) {
             long start = System.nanoTime();
-            outputBytes = runOnce(grid, engine);
+            outputBytes = runOnce(engine);
             timings[i] = System.nanoTime() - start;
         }
         Arrays.sort(timings);
@@ -127,22 +131,18 @@ class ExcelExporterBenchmarkTest {
         return new BenchmarkResult(name, median, average, outputBytes);
     }
 
-    private static int runOnce(Grid<SampleRow> grid, ExportEngine engine) throws IOException {
+    private static int runOnce(ExportEngine engine) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        engine.export(grid, out);
+        engine.export(out);
         return out.size();
     }
 
-    // ----------------------------------------------------------- Daten & Grid
+    // ----------------------------------------------------------- Grid (lazy, DB-gestützt)
 
-    private static List<SampleRow> generateRows(int count) {
-        return SampleData.rows(count);
-    }
-
-    private static Grid<SampleRow> buildGrid(List<SampleRow> rows) {
+    private static Grid<SampleRow> buildGrid(TestDataDatabase db) {
         Grid<SampleRow> grid = new Grid<>();
         SampleGrid.configure(grid);
-        grid.setItems(rows);
+        SampleDataProvider.bind(grid, db);
         return grid;
     }
 
@@ -166,22 +166,23 @@ class ExcelExporterBenchmarkTest {
     // ----------------------------------------------------------- Korrektheit
 
     /**
-     * Exportiert einmalig und prüft, dass eine gültige, vollständige {@code .xlsx} entsteht: mit
-     * Apache POI öffenbar und mit mindestens {@code rowCount} Datenzeilen (zusätzlich zu eventuellen
-     * Kopf-/Titelzeilen, die je Engine variieren).
+     * Exportiert einmalig und prüft leichtgewichtig, dass eine gültige {@code .xlsx} entstanden ist:
+     * ZIP-Signatur ({@code PK}) und ein Worksheet-Eintrag. ZIP speichert Eintragsnamen
+     * unkomprimiert, daher genügt eine Byte-Suche nach {@code xl/worksheets/sheet} – ohne das
+     * (potenziell sehr große) Workbook zu entpacken. Die zellgenaue Korrektheit deckt
+     * {@code GridExcelExporterTest} ab.
      */
-    private static void assertValidWorkbook(List<SampleRow> rows, ExportEngine engine, int rowCount) throws Exception {
-        Grid<SampleRow> grid = buildGrid(rows);
+    private static void assertValidWorkbook(ExportEngine engine) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        engine.export(grid, out);
+        engine.export(out);
+        byte[] bytes = out.toByteArray();
 
-        assertTrue(out.size() > 0, "Export erzeugte keine Bytes");
-        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
-            Sheet sheet = workbook.getSheetAt(0);
-            assertTrue(
-                    sheet.getLastRowNum() >= rowCount,
-                    "Erwartete mindestens " + rowCount + " Datenzeilen, fand " + sheet.getLastRowNum());
-        }
+        assertTrue(bytes.length > 4, "Export erzeugte keine Bytes");
+        assertTrue(
+                bytes[0] == 'P' && bytes[1] == 'K' && bytes[2] == 3 && bytes[3] == 4,
+                "Keine gültige ZIP-/xlsx-Signatur");
+        String raw = new String(bytes, StandardCharsets.ISO_8859_1);
+        assertTrue(raw.contains("xl/worksheets/sheet"), "Erzeugte Datei enthält kein Worksheet");
     }
 
     // ----------------------------------------------------------- Report
@@ -193,11 +194,11 @@ class ExcelExporterBenchmarkTest {
 
         StringBuilder report = new StringBuilder();
         report.append(System.lineSeparator());
-        report.append("=== Excel-Export Benchmark ===================================")
+        report.append("=== Excel-Export Benchmark (aus H2-Datenbank) ================")
                 .append(System.lineSeparator());
         report.append(String.format(
-                        "Zeilen: %d  |  Warmup: %d  |  Messläufe: %d",
-                        rowCount, WARMUP_ITERATIONS, MEASURED_ITERATIONS))
+                        "Zeilen: %d  |  Warmup: %d  |  Messläufe: %d  |  FetchSize: %d",
+                        rowCount, WARMUP_ITERATIONS, MEASURED_ITERATIONS, FETCH_SIZE))
                 .append(System.lineSeparator());
         report.append(String.format("%-14s %12s %12s %14s %12s", "Engine", "Median", "Avg", "Zeilen/s", "Größe"))
                 .append(System.lineSeparator());

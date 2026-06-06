@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import de.makno.xlsbuilder.builder.ColumnType;
+import de.makno.xlsbuilder.builder.DataProviders;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -259,6 +260,33 @@ class GridExcelExporterTest {
             // Datenzeilen folgen dem Comparator (Alter absteigend), nicht der Eingabe
             assertEquals("Bob", sheet.getRow(1).getCell(0).getStringCellValue());
             assertEquals("Alice", sheet.getRow(2).getCell(0).getStringCellValue());
+        }
+    }
+
+    /**
+     * Prüft die Überladung, die direkt aus einer xlsbuilder-{@code DataProvider}-Quelle exportiert
+     * (z. B. ein gestreamtes ResultSet): Spalten stammen aus dem Grid, die Daten und ihre
+     * Reihenfolge aus der übergebenen Quelle.
+     */
+    @Test
+    void exportsFromXlsbuilderDataProviderInSourceOrder() throws Exception {
+        Grid<Person> grid = new Grid<>();
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING);
+        Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
+        ExcelMeta.type(age, ColumnType.INTEGER, Person::age);
+        // Kein setItems nötig – die Daten kommen aus der xlsbuilder-Quelle.
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(DataProviders.ofIterable(people()), out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Sheet sheet = workbook.getSheetAt(0);
+            // Reihenfolge = Quellreihenfolge (Alice, dann Bob)
+            assertEquals("Alice", sheet.getRow(1).getCell(0).getStringCellValue());
+            assertEquals("Bob", sheet.getRow(2).getCell(0).getStringCellValue());
+            assertEquals(30L, (long) sheet.getRow(1).getCell(1).getNumericCellValue());
         }
     }
 
