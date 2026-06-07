@@ -17,7 +17,6 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -57,6 +56,7 @@ public class MainView extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
     private static final String PDF_URL = "/excel-export-vergleich.pdf";
+    private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String MAKNOS_FILE_BASE = "maknos-export";
     private static final String VAADINS_FILE_BASE = "vaadins-export";
     private static final int DEFAULT_PAGE_SIZE = 1000;
@@ -71,7 +71,6 @@ public class MainView extends VerticalLayout {
 
     private final IntegerField rowCountField = new IntegerField();
     private final IntegerField pageSizeField = new IntegerField();
-    private final Select<ExportFormat> formatSelect = new Select<>();
     private final Checkbox parallelCheckbox = new Checkbox("Parallele Pipeline");
     private final ProgressBar progressBar = new ProgressBar();
     private final Span statusSpan = new Span();
@@ -136,12 +135,6 @@ public class MainView extends VerticalLayout {
         pageSizeField.setStepButtonsVisible(true);
         pageSizeField.setWidth("9em");
 
-        formatSelect.setLabel("Format");
-        formatSelect.setItems(ExportFormat.values());
-        formatSelect.setItemLabelGenerator(ExportFormat::label);
-        formatSelect.setValue(ExportFormat.XLSX);
-        formatSelect.setWidth("10em");
-
         parallelCheckbox.setValue(false);
 
         Button pdfButton = new Button("Vergleich (PDF)", VaadinIcon.FILE_TEXT_O.create(), e -> openPdfDialog());
@@ -149,7 +142,6 @@ public class MainView extends VerticalLayout {
         HorizontalLayout bar = new HorizontalLayout(
                 rowCountField,
                 pageSizeField,
-                formatSelect,
                 parallelCheckbox,
                 generateButton,
                 maknosButton,
@@ -202,50 +194,48 @@ public class MainView extends VerticalLayout {
 
     private record TestStep(String engine, String fileBase, Anchor anchor, EngineTask task) {}
 
-    private TestStep maknosStep(ExportFormat format, boolean parallel) {
+    private TestStep maknosStep(boolean parallel) {
         return new TestStep(
                 ExportRunner.ENGINE_MAKNOS,
                 MAKNOS_FILE_BASE,
                 anchorMaknos,
-                (session, pageSize) -> runner.runMaknos(format, seededRows, pageSize, parallel));
+                (session, pageSize) -> runner.runMaknos(seededRows, pageSize, parallel));
     }
 
-    private TestStep vaadinsStep(ExportFormat format) {
+    private TestStep vaadinsStep() {
         return new TestStep(
                 ExportRunner.ENGINE_VAADINS,
                 VAADINS_FILE_BASE,
                 anchorVaadins,
-                (session, pageSize) -> runner.runVaadins(format, seededRows, session));
+                (session, pageSize) -> runner.runVaadins(seededRows, session));
     }
 
     /**
-     * Sammelt die gewählten Engines mit dem aktuellen Format/Parallel-Schalter und startet den Lauf.
-     * Format und Parallelismus werden hier (im UI-Thread) als Schnappschuss gelesen.
+     * Sammelt die gewählten Engines mit dem aktuellen Parallel-Schalter und startet den Lauf. Der
+     * Parallelismus wird hier (im UI-Thread) als Schnappschuss gelesen.
      */
     private void runSelected(boolean maknos, boolean vaadins) {
         if (seededRows == 0) {
             Notification.show("Bitte zuerst Daten generieren.");
             return;
         }
-        ExportFormat format = currentFormat();
         boolean parallel = Boolean.TRUE.equals(parallelCheckbox.getValue());
         List<TestStep> steps = new ArrayList<>();
         if (maknos) {
-            steps.add(maknosStep(format, parallel));
+            steps.add(maknosStep(parallel));
         }
         if (vaadins) {
-            steps.add(vaadinsStep(format));
+            steps.add(vaadinsStep());
         }
-        runSteps(steps, format);
+        runSteps(steps);
     }
 
     /**
      * Führt die Schritte nacheinander im Hintergrund-Worker aus. Vor jedem Schritt wird der Status
      * („Aktueller Test: …") gepusht, nach jedem Schritt sofort dessen Ergebnis + Download – beim
-     * Kombi-Lauf erscheinen die Engines also einzeln, nicht erst am Ende. Das {@code format} bestimmt
-     * Dateiendung und Download-Content-Type.
+     * Kombi-Lauf erscheinen die Engines also einzeln, nicht erst am Ende.
      */
-    private void runSteps(List<TestStep> steps, ExportFormat format) {
+    private void runSteps(List<TestStep> steps) {
         int pageSize = currentPageSize();
         grid.setPageSize(pageSize);
         setControlsEnabled(false);
@@ -259,7 +249,7 @@ public class MainView extends VerticalLayout {
             try {
                 for (TestStep step : steps) {
                     ui.access(() -> {
-                        statusSpan.setText("Aktueller Test: " + step.engine() + " (" + format.label() + ") …");
+                        statusSpan.setText("Aktueller Test: " + step.engine() + " …");
                         metricLines.get(step.engine()).setText(step.engine() + ": wird gemessen …");
                     });
                     ExportMeasurement.Result result;
@@ -271,7 +261,7 @@ public class MainView extends VerticalLayout {
                     }
                     ui.access(() -> {
                         reportMetrics(result.metrics());
-                        triggerDownload(step.anchor(), result.bytes(), testFileName(step.fileBase(), format), format);
+                        triggerDownload(step.anchor(), result.bytes(), testFileName(step.fileBase()));
                     });
                 }
             } catch (RuntimeException ex) {
@@ -286,17 +276,11 @@ public class MainView extends VerticalLayout {
         });
     }
 
-    private ExportFormat currentFormat() {
-        ExportFormat value = formatSelect.getValue();
-        return value == null ? ExportFormat.XLSX : value;
-    }
-
     private void setControlsEnabled(boolean enabled) {
         generateButton.setEnabled(enabled);
         maknosButton.setEnabled(enabled);
         vaadinsButton.setEnabled(enabled);
         combinedButton.setEnabled(enabled);
-        formatSelect.setEnabled(enabled);
         parallelCheckbox.setEnabled(enabled);
     }
 
@@ -337,11 +321,11 @@ public class MainView extends VerticalLayout {
     // ─────────────────────────────────────────────────────── Download
 
     /**
-     * Baut einen eindeutigen Download-Namen {@code Test_<base>_<datum_uhrzeit>.<endung>}. Es ist ein
+     * Baut einen eindeutigen Download-Namen {@code Test_<base>_<datum_uhrzeit>.xlsx}. Es ist ein
      * HTTP-Download-Name (Content-Disposition), kein Dateisystem-Pfad – daher bewusst {@link String}.
      */
-    private static String testFileName(String base, ExportFormat format) {
-        return "Test_" + base + "_" + LocalDateTime.now().format(FILE_TIMESTAMP) + "." + format.extension();
+    private static String testFileName(String base) {
+        return "Test_" + base + "_" + LocalDateTime.now().format(FILE_TIMESTAMP) + ".xlsx";
     }
 
     private static Anchor hiddenDownloadAnchor() {
@@ -351,9 +335,9 @@ public class MainView extends VerticalLayout {
         return anchor;
     }
 
-    private static void triggerDownload(Anchor anchor, byte[] bytes, String fileName, ExportFormat format) {
+    private static void triggerDownload(Anchor anchor, byte[] bytes, String fileName) {
         StreamResource resource = new StreamResource(fileName, () -> new ByteArrayInputStream(bytes));
-        resource.setContentType(format.mimeType());
+        resource.setContentType(XLSX_MIME_TYPE);
         anchor.setHref(resource);
         anchor.getElement().callJsFunction("click");
     }

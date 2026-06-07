@@ -10,7 +10,8 @@ pluginManagement {
 
 rootProject.name = 'VaadinExcelExport'
 
-// Composite Build: bindet die Schwester-Bibliothek xlsbuilder direkt aus dem Quellbaum ein.
-// Gradle substituiert dadurch die Abhängigkeit 'de.makno.xlsbuilder:xlsbuilder' automatisch und
+// Composite Build: bindet die Schwester-Bibliothek xlsxbuilder direkt aus dem Quellbaum ein.
+// Gradle substituiert dadurch die Abhängigkeit 'de.makno.xlsxbuilder:xlsxbuilder' automatisch und
 // löst deren transitive Abhängigkeiten (Apache POI, Log4j2) mit auf – kein separates Publish nötig.
+// Hinweis: Das Verzeichnis heißt weiterhin 'xlsbuilder' (nur Artefakt/Packages wurden umbenannt).
 includeBuild '../xlsbuilder'

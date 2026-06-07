@@ -8,7 +8,7 @@ import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.VaadinServletService;
 import com.vaadin.flow.server.VaadinSession;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
-import de.makno.xlsbuilder.builder.DataProviders;
+import de.makno.xlsxbuilder.builder.DataProviders;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
  * ({@link TestDataDatabase}, file-basierte H2), genau wie die App:
  *
  * <ul>
- *   <li><b>xlsbuilder</b> – {@link GridExcelExporter} streamt out-of-core aus einem forward-only
+ *   <li><b>xlsxbuilder</b> – {@link GridExcelExporter} streamt out-of-core aus einem forward-only
  *       JDBC-{@code ResultSet} ({@code DataProviders.ofResultSet}).</li>
  *   <li><b>Flowingcode</b> – der Community-{@link GridExporter} liest über das lazy, seitenweise
  *       Grid (das wiederum aus der DB paginiert).</li>
@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
 @Tag("benchmark")
 class ExcelExporterBenchmarkTest {
 
-    private static final String ENGINE_XLSBUILDER = "xlsbuilder";
+    private static final String ENGINE_XLSBUILDER = "xlsxbuilder";
     private static final String ENGINE_FLOWINGCODE = "Flowingcode";
 
     private static final String ROW_COUNT_PROPERTY = "benchmark.rows";
@@ -83,15 +83,15 @@ class ExcelExporterBenchmarkTest {
             db.seed(rowCount);
             Grid<SampleRow> grid = buildGrid(db);
 
-            ExportEngine xlsbuilderEngine = out -> exportWithXlsbuilder(grid, db, out);
+            ExportEngine xlsxbuilderEngine = out -> exportWithXlsbuilder(grid, db, out);
             ExportEngine flowingcodeEngine = out -> exportWithFlowingcode(grid, out);
 
-            BenchmarkResult xlsbuilder = benchmark(ENGINE_XLSBUILDER, xlsbuilderEngine);
+            BenchmarkResult xlsxbuilder = benchmark(ENGINE_XLSBUILDER, xlsxbuilderEngine);
             BenchmarkResult flowingcode = benchmark(ENGINE_FLOWINGCODE, flowingcodeEngine);
 
-            printReport(rowCount, xlsbuilder, flowingcode);
+            printReport(rowCount, xlsxbuilder, flowingcode);
 
-            assertValidWorkbook(xlsbuilderEngine);
+            assertValidWorkbook(xlsxbuilderEngine);
             assertValidWorkbook(flowingcodeEngine);
         }
     }
@@ -187,9 +187,9 @@ class ExcelExporterBenchmarkTest {
 
     // ----------------------------------------------------------- Report
 
-    private static void printReport(int rowCount, BenchmarkResult xlsbuilder, BenchmarkResult flowingcode) {
-        BenchmarkResult faster = xlsbuilder.medianNanos() <= flowingcode.medianNanos() ? xlsbuilder : flowingcode;
-        BenchmarkResult slower = faster == xlsbuilder ? flowingcode : xlsbuilder;
+    private static void printReport(int rowCount, BenchmarkResult xlsxbuilder, BenchmarkResult flowingcode) {
+        BenchmarkResult faster = xlsxbuilder.medianNanos() <= flowingcode.medianNanos() ? xlsxbuilder : flowingcode;
+        BenchmarkResult slower = faster == xlsxbuilder ? flowingcode : xlsxbuilder;
         double factor = (double) slower.medianNanos() / faster.medianNanos();
 
         StringBuilder report = new StringBuilder();
@@ -202,7 +202,7 @@ class ExcelExporterBenchmarkTest {
                 .append(System.lineSeparator());
         report.append(String.format("%-14s %12s %12s %14s %12s", "Engine", "Median", "Avg", "Zeilen/s", "Größe"))
                 .append(System.lineSeparator());
-        report.append(formatRow(xlsbuilder, rowCount)).append(System.lineSeparator());
+        report.append(formatRow(xlsxbuilder, rowCount)).append(System.lineSeparator());
         report.append(formatRow(flowingcode, rowCount)).append(System.lineSeparator());
         report.append("--------------------------------------------------------------")
                 .append(System.lineSeparator());

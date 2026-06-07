@@ -4,10 +4,9 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.Query;
-import de.makno.xlsbuilder.builder.CsvOptions;
-import de.makno.xlsbuilder.builder.DataProviders;
-import de.makno.xlsbuilder.builder.ExcelBuilder;
-import de.makno.xlsbuilder.builder.WorkbookBuilder;
+import de.makno.xlsxbuilder.builder.DataProviders;
+import de.makno.xlsxbuilder.builder.WorkbookBuilder;
+import de.makno.xlsxbuilder.builder.XlsxBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Comparator;
@@ -18,14 +17,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Brücke zwischen einer Vaadin-Tabelle und dem xlsbuilder: exportiert alle per
- * {@link ExcelMeta#type(Column, de.makno.xlsbuilder.builder.ColumnType)} annotierten
+ * Brücke zwischen einer Vaadin-Tabelle und dem xlsxbuilder: exportiert alle per
+ * {@link ExcelMeta#type(Column, de.makno.xlsxbuilder.builder.ColumnType)} annotierten
  * Grid-Spalten als {@code .xlsx}-Datei.
  *
  * <p>Der Wert jeder Spalte wird durch {@link ColumnValueExtractor} automatisch aus dem
  * Grid-Renderer extrahiert. Für typisierte Spalten und Sonderfälle (z. B.
- * {@link de.makno.xlsbuilder.builder.ColumnType#FORMULA}) wird der Export-Wert explizit über
- * {@link ExcelMeta#type(Column, de.makno.xlsbuilder.builder.ColumnType, com.vaadin.flow.function.ValueProvider)}
+ * {@link de.makno.xlsxbuilder.builder.ColumnType#FORMULA}) wird der Export-Wert explizit über
+ * {@link ExcelMeta#type(Column, de.makno.xlsxbuilder.builder.ColumnType, com.vaadin.flow.function.ValueProvider)}
  * gesetzt.
  *
  * <p>Verwendung:
@@ -72,7 +71,7 @@ public final class GridExcelExporter<T> {
      * <ul>
      *   <li>einen Key hat ({@link Column#getKey()} ≠ {@code null}) – der Key dient als
      *       Excel-Spaltenüberschrift, und</li>
-     *   <li>per {@link ExcelMeta#type(Column, de.makno.xlsbuilder.builder.ColumnType)} annotiert
+     *   <li>per {@link ExcelMeta#type(Column, de.makno.xlsxbuilder.builder.ColumnType)} annotiert
      *       wurde.</li>
      * </ul>
      *
@@ -98,7 +97,7 @@ public final class GridExcelExporter<T> {
     /**
      * Schreibt die Tabelle als {@code .xlsx} in den Stream und übernimmt dabei die übergebene
      * In-Memory-Sortierung, sodass die Zeilenreihenfolge der Excel-Datei der sortierten Tabelle
-     * entspricht. xlsbuilder schreibt die Zeilen genau in Stream-Reihenfolge – die Reihenfolge wird
+     * entspricht. xlsxbuilder schreibt die Zeilen genau in Stream-Reihenfolge – die Reihenfolge wird
      * also allein durch den {@code inMemorySort}-Comparator bestimmt.
      *
      * @param dataProvider Datenquelle der Tabelle
@@ -110,38 +109,39 @@ public final class GridExcelExporter<T> {
             throws IOException {
         Objects.requireNonNull(dataProvider, "dataProvider");
         Objects.requireNonNull(out, "out");
-        de.makno.xlsbuilder.builder.DataProvider<T> data = DataProviders.ofStream(fetchAll(dataProvider, inMemorySort));
+        de.makno.xlsxbuilder.builder.DataProvider<T> data =
+                DataProviders.ofStream(fetchAll(dataProvider, inMemorySort));
         export(data, out);
     }
 
     /**
      * Schreibt die Tabelle als {@code .xlsx} und bezieht die Daten direkt aus einer
-     * xlsbuilder-{@link de.makno.xlsbuilder.builder.DataProvider Datenquelle} – etwa einem
+     * xlsxbuilder-{@link de.makno.xlsxbuilder.builder.DataProvider Datenquelle} – etwa einem
      * gestreamten JDBC-{@code ResultSet} via
-     * {@link DataProviders#ofResultSet(java.sql.ResultSet, de.makno.xlsbuilder.builder.ResultSetRowMapper)}.
+     * {@link DataProviders#ofResultSet(java.sql.ResultSet, de.makno.xlsxbuilder.builder.ResultSetRowMapper)}.
      * So lässt sich <b>out-of-core</b> exportieren, ohne den gesamten Datenbestand in den Speicher
      * zu laden. Die Spaltendefinitionen stammen weiterhin aus dem {@link Grid}.
      *
-     * <p>xlsbuilder durchläuft die Quelle genau einmal (forward-only) und schließt sie nach dem
-     * Schreiben ({@link de.makno.xlsbuilder.builder.DataProvider#close()}). Ein gehaltenes
+     * <p>xlsxbuilder durchläuft die Quelle genau einmal (forward-only) und schließt sie nach dem
+     * Schreiben ({@link de.makno.xlsxbuilder.builder.DataProvider#close()}). Ein gehaltenes
      * {@code Statement}/{@code Connection} muss der Aufrufer schließen.
      *
-     * @param data xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
+     * @param data xlsxbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
      * @param out  Ziel-Stream (wird nicht geschlossen)
      */
-    public void export(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out) throws IOException {
+    public void export(de.makno.xlsxbuilder.builder.DataProvider<T> data, OutputStream out) throws IOException {
         export(data, out, ExportOptions.none());
     }
 
     /**
-     * Wie {@link #export(de.makno.xlsbuilder.builder.DataProvider, OutputStream)}, zusätzlich mit
+     * Wie {@link #export(de.makno.xlsxbuilder.builder.DataProvider, OutputStream)}, zusätzlich mit
      * {@link ExportOptions} (Fußzeile, Summenspalten, Pipeline-Parallelismus).
      *
-     * @param data    xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
+     * @param data    xlsxbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
      * @param out     Ziel-Stream (wird nicht geschlossen)
      * @param options Zusatzoptionen (Footer/Summe/Parallel)
      */
-    public void export(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out, ExportOptions options)
+    public void export(de.makno.xlsxbuilder.builder.DataProvider<T> data, OutputStream out, ExportOptions options)
             throws IOException {
         Objects.requireNonNull(data, "data");
         Objects.requireNonNull(out, "out");
@@ -150,48 +150,11 @@ public final class GridExcelExporter<T> {
     }
 
     /**
-     * Schreibt die Tabelle als <b>CSV</b> in den Stream – dieselben Spaltendefinitionen, aber im
-     * streamenden CSV-Format von xlsbuilder. Hinweis: CSV kennt keine Formeln, daher bleiben
-     * {@link de.makno.xlsbuilder.builder.ColumnType#FORMULA}-Spalten leer. Der Stream wird
-     * <em>nicht</em> geschlossen.
-     *
-     * @param data       xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
-     * @param out        Ziel-Stream (wird nicht geschlossen)
-     * @param csvOptions CSV-Formatierung (Trennzeichen, Charset, BOM …)
-     */
-    public void exportCsv(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out, CsvOptions csvOptions)
-            throws IOException {
-        exportCsv(data, out, csvOptions, ExportOptions.none());
-    }
-
-    /**
-     * Wie {@link #exportCsv(de.makno.xlsbuilder.builder.DataProvider, OutputStream, CsvOptions)},
-     * zusätzlich mit {@link ExportOptions} (Fußzeile, Summenspalten, Pipeline-Parallelismus).
-     *
-     * @param data       xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
-     * @param out        Ziel-Stream (wird nicht geschlossen)
-     * @param csvOptions CSV-Formatierung (Trennzeichen, Charset, BOM …)
-     * @param options    Zusatzoptionen (Footer/Summe/Parallel)
-     */
-    public void exportCsv(
-            de.makno.xlsbuilder.builder.DataProvider<T> data,
-            OutputStream out,
-            CsvOptions csvOptions,
-            ExportOptions options)
-            throws IOException {
-        Objects.requireNonNull(data, "data");
-        Objects.requireNonNull(out, "out");
-        Objects.requireNonNull(csvOptions, "csvOptions");
-        Objects.requireNonNull(options, "options");
-        newSheetWithColumns(options).data(data).writeCsv(out, csvOptions);
-    }
-
-    /**
      * Baut das Sheet mit allen Spaltendefinitionen (Header, Typ, Format, Converter) – ohne Daten –
      * und wendet die {@link ExportOptions} (Summenspalten, Fußzeile, Parallelismus) an.
      */
-    private ExcelBuilder<T> newSheetWithColumns(ExportOptions options) {
-        ExcelBuilder<T> sheet = ExcelBuilder.<T>create().sheetName(sheetName).columnHeaders(true);
+    private XlsxBuilder<T> newSheetWithColumns(ExportOptions options) {
+        XlsxBuilder<T> sheet = XlsxBuilder.<T>create().sheetName(sheetName).columnHeaders(true);
         ColumnValueExtractor<T> extractor = new ColumnValueExtractor<>();
 
         for (Column<T> column : columns) {

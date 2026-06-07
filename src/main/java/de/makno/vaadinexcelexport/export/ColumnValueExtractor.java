@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
  * <p>Die folgenden Strategien werden der Reihe nach probiert:
  * <ol>
  *   <li><b>ExcelMeta-ValueProvider (Hauptpfad):</b> Explizit über
- *       {@link ExcelMeta#type(Column, de.makno.xlsbuilder.builder.ColumnType, ValueProvider)}
+ *       {@link ExcelMeta#type(Column, de.makno.xlsxbuilder.builder.ColumnType, ValueProvider)}
  *       gesetzt – liefert den typkorrekten Java-Wert ohne Umwege. Für alle typisierten
  *       Spalten (DATE, DECIMAL, FORMULA …) empfohlen.</li>
  *   <li><b>LitRenderer-ValueProvider:</b> Für Spalten, die mit
@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
  *   <li><b>ColumnPathRenderer-Provider (Fallback):</b> Vaadin 24 erzeugt für
  *       {@code Grid.addColumn(ValueProvider)} intern einen {@link ColumnPathRenderer}, dessen
  *       eingebetteter Provider den Wert als {@link String} zurückgibt. Geeignet als Fallback
- *       für {@link de.makno.xlsbuilder.builder.ColumnType#STRING}.</li>
+ *       für {@link de.makno.xlsxbuilder.builder.ColumnType#STRING}.</li>
  * </ol>
  *
  * <p><b>Thread-Sicherheit:</b> Nicht thread-safe; eine Instanz pro Export-Aufruf.
@@ -75,7 +75,7 @@ final class ColumnValueExtractor<T> {
     /**
      * Greift via Reflexion auf das private {@code provider}-Feld von {@link ColumnPathRenderer}
      * zu. Der extrahierte Provider liefert einen String-formatierten Wert (geeignet für
-     * {@link de.makno.xlsbuilder.builder.ColumnType#STRING}).
+     * {@link de.makno.xlsxbuilder.builder.ColumnType#STRING}).
      */
     @SuppressWarnings("unchecked")
     private Object extractFromColumnPathRenderer(T item, ColumnPathRenderer<T> renderer) {

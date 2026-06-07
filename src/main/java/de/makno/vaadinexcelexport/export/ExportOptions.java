@@ -5,18 +5,18 @@ import java.util.Objects;
 
 /**
  * Unveränderliche Zusatzoptionen für einen Export über {@link GridExcelExporter}: Fußzeile(n),
- * Summenspalten und der optionale Pipeline-Parallelismus von xlsbuilder. Bewusst als {@code record}
+ * Summenspalten und der optionale Pipeline-Parallelismus von xlsxbuilder. Bewusst als {@code record}
  * (immutable), damit der {@link GridExcelExporter} seinen Thread-Safety-Vertrag wahrt – die Optionen
  * werden pro Aufruf übergeben statt als veränderlicher Zustand gehalten.
  *
- * <p>Footer-Zeilen dürfen Platzhalter enthalten, die xlsbuilder beim Schreiben auflöst – u. a.
+ * <p>Footer-Zeilen dürfen Platzhalter enthalten, die xlsxbuilder beim Schreiben auflöst – u. a.
  * {@code {datetime}}/{@code {date}}, {@code {rowCount}} und {@code {sum:Spaltenname}}. Damit
  * {@code {sum:…}} einen Wert liefert, muss die betreffende Spalte in {@link #sumColumns()} stehen
- * (das aktiviert in xlsbuilder die Summenzeile und damit die Summenverfolgung).
+ * (das aktiviert in xlsxbuilder die Summenzeile und damit die Summenverfolgung).
  *
  * @param footerLines Fußzeilen unter den Daten (über die Breite gemerged); leer = keine
  * @param sumColumns  Spaltennamen, für die eine Summe gebildet wird (Summenzeile + {@code {sum:…}})
- * @param parallel    xlsbuilder-Pipeline-Parallelismus aktivieren (Producer/Consumer-Entkopplung)
+ * @param parallel    xlsxbuilder-Pipeline-Parallelismus aktivieren (Producer/Consumer-Entkopplung)
  */
 public record ExportOptions(List<String> footerLines, List<String> sumColumns, boolean parallel) {
 

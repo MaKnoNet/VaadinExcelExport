@@ -9,7 +9,7 @@ import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.function.ValueProvider;
 import de.makno.vaadinexcelexport.export.ExcelMeta;
-import de.makno.xlsbuilder.builder.ColumnType;
+import de.makno.xlsxbuilder.builder.ColumnType;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -125,7 +125,7 @@ final class SampleGrid {
 
     /**
      * Hyperlink-Spalte: das Grid zeigt einen klickbaren Link mit dem <b>Anzeigenamen</b> als Text;
-     * xlsbuilder exportiert eine {@code HYPERLINK(ziel, name)}-Formel. Sortiert wird über
+     * xlsxbuilder exportiert eine {@code HYPERLINK(ziel, name)}-Formel. Sortiert wird über
      * {@code webseite_name}.
      */
     private static void addHyperlinkColumn(Grid<SampleRow> grid) {

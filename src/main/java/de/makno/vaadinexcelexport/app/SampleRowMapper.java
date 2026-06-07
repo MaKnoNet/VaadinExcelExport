@@ -1,6 +1,6 @@
 package de.makno.vaadinexcelexport.app;
 
-import de.makno.xlsbuilder.builder.ResultSetRowMapper;
+import de.makno.xlsxbuilder.builder.ResultSetRowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;

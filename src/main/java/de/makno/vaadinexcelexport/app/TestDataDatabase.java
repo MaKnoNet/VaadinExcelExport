@@ -1,6 +1,6 @@
 package de.makno.vaadinexcelexport.app;
 
-import de.makno.xlsbuilder.builder.DataAccessException;
+import de.makno.xlsxbuilder.builder.DataAccessException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -233,7 +233,7 @@ final class TestDataDatabase implements AutoCloseable {
             try {
                 resultSet.close();
             } catch (SQLException ignored) {
-                // ggf. bereits vom xlsbuilder geschlossen
+                // ggf. bereits vom xlsxbuilder geschlossen
             }
             try {
                 statement.close();

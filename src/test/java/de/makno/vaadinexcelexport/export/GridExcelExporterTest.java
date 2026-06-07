@@ -7,13 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
-import de.makno.xlsbuilder.builder.ColumnType;
-import de.makno.xlsbuilder.builder.CsvOptions;
-import de.makno.xlsbuilder.builder.DataProviders;
+import de.makno.xlsxbuilder.builder.ColumnType;
+import de.makno.xlsxbuilder.builder.DataProviders;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
@@ -267,7 +265,7 @@ class GridExcelExporterTest {
     }
 
     /**
-     * Prüft die Überladung, die direkt aus einer xlsbuilder-{@code DataProvider}-Quelle exportiert
+     * Prüft die Überladung, die direkt aus einer xlsxbuilder-{@code DataProvider}-Quelle exportiert
      * (z. B. ein gestreamtes ResultSet): Spalten stammen aus dem Grid, die Daten und ihre
      * Reihenfolge aus der übergebenen Quelle.
      */
@@ -278,7 +276,7 @@ class GridExcelExporterTest {
         ExcelMeta.type(name, ColumnType.STRING);
         Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
         ExcelMeta.type(age, ColumnType.INTEGER, Person::age);
-        // Kein setItems nötig – die Daten kommen aus der xlsbuilder-Quelle.
+        // Kein setItems nötig – die Daten kommen aus der xlsxbuilder-Quelle.
 
         GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -310,24 +308,6 @@ class GridExcelExporterTest {
             assertEquals(CellType.FORMULA, cell.getCellType());
             assertTrue(cell.getCellFormula().contains("HYPERLINK"), "Formel: " + cell.getCellFormula());
         }
-    }
-
-    /**
-     * Prüft den CSV-Export: Spaltenüberschriften + Datenzeilen erscheinen, und eine
-     * {@link ColumnType#FORMULA}-Spalte bleibt leer (CSV kennt keine Formeln).
-     */
-    @Test
-    void exportsCsvWithHeaderDataAndEmptyFormula() throws Exception {
-        Grid<Person> grid = buildGrid();
-        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        exporter.exportCsv(DataProviders.ofIterable(people()), out, CsvOptions.DEFAULT);
-
-        String[] lines = out.toString(StandardCharsets.UTF_8).split("\r\n");
-        assertEquals("Name,Alter,Score,Gehalt,Aktiv,Geburtstag,Kommt,Steuer", lines[0]);
-        // Reihenfolge = Quellreihenfolge; FORMULA-Spalte (Steuer) ist die leere letzte Spalte.
-        assertTrue(lines[1].startsWith("Alice,30,"), lines[1]);
-        assertTrue(lines[1].endsWith(","), "FORMULA-Spalte muss leer sein: " + lines[1]);
     }
 
     /**

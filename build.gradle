@@ -44,9 +44,9 @@ repositories {
 dependencies {
     implementation 'com.vaadin:vaadin-spring-boot-starter'
 
-    // xlsbuilder wird per Composite Build (settings.gradle 'includeBuild') aus dem Quellbaum gebaut;
+    // xlsxbuilder wird per Composite Build (settings.gradle 'includeBuild') aus dem Quellbaum gebaut;
     // transitive Abhängigkeiten (Apache POI, Log4j2) kommen automatisch vom eingebundenen Build.
-    implementation 'de.makno.xlsbuilder:xlsbuilder:1.0.0'
+    implementation 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0'
 
     // Flowingcode Grid Exporter – Community-Add-on für tabellenbasierten Excel/CSV-Export.
     // Ausschließlich auf https://maven.vaadin.com/vaadin-addons verfügbar (nicht Maven Central).
@@ -69,7 +69,7 @@ dependencyManagement {
         mavenBom "com.vaadin:vaadin-bom:$vaadinVersion"
     }
     dependencies {
-        // Log4j2 auf die im Projekt vorhandene Version festlegen (die xlsbuilder ebenfalls nutzt),
+        // Log4j2 auf die im Projekt vorhandene Version festlegen (die xlsxbuilder ebenfalls nutzt),
         // statt der vom Spring-Boot-BOM verwalteten älteren Version.
         dependency 'org.apache.logging.log4j:log4j-api:2.24.3'
         dependency 'org.apache.logging.log4j:log4j-core:2.24.3'
@@ -88,7 +88,7 @@ test {
 // Eigenständige Task nur für den Excel-Export-Benchmark (ohne Jacoco, mit Konsolenausgabe).
 // Zeilenzahl konfigurierbar: ./gradlew benchmark -Prows=50000
 tasks.register('benchmark', Test) {
-    description = 'Vergleicht die Performance der beiden Excel-Exporter (xlsbuilder vs. Flowingcode).'
+    description = 'Vergleicht die Performance der beiden Excel-Exporter (xlsxbuilder vs. Flowingcode).'
     group = 'verification'
     testClassesDirs = sourceSets.test.output.classesDirs
     classpath = sourceSets.test.runtimeClasspath

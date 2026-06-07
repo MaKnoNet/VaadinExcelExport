@@ -3,7 +3,7 @@ package de.makno.vaadinexcelexport.export;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.function.ValueProvider;
-import de.makno.xlsbuilder.builder.ColumnType;
+import de.makno.xlsxbuilder.builder.ColumnType;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -58,10 +58,10 @@ public final class ExcelMeta {
      *
      * <p>Für alle typisierten Spalten (DATE, DECIMAL, BOOLEAN, FORMULA …) ist dieser
      * Overload zu bevorzugen: Der übergeben {@code valueProvider} wird zur Export-Zeit
-     * aufgerufen und liefert den typkorrekten Java-Wert direkt an xlsbuilder.
+     * aufgerufen und liefert den typkorrekten Java-Wert direkt an xlsxbuilder.
      *
      * @param column        die Grid-Spalte
-     * @param type          der xlsbuilder-Spaltentyp
+     * @param type          der xlsxbuilder-Spaltentyp
      * @param valueProvider liefert den Export-Wert (bei FORMULA: den Formeltext)
      */
     public static <T> Builder<T> type(Column<T> column, ColumnType type, ValueProvider<T, ?> valueProvider) {
@@ -78,7 +78,7 @@ public final class ExcelMeta {
      * anderen Typen empfiehlt sich {@link #type(Column, ColumnType, ValueProvider)}.
      *
      * @param column die Grid-Spalte
-     * @param type   der xlsbuilder-Spaltentyp
+     * @param type   der xlsxbuilder-Spaltentyp
      */
     public static <T> Builder<T> type(Column<T> column, ColumnType type) {
         ComponentUtil.setData(column, KEY_TYPE, Objects.requireNonNull(type, "type"));
@@ -114,7 +114,7 @@ public final class ExcelMeta {
 
         /**
          * Setzt den Excel-Formatcode, z. B. {@code "dd.mm.yyyy"} oder {@code "#,##0.00 €"}.
-         * Wird direkt an {@code xlsbuilder.formatForType()} weitergereicht.
+         * Wird direkt an {@code xlsxbuilder.formatForType()} weitergereicht.
          */
         public Builder<T> format(String format) {
             ComponentUtil.setData(column, KEY_FORMAT, format);
