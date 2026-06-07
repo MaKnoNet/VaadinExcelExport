@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vaadin",
+      "runtimeExecutable": "C:/Entwicklung/KI/Claude/VaadinExcelExport/gradlew.bat",
+      "runtimeArgs": ["bootRun"],
+      "port": 8080
+    }
+  ]
+}

@@ -29,6 +29,7 @@ frontend/generated/
 # --- Sonstiges ---
 *.xlsx
 
-# --- Persönliche Claude-Code-Einstellungen (NIEMALS ins Repo) ---
-.claude/
-CLAUDE.md
+# --- Claude-Code-Einstellungen ---
+# Projekt-.claude/ und projekt-spezifische CLAUDE.md werden versioniert (Team-geteilt).
+# Nur die maschinenlokalen Settings bleiben draußen:
+.claude/settings.local.json
