@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "vaadin",
-      "runtimeExecutable": "C:/Entwicklung/KI/Claude/VaadinExcelExport/gradlew.bat",
+      "runtimeExecutable": "./gradlew.bat",
       "runtimeArgs": ["bootRun"],
       "port": 8080
     }
