@@ -1,0 +1,18 @@
+# Plattformübergreifende, sichere Behandlung von Dateien.
+# Textdateien normalisieren Git intern auf LF; im Working-Tree gilt die Plattform-Konvention.
+* text=auto
+
+# Binäre Assets NIEMALS als Text behandeln – sonst zerstört die CRLF-Normalisierung die Datei
+# (z. B. die eingebettete Vergleichs-PDF) bei Checkout/Clone auf anderen Plattformen.
+*.pdf  binary
+*.xlsx binary
+*.xls  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+
+# Gradle-Wrapper-Skripte mit festen Zeilenenden.
+*.bat  text eol=crlf
+gradlew text eol=lf
