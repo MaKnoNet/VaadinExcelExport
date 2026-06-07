@@ -1,16 +1,19 @@
 package de.makno.vaadinexcelexport.export;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import de.makno.xlsbuilder.builder.ColumnType;
+import de.makno.xlsbuilder.builder.CsvOptions;
 import de.makno.xlsbuilder.builder.DataProviders;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
@@ -307,5 +310,58 @@ class GridExcelExporterTest {
             assertEquals(CellType.FORMULA, cell.getCellType());
             assertTrue(cell.getCellFormula().contains("HYPERLINK"), "Formel: " + cell.getCellFormula());
         }
+    }
+
+    /**
+     * Prüft den CSV-Export: Spaltenüberschriften + Datenzeilen erscheinen, und eine
+     * {@link ColumnType#FORMULA}-Spalte bleibt leer (CSV kennt keine Formeln).
+     */
+    @Test
+    void exportsCsvWithHeaderDataAndEmptyFormula() throws Exception {
+        Grid<Person> grid = buildGrid();
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.exportCsv(DataProviders.ofIterable(people()), out, CsvOptions.DEFAULT);
+
+        String[] lines = out.toString(StandardCharsets.UTF_8).split("\r\n");
+        assertEquals("Name,Alter,Score,Gehalt,Aktiv,Geburtstag,Kommt,Steuer", lines[0]);
+        // Reihenfolge = Quellreihenfolge; FORMULA-Spalte (Steuer) ist die leere letzte Spalte.
+        assertTrue(lines[1].startsWith("Alice,30,"), lines[1]);
+        assertTrue(lines[1].endsWith(","), "FORMULA-Spalte muss leer sein: " + lines[1]);
+    }
+
+    /**
+     * Prüft die {@link ExportOptions}: eine Fußzeile mit den Platzhaltern {@code {rowCount}} und
+     * {@code {sum:Gehalt}} wird mit den tatsächlichen Werten aufgelöst (Summenzeile aktiviert über
+     * {@code withSumColumns}).
+     */
+    @Test
+    void appendsFooterWithResolvedPlaceholders() throws Exception {
+        Grid<Person> grid = buildGrid();
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
+        ExportOptions options =
+                ExportOptions.none().withSumColumns("Gehalt").withFooter("Zeilen: {rowCount} – Summe: {sum:Gehalt} €");
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(DataProviders.ofIterable(people()), out, options);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            String footer = findCellContaining(workbook.getSheetAt(0), "Zeilen:");
+            assertTrue(footer.contains("Zeilen: 2"), footer);
+            assertTrue(footer.contains("5600.50"), footer); // 2500.00 + 3100.50
+            assertFalse(footer.contains("{sum"), "Platzhalter nicht aufgelöst: " + footer);
+        }
+    }
+
+    /** Liefert den ersten String-Zellwert im Blatt, der {@code needle} enthält (für Footer-Suche). */
+    private static String findCellContaining(Sheet sheet, String needle) {
+        for (Row row : sheet) {
+            for (Cell cell : row) {
+                if (cell.getCellType() == CellType.STRING
+                        && cell.getStringCellValue().contains(needle)) {
+                    return cell.getStringCellValue();
+                }
+            }
+        }
+        return "";
     }
 }

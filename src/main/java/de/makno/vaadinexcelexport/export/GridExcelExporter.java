@@ -4,6 +4,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.Query;
+import de.makno.xlsbuilder.builder.CsvOptions;
 import de.makno.xlsbuilder.builder.DataProviders;
 import de.makno.xlsbuilder.builder.ExcelBuilder;
 import de.makno.xlsbuilder.builder.WorkbookBuilder;
@@ -129,13 +130,67 @@ public final class GridExcelExporter<T> {
      * @param out  Ziel-Stream (wird nicht geschlossen)
      */
     public void export(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out) throws IOException {
-        Objects.requireNonNull(data, "data");
-        Objects.requireNonNull(out, "out");
-        WorkbookBuilder.create().sheet(newSheetWithColumns().data(data)).write(out);
+        export(data, out, ExportOptions.none());
     }
 
-    /** Baut das Sheet mit allen Spaltendefinitionen (Header, Typ, Format, Converter) – ohne Daten. */
-    private ExcelBuilder<T> newSheetWithColumns() {
+    /**
+     * Wie {@link #export(de.makno.xlsbuilder.builder.DataProvider, OutputStream)}, zusätzlich mit
+     * {@link ExportOptions} (Fußzeile, Summenspalten, Pipeline-Parallelismus).
+     *
+     * @param data    xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
+     * @param out     Ziel-Stream (wird nicht geschlossen)
+     * @param options Zusatzoptionen (Footer/Summe/Parallel)
+     */
+    public void export(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out, ExportOptions options)
+            throws IOException {
+        Objects.requireNonNull(data, "data");
+        Objects.requireNonNull(out, "out");
+        Objects.requireNonNull(options, "options");
+        WorkbookBuilder.create().sheet(newSheetWithColumns(options).data(data)).write(out);
+    }
+
+    /**
+     * Schreibt die Tabelle als <b>CSV</b> in den Stream – dieselben Spaltendefinitionen, aber im
+     * streamenden CSV-Format von xlsbuilder. Hinweis: CSV kennt keine Formeln, daher bleiben
+     * {@link de.makno.xlsbuilder.builder.ColumnType#FORMULA}-Spalten leer. Der Stream wird
+     * <em>nicht</em> geschlossen.
+     *
+     * @param data       xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
+     * @param out        Ziel-Stream (wird nicht geschlossen)
+     * @param csvOptions CSV-Formatierung (Trennzeichen, Charset, BOM …)
+     */
+    public void exportCsv(de.makno.xlsbuilder.builder.DataProvider<T> data, OutputStream out, CsvOptions csvOptions)
+            throws IOException {
+        exportCsv(data, out, csvOptions, ExportOptions.none());
+    }
+
+    /**
+     * Wie {@link #exportCsv(de.makno.xlsbuilder.builder.DataProvider, OutputStream, CsvOptions)},
+     * zusätzlich mit {@link ExportOptions} (Fußzeile, Summenspalten, Pipeline-Parallelismus).
+     *
+     * @param data       xlsbuilder-Datenquelle (Reihenfolge = Schreibreihenfolge)
+     * @param out        Ziel-Stream (wird nicht geschlossen)
+     * @param csvOptions CSV-Formatierung (Trennzeichen, Charset, BOM …)
+     * @param options    Zusatzoptionen (Footer/Summe/Parallel)
+     */
+    public void exportCsv(
+            de.makno.xlsbuilder.builder.DataProvider<T> data,
+            OutputStream out,
+            CsvOptions csvOptions,
+            ExportOptions options)
+            throws IOException {
+        Objects.requireNonNull(data, "data");
+        Objects.requireNonNull(out, "out");
+        Objects.requireNonNull(csvOptions, "csvOptions");
+        Objects.requireNonNull(options, "options");
+        newSheetWithColumns(options).data(data).writeCsv(out, csvOptions);
+    }
+
+    /**
+     * Baut das Sheet mit allen Spaltendefinitionen (Header, Typ, Format, Converter) – ohne Daten –
+     * und wendet die {@link ExportOptions} (Summenspalten, Fußzeile, Parallelismus) an.
+     */
+    private ExcelBuilder<T> newSheetWithColumns(ExportOptions options) {
         ExcelBuilder<T> sheet = ExcelBuilder.<T>create().sheetName(sheetName).columnHeaders(true);
         ColumnValueExtractor<T> extractor = new ColumnValueExtractor<>();
 
@@ -153,6 +208,13 @@ public final class GridExcelExporter<T> {
                 sheet.convertToColumnType(converter);
             }
         }
+
+        // Summenspalten zuerst (aktiviert die Summenzeile und die {sum:…}-Footer-Auflösung).
+        options.sumColumns().forEach(sheet::sumColumn);
+        if (!options.footerLines().isEmpty()) {
+            sheet.footer(options.footerLines().toArray(String[]::new));
+        }
+        sheet.parallel(options.parallel());
         return sheet;
     }
 

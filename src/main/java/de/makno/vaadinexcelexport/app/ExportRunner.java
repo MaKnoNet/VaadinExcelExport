@@ -3,7 +3,9 @@ package de.makno.vaadinexcelexport.app;
 import com.flowingcode.vaadin.addons.gridexporter.GridExporter;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.server.VaadinSession;
+import de.makno.vaadinexcelexport.export.ExportOptions;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
+import de.makno.xlsbuilder.builder.CsvOptions;
 import de.makno.xlsbuilder.builder.DataProviders;
 
 /**
@@ -31,6 +33,16 @@ final class ExportRunner {
     private static final String VAADINS_FILE_BASE = "vaadins-export";
     private static final SampleRowMapper MAPPER = new SampleRowMapper();
 
+    /** Spalten-Key (= Excel-Header) der Betrag-Spalte – Bezug für die Summenzeile/{sum:…}. */
+    private static final String SUM_COLUMN = "Betrag";
+
+    /** Fußzeile des MaKnos-Exports: zeigt {@code {datetime}}, {@code {rowCount}} und {@code {sum:Betrag}}. */
+    private static final String FOOTER_LINE =
+            "Erzeugt am {datetime} – {rowCount} Zeilen – Summe Betrag: {sum:Betrag} €";
+
+    /** CSV-Variante für deutsches Excel: Semikolon + UTF-8-BOM (öffnet Umlaute korrekt). */
+    private static final CsvOptions CSV_OPTIONS = CsvOptions.excelGerman();
+
     private final Grid<SampleRow> grid;
     private final TestDataDatabase db;
     private final GridExporter<SampleRow> flowExporter;
@@ -46,26 +58,41 @@ final class ExportRunner {
 
     /**
      * Streamt den xlsbuilder-Export out-of-core aus der DB. {@code pageSize} dient als JDBC-Fetch-Size
-     * (Zeilen pro DB-Roundtrip); die Sortierung entspricht der aktuellen Grid-Sortierung.
+     * (Zeilen pro DB-Roundtrip); die Sortierung entspricht der aktuellen Grid-Sortierung. Je nach
+     * {@code format} wird {@code .xlsx} oder CSV geschrieben; der Export trägt eine Fußzeile mit
+     * Summenzeile und kann optional {@code parallel} laufen.
      */
-    ExportMeasurement.Result runMaknos(int rowCount, int pageSize) {
+    ExportMeasurement.Result runMaknos(ExportFormat format, int rowCount, int pageSize, boolean parallel) {
         String orderBy = SampleGrid.orderByForKeys(grid.getSortOrder());
+        ExportOptions options = ExportOptions.none()
+                .withFooter(FOOTER_LINE)
+                .withSumColumns(SUM_COLUMN)
+                .withParallel(parallel);
         return ExportMeasurement.run(ENGINE_MAKNOS, rowCount, out -> {
             try (TestDataDatabase.StreamingResult stream = db.openStream(orderBy, pageSize)) {
-                GridExcelExporter.from(SHEET_NAME, grid)
-                        .export(DataProviders.ofResultSet(stream.resultSet(), MAPPER), out);
+                GridExcelExporter<SampleRow> exporter = GridExcelExporter.from(SHEET_NAME, grid);
+                var data = DataProviders.ofResultSet(stream.resultSet(), MAPPER);
+                if (format == ExportFormat.CSV) {
+                    exporter.exportCsv(data, out, CSV_OPTIONS, options);
+                } else {
+                    exporter.export(data, out, options);
+                }
             }
         });
     }
 
     /**
-     * Führt den Flowingcode-Export über das lazy Grid aus. Der Writer sperrt die {@code session}
-     * selbst (reentrant); der Aufruf erfolgt im Worker unter bereits gehaltenem Lock.
+     * Führt den Flowingcode-Export über das lazy Grid aus – je nach {@code format} als {@code .xlsx}
+     * oder CSV. Der Writer sperrt die {@code session} selbst (reentrant); der Aufruf erfolgt im Worker
+     * unter bereits gehaltenem Lock.
      */
-    ExportMeasurement.Result runVaadins(int rowCount, VaadinSession session) {
-        return ExportMeasurement.run(
-                ENGINE_VAADINS,
-                rowCount,
-                out -> flowExporter.getExcelStreamResource().getWriter().accept(out, session));
+    ExportMeasurement.Result runVaadins(ExportFormat format, int rowCount, VaadinSession session) {
+        return ExportMeasurement.run(ENGINE_VAADINS, rowCount, out -> {
+            if (format == ExportFormat.CSV) {
+                flowExporter.getCsvStreamResource().getWriter().accept(out, session);
+            } else {
+                flowExporter.getExcelStreamResource().getWriter().accept(out, session);
+            }
+        });
     }
 }
