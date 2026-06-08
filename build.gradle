@@ -5,10 +5,13 @@ plugins {
     id 'com.vaadin'
     id 'jacoco'
     id 'com.diffplug.spotless' version '6.25.0'
+    // Bibliotheks-Publishing: stellt das Export-Jar als de.makno.vaadinexcelexport:VaadinExcelExport
+    // bereit (publishToMavenLocal / Nexus) fuer Konsumenten wie web-module-conversion.
+    id 'maven-publish'
 }
 
 group = 'de.makno.vaadinexcelexport'
-version = '1.0.0'
+version = '1.0.0-SNAPSHOT'
 
 java {
     toolchain {
@@ -36,6 +39,8 @@ spotless {
 }
 
 repositories {
+    // Lokales Maven-Repo (~/.m2) fuer das selbst publizierte de.makno.xlsxbuilder:xlsxbuilder.
+    mavenLocal()
     mavenCentral()
     // Vaadin Add-ons Repository – wird für Flowingcode Grid Exporter benötigt.
     maven { url = 'https://maven.vaadin.com/vaadin-addons' }
@@ -44,9 +49,9 @@ repositories {
 dependencies {
     implementation 'com.vaadin:vaadin-spring-boot-starter'
 
-    // xlsxbuilder wird per Composite Build (settings.gradle 'includeBuild') aus dem Quellbaum gebaut;
-    // transitive Abhängigkeiten (Apache POI, Log4j2) kommen automatisch vom eingebundenen Build.
-    implementation 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0'
+    // xlsxbuilder als Binaer-Abhaengigkeit aus mavenLocal (publishToMavenLocal); bringt transitiv
+    // Apache POI und Log4j2 mit.
+    implementation 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
 
     // Flowingcode Grid Exporter – Community-Add-on für tabellenbasierten Excel/CSV-Export.
     // Ausschließlich auf https://maven.vaadin.com/vaadin-addons verfügbar (nicht Maven Central).
@@ -119,4 +124,28 @@ jacocoTestReport {
     classDirectories.setFrom(files(classDirectories.files.collect {
         fileTree(dir: it, exclude: 'de/makno/vaadinexcelexport/app/**')
     }))
+}
+
+// --- Bibliotheks-Publishing -------------------------------------------------------------------
+// Spring-Boot wuerde sonst das schlanke Bibliotheks-Jar mit Classifier 'plain' versehen und die
+// ausfuehrbare bootJar zum Hauptartefakt machen. Fuer die Verwendung als normale Abhaengigkeit
+// (de.makno.vaadinexcelexport:VaadinExcelExport, ohne Classifier) wird das jar zum Hauptartefakt
+// gemacht und bootJar deaktiviert. Das Demo-/App-Package (Spring-Application + @Route MainView) darf
+// NICHT mit ausgeliefert werden, sonst kollidiert es in Konsumenten-Apps mit deren
+// AppShellConfigurator/Routes. Die wiederverwendbare Bibliothek ist nur das Package ...export.
+tasks.named('jar') {
+    enabled = true
+    archiveClassifier = ''
+    exclude 'de/makno/vaadinexcelexport/app/**'
+}
+tasks.named('bootJar') {
+    enabled = false
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
