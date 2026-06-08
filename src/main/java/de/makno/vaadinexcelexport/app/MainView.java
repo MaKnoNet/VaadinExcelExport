@@ -18,6 +18,9 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.provider.ConfigurableFilterDataProvider;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
@@ -71,6 +74,7 @@ public class MainView extends VerticalLayout {
 
     private final IntegerField rowCountField = new IntegerField();
     private final IntegerField pageSizeField = new IntegerField();
+    private final TextField searchField = new TextField();
     private final Checkbox parallelCheckbox = new Checkbox("Parallele Pipeline");
     private final ProgressBar progressBar = new ProgressBar();
     private final Span statusSpan = new Span();
@@ -89,6 +93,8 @@ public class MainView extends VerticalLayout {
 
     private final ExecutorService worker = Executors.newSingleThreadExecutor(this::newDaemonWorker);
 
+    private transient ConfigurableFilterDataProvider<SampleRow, Void, String> filterProvider;
+    private String currentFilter;
     private int seededRows;
 
     public MainView() {
@@ -135,6 +141,13 @@ public class MainView extends VerticalLayout {
         pageSizeField.setStepButtonsVisible(true);
         pageSizeField.setWidth("9em");
 
+        searchField.setLabel("Filter (Text/Webseite)");
+        searchField.setPlaceholder("z. B. Alice oder Eintrag 1");
+        searchField.setClearButtonVisible(true);
+        searchField.setValueChangeMode(ValueChangeMode.LAZY);
+        searchField.setWidth("15em");
+        searchField.addValueChangeListener(e -> applyFilter(e.getValue()));
+
         parallelCheckbox.setValue(false);
 
         Button pdfButton = new Button("Vergleich (PDF)", VaadinIcon.FILE_TEXT_O.create(), e -> openPdfDialog());
@@ -142,6 +155,7 @@ public class MainView extends VerticalLayout {
         HorizontalLayout bar = new HorizontalLayout(
                 rowCountField,
                 pageSizeField,
+                searchField,
                 parallelCheckbox,
                 generateButton,
                 maknosButton,
@@ -173,10 +187,20 @@ public class MainView extends VerticalLayout {
         int pageSize = currentPageSize();
         db.seed(count);
         seededRows = count;
-        SampleDataProvider.bind(grid, db);
+        filterProvider = SampleDataProvider.bind(grid, db);
+        currentFilter = null;
+        searchField.clear();
         grid.setPageSize(pageSize);
         grid.sort(Collections.<GridSortOrder<SampleRow>>emptyList()); // unsortiert (Default ORDER BY id)
         Notification.show(ROW_FORMAT.format(count) + " Zeilen in der DB · PageSize " + pageSize + ".");
+    }
+
+    /** Setzt den aktiven Grid-Filter; wirkt sofort auf die Anzeige und auf beide Exporte. */
+    private void applyFilter(String value) {
+        currentFilter = (value == null || value.isBlank()) ? null : value.trim();
+        if (filterProvider != null) {
+            filterProvider.setFilter(currentFilter);
+        }
     }
 
     private int currentPageSize() {
@@ -194,25 +218,26 @@ public class MainView extends VerticalLayout {
 
     private record TestStep(String engine, String fileBase, Anchor anchor, EngineTask task) {}
 
-    private TestStep maknosStep(boolean parallel) {
+    private TestStep maknosStep(int rowCount, boolean parallel, String search) {
         return new TestStep(
                 ExportRunner.ENGINE_MAKNOS,
                 MAKNOS_FILE_BASE,
                 anchorMaknos,
-                (session, pageSize) -> runner.runMaknos(seededRows, pageSize, parallel));
+                (session, pageSize) -> runner.runMaknos(rowCount, pageSize, parallel, search));
     }
 
-    private TestStep vaadinsStep() {
+    private TestStep vaadinsStep(int rowCount) {
         return new TestStep(
                 ExportRunner.ENGINE_VAADINS,
                 VAADINS_FILE_BASE,
                 anchorVaadins,
-                (session, pageSize) -> runner.runVaadins(seededRows, session));
+                (session, pageSize) -> runner.runVaadins(rowCount, session));
     }
 
     /**
-     * Sammelt die gewählten Engines mit dem aktuellen Parallel-Schalter und startet den Lauf. Der
-     * Parallelismus wird hier (im UI-Thread) als Schnappschuss gelesen.
+     * Sammelt die gewählten Engines mit dem aktuellen Parallel-Schalter und dem aktiven Filter und
+     * startet den Lauf. Filter/Parallelismus und die gefilterte Zeilenzahl werden hier (im UI-Thread)
+     * als Schnappschuss gelesen; beide Engines exportieren so genau die gefilterten Zeilen.
      */
     private void runSelected(boolean maknos, boolean vaadins) {
         if (seededRows == 0) {
@@ -220,12 +245,14 @@ public class MainView extends VerticalLayout {
             return;
         }
         boolean parallel = Boolean.TRUE.equals(parallelCheckbox.getValue());
+        String search = currentFilter;
+        int rowCount = (int) db.count(search);
         List<TestStep> steps = new ArrayList<>();
         if (maknos) {
-            steps.add(maknosStep(parallel));
+            steps.add(maknosStep(rowCount, parallel, search));
         }
         if (vaadins) {
-            steps.add(vaadinsStep());
+            steps.add(vaadinsStep(rowCount));
         }
         runSteps(steps);
     }

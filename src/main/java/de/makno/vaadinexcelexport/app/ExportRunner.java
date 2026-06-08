@@ -55,17 +55,17 @@ final class ExportRunner {
     /**
      * Streamt den xlsxbuilder-Export out-of-core aus der DB als {@code .xlsx}. {@code pageSize} dient
      * als JDBC-Fetch-Size (Zeilen pro DB-Roundtrip); die Sortierung entspricht der aktuellen
-     * Grid-Sortierung. Der Export trägt eine Fußzeile mit Summenzeile und kann optional
-     * {@code parallel} laufen.
+     * Grid-Sortierung, der {@code search}-Filter dem aktiven Grid-Filter (als SQL {@code WHERE}). Der
+     * Export trägt eine Fußzeile mit Summenzeile und kann optional {@code parallel} laufen.
      */
-    ExportMeasurement.Result runMaknos(int rowCount, int pageSize, boolean parallel) {
+    ExportMeasurement.Result runMaknos(int rowCount, int pageSize, boolean parallel, String search) {
         String orderBy = SampleGrid.orderByForKeys(grid.getSortOrder());
         ExportOptions options = ExportOptions.none()
                 .withFooter(FOOTER_LINE)
                 .withSumColumns(SUM_COLUMN)
                 .withParallel(parallel);
         return ExportMeasurement.run(ENGINE_MAKNOS, rowCount, out -> {
-            try (TestDataDatabase.StreamingResult stream = db.openStream(orderBy, pageSize)) {
+            try (TestDataDatabase.StreamingResult stream = db.openStream(search, orderBy, pageSize)) {
                 GridExcelExporter.from(SHEET_NAME, grid)
                         .export(DataProviders.ofResultSet(stream.resultSet(), MAPPER), out, options);
             }

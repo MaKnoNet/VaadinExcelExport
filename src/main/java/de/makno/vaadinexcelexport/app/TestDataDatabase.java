@@ -133,26 +133,45 @@ final class TestDataDatabase implements AutoCloseable {
         ps.setString(12, r.webseiteName());
     }
 
-    /** Anzahl der Zeilen in der Tabelle. */
+    /** Anzahl aller Zeilen in der Tabelle (ohne Filter). */
     synchronized long count() {
-        try (Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM testdata")) {
-            rs.next();
-            return rs.getLong(1);
+        return count(null);
+    }
+
+    /**
+     * Anzahl der Zeilen, die zum Suchbegriff passen ({@code null}/leer = alle). Der Filter wird über
+     * {@link SampleSearch} als parametrisiertes {@code WHERE} angewandt.
+     */
+    synchronized long count(String search) {
+        SampleSearch.WhereClause where = SampleSearch.where(search);
+        try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM testdata" + where.sql())) {
+            bindParams(ps, where.params());
+            try (ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                return rs.getLong(1);
+            }
         } catch (SQLException e) {
             throw new DataAccessException("Zählen der Testdaten fehlgeschlagen", e);
         }
     }
 
-    /**
-     * Liest eine Seite (für die lazy Grid-Anzeige). {@code orderBy} ist eine bereits validierte,
-     * vollständige {@code ORDER BY …}-Klausel (siehe {@link SampleGrid}).
-     */
+    /** Liest eine Seite ohne Filter. */
     synchronized List<SampleRow> fetchPage(int offset, int limit, String orderBy) {
-        String sql = "SELECT * FROM testdata " + orderBy + " LIMIT ? OFFSET ?";
+        return fetchPage(null, offset, limit, orderBy);
+    }
+
+    /**
+     * Liest eine Seite (für die lazy Grid-Anzeige), optional gefiltert. {@code orderBy} ist eine
+     * bereits validierte, vollständige {@code ORDER BY …}-Klausel (siehe {@link SampleGrid}); der
+     * {@code search}-Filter wird über {@link SampleSearch} als parametrisiertes {@code WHERE} angewandt.
+     */
+    synchronized List<SampleRow> fetchPage(String search, int offset, int limit, String orderBy) {
+        SampleSearch.WhereClause where = SampleSearch.where(search);
+        String sql = "SELECT * FROM testdata" + where.sql() + " " + orderBy + " LIMIT ? OFFSET ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, limit);
-            ps.setInt(2, offset);
+            int idx = bindParams(ps, where.params());
+            ps.setInt(idx, limit);
+            ps.setInt(idx + 1, offset);
             try (ResultSet rs = ps.executeQuery()) {
                 List<SampleRow> page = new ArrayList<>();
                 while (rs.next()) {
@@ -165,23 +184,42 @@ final class TestDataDatabase implements AutoCloseable {
         }
     }
 
+    /** Öffnet einen forward-only-Stream über alle Zeilen (ohne Filter). */
+    synchronized StreamingResult openStream(String orderBy, int fetchSize) {
+        return openStream(null, orderBy, fetchSize);
+    }
+
     /**
-     * Öffnet einen <b>forward-only</b>-Stream über alle Zeilen (für den out-of-core-Export). Der
-     * Aufrufer muss das Ergebnis schließen (try-with-resources) – das schließt {@code ResultSet}
-     * und {@code Statement} (die geteilte Verbindung bleibt offen).
+     * Öffnet einen <b>forward-only</b>-Stream über die (optional gefilterten) Zeilen für den
+     * out-of-core-Export. Der Aufrufer muss das Ergebnis schließen (try-with-resources) – das schließt
+     * {@code ResultSet} und {@code Statement} (die geteilte Verbindung bleibt offen).
      *
+     * @param search    Suchbegriff ({@code null}/leer = alle), als parametrisiertes {@code WHERE}
      * @param orderBy   validierte {@code ORDER BY …}-Klausel (Reihenfolge der Excel-Zeilen)
      * @param fetchSize JDBC-Fetch-Size (Zeilen pro DB-Roundtrip)
      */
-    synchronized StreamingResult openStream(String orderBy, int fetchSize) {
+    synchronized StreamingResult openStream(String search, String orderBy, int fetchSize) {
+        SampleSearch.WhereClause where = SampleSearch.where(search);
+        String sql = "SELECT * FROM testdata" + where.sql() + " " + orderBy;
         try {
-            Statement st = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            st.setFetchSize(Math.max(1, fetchSize));
-            ResultSet rs = st.executeQuery("SELECT * FROM testdata " + orderBy);
-            return new StreamingResult(st, rs);
+            PreparedStatement ps =
+                    connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            bindParams(ps, where.params());
+            ps.setFetchSize(Math.max(1, fetchSize));
+            ResultSet rs = ps.executeQuery();
+            return new StreamingResult(ps, rs);
         } catch (SQLException e) {
             throw new DataAccessException("Öffnen des Daten-Streams fehlgeschlagen", e);
         }
+    }
+
+    /** Bindet die WHERE-Parameter ab Index 1 und liefert den nächsten freien Parameterindex. */
+    private static int bindParams(PreparedStatement ps, List<Object> params) throws SQLException {
+        int idx = 1;
+        for (Object param : params) {
+            ps.setObject(idx++, param);
+        }
+        return idx;
     }
 
     @Override

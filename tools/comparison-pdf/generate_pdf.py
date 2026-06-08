@@ -240,10 +240,10 @@ def recommendation():
     ])
     right = [Paragraph(f"{RIGHT_LABEL} (Flowingcode)", style("rr", parent=S_REC_HDR, textColor=NAVY))]
     right += col([
-        "Export soll den aktiven Grid-Filter spiegeln",
         "Hierarchische Daten (TreeGrid) exportieren",
         "Mehrere Formate anbieten (CSV, DOCX, PDF)",
         "Excel-Vorlage mit Platzhaltern befuellen",
+        "Mehrzeilige / verbundene Header",
         "Fertige UI-Buttons ohne eigenen Code",
     ])
     t = Table([[left, right]], colWidths=[USABLE_WIDTH / 2, USABLE_WIDTH / 2])
@@ -357,13 +357,18 @@ def build():
     story.append(Paragraph("2.2 Datenquelle, Sortierung &amp; Filter", S_H2))
     story.append(feature_table([
         ("Respektiert Grid-Sortierung (Spaltenkoepfe)", True, True),
-        ("Respektiert aktiven Grid-Filter automatisch", False, True),
+        ("Respektiert aktiven Grid-Filter automatisch", True, True),
         ("Programmatischer Daten-Filter (Predicate)", True, False),
         ("Out-of-core-Stream direkt aus JDBC-ResultSet", True, False),
         ("Out-of-core External-Merge-Sort (sortBy)", True, False),
         ("Streaming / out-of-core (konstanter Speicher)", True, False),
         ("TreeGrid / hierarchische Daten", False, True),
     ]))
+    story.append(Spacer(1, 3))
+    story.append(Paragraph(
+        "Beide Exporte spiegeln den aktiven Grid-Filter automatisch: Flowingcode liest den Filter aus dem "
+        "DataProvider; GridExcelExporter erhaelt den Suchbegriff als parametrisiertes SQL-WHERE und streamt nur die "
+        "passenden Zeilen weiterhin out-of-core (ein Suchfeld, eine Quelle der Wahrheit fuer Anzeige + beide Exporte).", S_NOTE))
     story.append(Spacer(1, 8))
 
     story.append(Paragraph("2.3 Zelltypen &amp; Formatierung", S_H2))

@@ -151,7 +151,7 @@ final class SampleGrid {
      * Baut die {@code ORDER BY}-Klausel für eine lazy Seitenabfrage aus den Sort-Properties der
      * {@link Query}. Ohne (gültige) Sortierung wird stabil nach dem Primärschlüssel sortiert.
      */
-    static String orderByForQuery(Query<SampleRow, Void> query) {
+    static String orderByForQuery(Query<SampleRow, ?> query) {
         StringJoiner terms = new StringJoiner(", ");
         for (QuerySortOrder order : query.getSortOrders()) {
             appendTerm(terms, order.getSorted(), order.getDirection());
