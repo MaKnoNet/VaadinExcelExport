@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'java'
+    id 'java-library'
     id 'com.vaadin'
     id 'jacoco'
     id 'com.diffplug.spotless' version '6.25.0'
@@ -47,11 +47,18 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.vaadin:vaadin-spring-boot-starter'
-
+    // ── Bibliotheks-Abhängigkeiten (Package ...export) – als 'api', da die öffentliche API
+    //    Vaadin-Grid- und xlsxbuilder-Typen exponiert; landen im veröffentlichten POM (compile).
     // xlsxbuilder als Binaer-Abhaengigkeit aus mavenLocal (publishToMavenLocal); bringt transitiv
     // Apache POI und Log4j2 mit.
-    implementation 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
+    api 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
+    // Vaadin Grid (Flow): liefert Grid/ColumnPathRenderer + transitiv flow-data/flow-server
+    // (DataProvider, LitRenderer, ComponentUtil, ValueProvider) – alles, was ...export nutzt.
+    api "com.vaadin:vaadin-grid-flow:$vaadinVersion"
+
+    // ── Nur für die Demo-App (Package ...app); werden NICHT mit der Bibliothek veröffentlicht
+    //    (POM-Bereinigung unten).
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
 
     // Flowingcode Grid Exporter – Community-Add-on für tabellenbasierten Excel/CSV-Export.
     // Ausschließlich auf https://maven.vaadin.com/vaadin-addons verfügbar (nicht Maven Central).
@@ -136,9 +143,18 @@ jacocoTestReport {
 tasks.named('jar') {
     enabled = true
     archiveClassifier = ''
-    exclude 'de/makno/vaadinexcelexport/app/**'
+    includeEmptyDirs = false
+    // Positivliste: nur das wiederverwendbare Bibliotheks-Package. Schließt damit App-Klassen UND
+    // alle App-Ressourcen (Demo-PDF, application.properties, evtl. Frontend/VAADIN) zugleich aus.
+    include 'de/makno/vaadinexcelexport/export/**'
 }
 tasks.named('bootJar') {
+    enabled = false
+}
+
+// Konsumenten sollen dem (unten gekürzten) POM folgen, nicht den Gradle-Module-Metadaten – daher
+// deren Erzeugung deaktivieren.
+tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
 }
 
@@ -146,6 +162,16 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            // App-only-Abhaengigkeiten aus dem veroeffentlichten POM entfernen: die Bibliothek
+            // (Package ...export) braucht nur xlsxbuilder + vaadin-grid-flow (als 'api' = compile).
+            pom.withXml {
+                def deps = asNode().dependencies
+                if (deps && !deps.isEmpty()) {
+                    deps.first().children().removeAll { d ->
+                        d.artifactId.text() in ['vaadin-spring-boot-starter', 'grid-exporter-addon', 'h2']
+                    }
+                }
+            }
         }
     }
 }
