@@ -50,6 +50,7 @@ public final class ExcelMeta {
     private static final String KEY_FORMAT = "de.makno.excel.format";
     private static final String KEY_CONVERTER = "de.makno.excel.converter";
     private static final String KEY_VALUE_PROVIDER = "de.makno.excel.valueProvider";
+    private static final String KEY_GROUP = "de.makno.excel.group";
 
     private ExcelMeta() {}
 
@@ -103,6 +104,19 @@ public final class ExcelMeta {
         return (ValueProvider<T, ?>) ComponentUtil.getData(column, KEY_VALUE_PROVIDER);
     }
 
+    /**
+     * Ordnet die Spalte einer Gruppe zu. Zusammenhängende Spalten mit demselben Label ergeben im
+     * Export eine verbundene (gemergte) Kopfzelle über der Spaltenüberschrift (joined header).
+     */
+    public static void group(Column<?> column, String label) {
+        ComponentUtil.setData(column, KEY_GROUP, label);
+    }
+
+    /** Gruppen-Label dieser Spalte für die verbundene Excel-Kopfzeile, oder {@code null}. */
+    static String getGroup(Column<?> column) {
+        return (String) ComponentUtil.getData(column, KEY_GROUP);
+    }
+
     /** Fluent-Builder für optionale Export-Metadaten einer Spalte. */
     public static final class Builder<T> {
 
@@ -128,6 +142,12 @@ public final class ExcelMeta {
          */
         public Builder<T> converter(Function<Object, ?> converter) {
             ComponentUtil.setData(column, KEY_CONVERTER, converter);
+            return this;
+        }
+
+        /** Wie {@link ExcelMeta#group(Column, String)}, fluent auf dem Builder. */
+        public Builder<T> group(String label) {
+            ExcelMeta.group(column, label);
             return this;
         }
     }

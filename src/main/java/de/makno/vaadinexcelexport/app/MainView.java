@@ -76,6 +76,7 @@ public class MainView extends VerticalLayout {
     private final IntegerField pageSizeField = new IntegerField();
     private final TextField searchField = new TextField();
     private final Checkbox parallelCheckbox = new Checkbox("Parallele Pipeline");
+    private final Checkbox reorderCheckbox = new Checkbox("Export: Spalten umordnen");
     private final ProgressBar progressBar = new ProgressBar();
     private final Span statusSpan = new Span();
     private final Map<String, Span> metricLines = new LinkedHashMap<>();
@@ -149,6 +150,7 @@ public class MainView extends VerticalLayout {
         searchField.addValueChangeListener(e -> applyFilter(e.getValue()));
 
         parallelCheckbox.setValue(false);
+        reorderCheckbox.setValue(false);
 
         Button pdfButton = new Button("Vergleich (PDF)", VaadinIcon.FILE_TEXT_O.create(), e -> openPdfDialog());
 
@@ -157,6 +159,7 @@ public class MainView extends VerticalLayout {
                 pageSizeField,
                 searchField,
                 parallelCheckbox,
+                reorderCheckbox,
                 generateButton,
                 maknosButton,
                 vaadinsButton,
@@ -218,12 +221,12 @@ public class MainView extends VerticalLayout {
 
     private record TestStep(String engine, String fileBase, Anchor anchor, EngineTask task) {}
 
-    private TestStep maknosStep(int rowCount, boolean parallel, String search) {
+    private TestStep maknosStep(int rowCount, boolean parallel, String search, List<String> columnOrder) {
         return new TestStep(
                 ExportRunner.ENGINE_MAKNOS,
                 MAKNOS_FILE_BASE,
                 anchorMaknos,
-                (session, pageSize) -> runner.runMaknos(rowCount, pageSize, parallel, search));
+                (session, pageSize) -> runner.runMaknos(rowCount, pageSize, parallel, search, columnOrder));
     }
 
     private TestStep vaadinsStep(int rowCount) {
@@ -246,10 +249,12 @@ public class MainView extends VerticalLayout {
         }
         boolean parallel = Boolean.TRUE.equals(parallelCheckbox.getValue());
         String search = currentFilter;
+        List<String> columnOrder =
+                Boolean.TRUE.equals(reorderCheckbox.getValue()) ? SampleGrid.EXPORT_ORDER_LINK_FIRST : List.of();
         int rowCount = (int) db.count(search);
         List<TestStep> steps = new ArrayList<>();
         if (maknos) {
-            steps.add(maknosStep(rowCount, parallel, search));
+            steps.add(maknosStep(rowCount, parallel, search, columnOrder));
         }
         if (vaadins) {
             steps.add(vaadinsStep(rowCount));
@@ -309,6 +314,7 @@ public class MainView extends VerticalLayout {
         vaadinsButton.setEnabled(enabled);
         combinedButton.setEnabled(enabled);
         parallelCheckbox.setEnabled(enabled);
+        reorderCheckbox.setEnabled(enabled);
     }
 
     // ─────────────────────────────────────────────────────── Vergleichs-Panel

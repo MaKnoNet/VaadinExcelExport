@@ -6,6 +6,7 @@ import com.vaadin.flow.server.VaadinSession;
 import de.makno.vaadinexcelexport.export.ExportOptions;
 import de.makno.vaadinexcelexport.export.GridExcelExporter;
 import de.makno.xlsxbuilder.builder.DataProviders;
+import java.util.List;
 
 /**
  * Führt beide Excel-Export-Wege vermessen aus – beide lesen aus der SQL-Datenbank:
@@ -57,8 +58,10 @@ final class ExportRunner {
      * als JDBC-Fetch-Size (Zeilen pro DB-Roundtrip); die Sortierung entspricht der aktuellen
      * Grid-Sortierung, der {@code search}-Filter dem aktiven Grid-Filter (als SQL {@code WHERE}). Der
      * Export trägt eine Fußzeile mit Summenzeile und kann optional {@code parallel} laufen.
+     * {@code columnOrder} überschreibt optional die Export-Spaltenreihenfolge (leer = Grid-Reihenfolge).
      */
-    ExportMeasurement.Result runMaknos(int rowCount, int pageSize, boolean parallel, String search) {
+    ExportMeasurement.Result runMaknos(
+            int rowCount, int pageSize, boolean parallel, String search, List<String> columnOrder) {
         String orderBy = SampleGrid.orderByForKeys(grid.getSortOrder());
         ExportOptions options = ExportOptions.none()
                 .withFooter(FOOTER_LINE)
@@ -66,7 +69,7 @@ final class ExportRunner {
                 .withParallel(parallel);
         return ExportMeasurement.run(ENGINE_MAKNOS, rowCount, out -> {
             try (TestDataDatabase.StreamingResult stream = db.openStream(search, orderBy, pageSize)) {
-                GridExcelExporter.from(SHEET_NAME, grid)
+                GridExcelExporter.from(SHEET_NAME, grid, columnOrder)
                         .export(DataProviders.ofResultSet(stream.resultSet(), MAPPER), out, options);
             }
         });

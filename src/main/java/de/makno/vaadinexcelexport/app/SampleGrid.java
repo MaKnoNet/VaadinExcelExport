@@ -3,6 +3,8 @@ package de.makno.vaadinexcelexport.app;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.grid.GridSortOrder;
+import com.vaadin.flow.component.grid.HeaderRow;
+import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.QuerySortOrder;
 import com.vaadin.flow.data.provider.SortDirection;
@@ -57,6 +59,38 @@ final class SampleGrid {
         ALLOWED_COLUMNS = Set.copyOf(allowed);
     }
 
+    /**
+     * Spaltengruppen für die verbundene Kopfzeile (joined header) – je Gruppe Label und die
+     * zusammenhängenden Spalten-Keys in Grid-Reihenfolge. Treibt sowohl die Anzeige
+     * ({@link Grid#prependHeaderRow()}/{@link HeaderRow#join}) als auch den Export
+     * ({@link ExcelMeta#group}).
+     */
+    private static final List<Map.Entry<String, List<String>>> HEADER_GROUPS = List.of(
+            Map.entry("Beschreibung", List.of("Text")),
+            Map.entry("Zahlen", List.of("Ganzzahl", "Große Zahl", "Gleitkomma", "Betrag")),
+            Map.entry("Status", List.of("Aktiv")),
+            Map.entry("Zeit", List.of("Datum", "Zeitstempel", "Kommt")),
+            Map.entry("Berechnung & Link", List.of("MwSt (Formel)", "Webseite")));
+
+    /**
+     * Alternative Export-Spaltenreihenfolge für die Demo: stellt die Gruppe „Berechnung &amp; Link"
+     * (MwSt, Webseite) nach vorne und lässt alle Gruppen zusammenhängend (verbundene Kopfzeile bleibt
+     * korrekt). Übergeben an {@link de.makno.vaadinexcelexport.export.GridExcelExporter#from(String,
+     * Grid, List)}.
+     */
+    static final List<String> EXPORT_ORDER_LINK_FIRST = List.of(
+            "MwSt (Formel)",
+            "Webseite",
+            "Text",
+            "Ganzzahl",
+            "Große Zahl",
+            "Gleitkomma",
+            "Betrag",
+            "Aktiv",
+            "Datum",
+            "Zeitstempel",
+            "Kommt");
+
     private SampleGrid() {}
 
     /** Fügt dem Grid alle Beispielspalten hinzu. Das Grid muss bereits instanziiert sein. */
@@ -72,6 +106,28 @@ final class SampleGrid {
         addTimeColumn(grid);
         addFormulaColumn(grid);
         addHyperlinkColumn(grid);
+        applyHeaderGroups(grid);
+    }
+
+    /**
+     * Setzt je Spalte das Export-Gruppen-Label ({@link ExcelMeta#group}) und legt für die Anzeige eine
+     * verbundene Kopfzeile darüber ({@link Grid#prependHeaderRow()} mit {@link HeaderRow#join}), sodass
+     * Tabelle und Export dieselbe Gruppierung zeigen. Berührt Daten/Sortierung/Filter nicht.
+     */
+    private static void applyHeaderGroups(Grid<SampleRow> grid) {
+        HeaderRow top = grid.prependHeaderRow();
+        for (Map.Entry<String, List<String>> group : HEADER_GROUPS) {
+            String label = group.getKey();
+            List<Column<SampleRow>> cols =
+                    group.getValue().stream().map(grid::getColumnByKey).toList();
+            cols.forEach(col -> ExcelMeta.group(col, label));
+            if (cols.size() == 1) {
+                top.getCell(cols.get(0)).setText(label);
+            } else {
+                HeaderCell[] cells = cols.stream().map(top::getCell).toArray(HeaderCell[]::new);
+                top.join(cells).setText(label);
+            }
+        }
     }
 
     /**

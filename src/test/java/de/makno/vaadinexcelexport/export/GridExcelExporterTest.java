@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 
@@ -329,6 +330,66 @@ class GridExcelExporterTest {
             assertTrue(footer.contains("Zeilen: 2"), footer);
             assertTrue(footer.contains("5600.50"), footer); // 2500.00 + 3100.50
             assertFalse(footer.contains("{sum"), "Platzhalter nicht aufgelöst: " + footer);
+        }
+    }
+
+    /**
+     * Prüft die überschriebene Export-Spaltenreihenfolge: Mit der Key-Liste {@code [Alter, Name]} wird
+     * nur diese Teilmenge in genau dieser Reihenfolge exportiert (Grid-Reihenfolge ist Name, Alter, …).
+     */
+    @Test
+    void exportsColumnsInOverriddenOrder() throws Exception {
+        Grid<Person> grid = new Grid<>();
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING);
+        Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
+        ExcelMeta.type(age, ColumnType.INTEGER, Person::age);
+        Column<Person> score = grid.addColumn(Person::score).setKey("Score");
+        ExcelMeta.type(score, ColumnType.DOUBLE, Person::score);
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid, List.of("Alter", "Name"));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(DataProviders.ofIterable(people()), out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Sheet sheet = workbook.getSheetAt(0);
+            assertEquals("Alter", sheet.getRow(0).getCell(0).getStringCellValue());
+            assertEquals("Name", sheet.getRow(0).getCell(1).getStringCellValue());
+            assertEquals(2, sheet.getRow(0).getLastCellNum(), "Score wurde nicht gelistet → weggelassen");
+            // Erste Datenzeile (Alice, 30): Alter in Spalte 0, Name in Spalte 1.
+            assertEquals(30L, (long) sheet.getRow(1).getCell(0).getNumericCellValue());
+            assertEquals("Alice", sheet.getRow(1).getCell(1).getStringCellValue());
+        }
+    }
+
+    /**
+     * Prüft die verbundene Kopfzeile (joined header): Zusammenhängende Spalten mit demselben
+     * {@link ExcelMeta#group(Column, String) Gruppen-Label} ergeben über dem Spaltenkopf eine gemergte
+     * Gruppenzelle. Zeilen: Gruppenzeile (0), Spaltenkopf (1), Daten ab (2).
+     */
+    @Test
+    void exportsJoinedHeaderForGroupedColumns() throws Exception {
+        Grid<Person> grid = new Grid<>();
+        Column<Person> name = grid.addColumn(Person::name).setKey("Name");
+        ExcelMeta.type(name, ColumnType.STRING).group("Stammdaten");
+        Column<Person> age = grid.addColumn(Person::age).setKey("Alter");
+        ExcelMeta.type(age, ColumnType.INTEGER, Person::age).group("Stammdaten");
+        Column<Person> score = grid.addColumn(Person::score).setKey("Score");
+        ExcelMeta.type(score, ColumnType.DOUBLE, Person::score).group("Wertung");
+
+        GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        exporter.export(DataProviders.ofIterable(people()), out);
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(out.toByteArray()))) {
+            Sheet sheet = workbook.getSheetAt(0);
+            assertEquals("Stammdaten", sheet.getRow(0).getCell(0).getStringCellValue());
+            assertEquals("Wertung", sheet.getRow(0).getCell(2).getStringCellValue());
+            assertEquals("Name", sheet.getRow(1).getCell(0).getStringCellValue(), "Spaltenkopf eine Zeile tiefer");
+            assertEquals("Alice", sheet.getRow(2).getCell(0).getStringCellValue());
+            boolean merged =
+                    sheet.getMergedRegions().stream().anyMatch(r -> r.equals(new CellRangeAddress(0, 0, 0, 1)));
+            assertTrue(merged, "Gruppe 'Stammdaten' muss über Spalten 0..1 gemergt sein");
         }
     }
 

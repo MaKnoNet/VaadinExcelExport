@@ -390,17 +390,21 @@ def build():
         ("Berechnete Footer-Platzhalter {rowCount} / {sum:Spalte} / {datetime}", True, False),
         ("Summenzeile (sumColumn, optional als Excel-Formel)", True, "~"),
         ("Auto-Size Columns (beim Streamen gemessen)", True, True),
+        ("Mehrzeilige Header / Joined Headers", True, True),
+        ("Spalten-Reihenfolge im Export ueberschreiben", True, True),
         ("Template-basierter Export (.xlsx-Vorlage)", False, True),
         ("Eigene Platzhalter im Template", False, True),
-        ("Mehrzeilige Header / Joined Headers", False, True),
-        ("Spalten-Reihenfolge im Export ueberschreiben", False, True),
     ]))
     story.append(Spacer(1, 3))
     story.append(Paragraph(
         "Neu in xlsxbuilder: Titel-/Fusszeilen (ueber die Breite gemerged) mit Platzhaltern, die beim Schreiben "
         "aufgeloest werden &ndash; eingebaut {date}/{datetime}, sowie im Footer {rowCount} und {sum:Spaltenname}; "
         "die Summenzeile aktiviert die Summenverfolgung. Die Demo nutzt eine Fusszeile "
-        "&bdquo;Erzeugt am {datetime} &ndash; {rowCount} Zeilen &ndash; Summe Betrag: {sum:Betrag} EUR&ldquo;.", S_NOTE))
+        "&bdquo;Erzeugt am {datetime} &ndash; {rowCount} Zeilen &ndash; Summe Betrag: {sum:Betrag} EUR&ldquo;. "
+        "Verbundene Header (joined headers) entstehen aus gruppierten Spalten "
+        "(<font name='Helvetica'>columnGroups(...)</font>, gemergte Gruppenzeile ueber dem Spaltenkopf); die "
+        "Export-Spaltenreihenfolge laesst sich unabhaengig von der Anzeige ueberschreiben "
+        "(<font name='Helvetica'>GridExcelExporter.from(sheet, grid, columnOrder)</font>).", S_NOTE))
     story.append(Spacer(1, 8))
 
     story.append(Paragraph("2.5 UI-Integration, Server-Tuning &amp; Performance", S_H2))

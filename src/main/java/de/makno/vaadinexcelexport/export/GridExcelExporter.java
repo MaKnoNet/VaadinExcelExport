@@ -4,13 +4,17 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.Query;
+import de.makno.xlsxbuilder.builder.ColumnGroup;
 import de.makno.xlsxbuilder.builder.DataProviders;
 import de.makno.xlsxbuilder.builder.WorkbookBuilder;
 import de.makno.xlsxbuilder.builder.XlsxBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -78,11 +82,34 @@ public final class GridExcelExporter<T> {
      * @throws IllegalArgumentException wenn keine exportierbare Spalte gefunden wurde
      */
     public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid) {
+        return from(sheetName, grid, List.of());
+    }
+
+    /**
+     * Wie {@link #from(String, Grid)}, exportiert die Spalten jedoch in der durch
+     * {@code columnKeyOrder} vorgegebenen Reihenfolge (Liste von {@link Column#getKey() Spalten-Keys}).
+     * So lässt sich die Export-Reihenfolge unabhängig von der im Grid sichtbaren überschreiben; nur die
+     * gelisteten, exportierbaren Spalten werden ausgegeben (unbekannte Keys werden ignoriert). Eine
+     * leere Liste entspricht der Grid-Reihenfolge.
+     *
+     * @throws IllegalArgumentException wenn keine exportierbare Spalte übrig bleibt
+     */
+    public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid, List<String> columnKeyOrder) {
         Objects.requireNonNull(grid, "grid");
-        List<Column<T>> exportable = grid.getColumns().stream()
-                .filter(col -> col.getKey() != null && ExcelMeta.getType(col) != null)
-                .collect(Collectors.toList());
-        return new GridExcelExporter<>(sheetName, exportable);
+        Objects.requireNonNull(columnKeyOrder, "columnKeyOrder");
+        Map<String, Column<T>> exportableByKey = new LinkedHashMap<>();
+        for (Column<T> col : grid.getColumns()) {
+            if (col.getKey() != null && ExcelMeta.getType(col) != null) {
+                exportableByKey.put(col.getKey(), col);
+            }
+        }
+        List<Column<T>> ordered = columnKeyOrder.isEmpty()
+                ? List.copyOf(exportableByKey.values())
+                : columnKeyOrder.stream()
+                        .map(exportableByKey::get)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
+        return new GridExcelExporter<>(sheetName, ordered);
     }
 
     /**
@@ -172,6 +199,12 @@ public final class GridExcelExporter<T> {
             }
         }
 
+        // Verbundene Kopfzeile (joined header) aus den Gruppen-Labels der Spalten – nur wenn gesetzt.
+        List<ColumnGroup> groups = buildColumnGroups();
+        if (!groups.isEmpty()) {
+            sheet.columnGroups(groups);
+        }
+
         // Summenspalten zuerst (aktiviert die Summenzeile und die {sum:…}-Footer-Auflösung).
         options.sumColumns().forEach(sheet::sumColumn);
         if (!options.footerLines().isEmpty()) {
@@ -179,6 +212,36 @@ public final class GridExcelExporter<T> {
         }
         sheet.parallel(options.parallel());
         return sheet;
+    }
+
+    /**
+     * Baut aus den Gruppen-Labels der Spalten ({@link ExcelMeta#getGroup}) die {@link ColumnGroup}-Zellen
+     * der verbundenen Kopfzeile: zusammenhängende Spalten mit demselben (nicht leeren) Label werden zu
+     * einer gemergten Zelle zusammengefasst; Spalten ohne Label bleiben einzelne (leere) Zellen. Liefert
+     * eine leere Liste, wenn keine Spalte ein Label trägt (dann keine Gruppenzeile).
+     */
+    private List<ColumnGroup> buildColumnGroups() {
+        boolean anyGroup = columns.stream().anyMatch(col -> ExcelMeta.getGroup(col) != null);
+        if (!anyGroup) {
+            return List.of();
+        }
+        List<ColumnGroup> groups = new ArrayList<>();
+        String currentLabel = null;
+        int span = 0;
+        for (Column<T> column : columns) {
+            String label = ExcelMeta.getGroup(column);
+            if (span > 0 && label != null && label.equals(currentLabel)) {
+                span++;
+            } else {
+                if (span > 0) {
+                    groups.add(new ColumnGroup(currentLabel == null ? "" : currentLabel, span));
+                }
+                currentLabel = label;
+                span = 1;
+            }
+        }
+        groups.add(new ColumnGroup(currentLabel == null ? "" : currentLabel, span));
+        return groups;
     }
 
     /**
