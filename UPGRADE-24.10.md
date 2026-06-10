@@ -56,5 +56,5 @@ gradlew test
 gradlew bootRun        # http://localhost:8080  -> Button "Excel-Export"
 ```
 
-> Der **Kern** (`de.makno.vaadinexcelexport.export.GridExcelExporter` und `ExcelColumn`) bleibt beim
+> Der **Kern** (`de.makno.vaadinexcelexport.GridExcelExporter` und `ExcelColumn`) bleibt beim
 > Upgrade **unverändert** – nur die Demo-View und die Versionsnummern ändern sich.

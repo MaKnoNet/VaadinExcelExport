@@ -1,177 +1,51 @@
+// Wurzel-Build: gemeinsame Konfiguration fuer die Subprojekte. ':library' ist die veroeffentlichte
+// Bruecken-Bibliothek (Package de.makno.vaadinexcelexport), ':app' die Spring-Boot/Vaadin-Demo
+// (nicht veroeffentlicht). Projekt-spezifische Plugins/Abhaengigkeiten stehen in den jeweiligen
+// Subprojekt-Build-Skripten (library/build.gradle, app/build.gradle).
 plugins {
-    id 'org.springframework.boot' version '3.3.5'
-    id 'io.spring.dependency-management' version '1.1.6'
-    id 'java-library'
-    id 'com.vaadin'
-    id 'jacoco'
-    id 'com.diffplug.spotless' version '6.25.0'
-    // Bibliotheks-Publishing: stellt das Export-Jar als de.makno.vaadinexcelexport:VaadinExcelExport
-    // bereit (publishToMavenLocal / Nexus) fuer Konsumenten wie web-module-conversion.
-    id 'maven-publish'
+    // Nur als Klassenpfad-Bereitstellung; angewendet wird Spotless je Subprojekt (siehe unten).
+    id 'com.diffplug.spotless' version '6.25.0' apply false
 }
 
-group = 'de.makno.vaadinexcelexport'
-version = '1.0.0-SNAPSHOT'
+subprojects {
+    group = 'de.makno.vaadinexcelexport'
+    version = '1.0.0-SNAPSHOT'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+    repositories {
+        // Lokales Maven-Repo (~/.m2) fuer das selbst publizierte de.makno.xlsxbuilder:xlsxbuilder.
+        mavenLocal()
+        mavenCentral()
+        // Vaadin Add-ons Repository – wird fuer den Flowingcode Grid Exporter (nur ':app') benoetigt.
+        maven { url = 'https://maven.vaadin.com/vaadin-addons' }
     }
-}
 
-// UTF-8 erzwingen: Quellen enthalten Umlaute (ä/ö/ü) in Kommentaren und String-Literalen.
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-// Javadoc-Kontrolle: prüft Referenzen/Syntax/HTML (zerbrochene @link schlagen fehl), ignoriert aber
-// fehlende Kommentare an privaten Members ("-missing"). UTF-8 für Umlaute.
-tasks.withType(Javadoc).configureEach {
-    options.encoding = 'UTF-8'
-    options.addStringOption('Xdoclint:all,-missing', '-quiet')
-}
-
-// Java-Quellcode wird mit palantir-java-format formatiert (über Spotless).
-spotless {
-    java {
-        palantirJavaFormat('2.39.0')
+    // Java-Quellcode wird mit palantir-java-format formatiert (ueber Spotless).
+    apply plugin: 'com.diffplug.spotless'
+    spotless {
+        java {
+            palantirJavaFormat('2.39.0')
+        }
     }
-}
 
-repositories {
-    // Lokales Maven-Repo (~/.m2) fuer das selbst publizierte de.makno.xlsxbuilder:xlsxbuilder.
-    mavenLocal()
-    mavenCentral()
-    // Vaadin Add-ons Repository – wird für Flowingcode Grid Exporter benötigt.
-    maven { url = 'https://maven.vaadin.com/vaadin-addons' }
-}
-
-dependencies {
-    // ── Bibliotheks-Abhängigkeiten (Package ...export) – als 'api', da die öffentliche API
-    //    Vaadin-Grid- und xlsxbuilder-Typen exponiert; landen im veröffentlichten POM (compile).
-    // xlsxbuilder als Binaer-Abhaengigkeit aus mavenLocal (publishToMavenLocal); bringt transitiv
-    // Apache POI und Log4j2 mit.
-    api 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
-    // Vaadin Grid (Flow): liefert Grid/ColumnPathRenderer + transitiv flow-data/flow-server
-    // (DataProvider, LitRenderer, ComponentUtil, ValueProvider) – alles, was ...export nutzt.
-    api "com.vaadin:vaadin-grid-flow:$vaadinVersion"
-
-    // ── Nur für die Demo-App (Package ...app); werden NICHT mit der Bibliothek veröffentlicht
-    //    (POM-Bereinigung unten).
-    implementation 'com.vaadin:vaadin-spring-boot-starter'
-
-    // Flowingcode Grid Exporter – Community-Add-on für tabellenbasierten Excel/CSV-Export.
-    // Ausschließlich auf https://maven.vaadin.com/vaadin-addons verfügbar (nicht Maven Central).
-    // Aktuelle stabile Version für Vaadin 24: 2.5.0 (kompiliert gegen Vaadin 24.3.9, kompatibel mit 24.5.x).
-    implementation 'org.vaadin.addons.flowingcode:grid-exporter-addon:2.5.0'
-
-    // H2: file-basierte SQL-Datenbank für die Testdaten. Reines JDBC via DriverManager
-    // (der Treiber registriert sich via ServiceLoader) – daher genügt runtimeOnly, kein Spring Data.
-    runtimeOnly 'com.h2database:h2:2.3.232'
-
-    // JUnit 5 (Version vom Spring-Boot-BOM verwaltet) zum Testen des Export-Codes.
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    // POI zum Rücklesen/Verifizieren der erzeugten .xlsx im Test.
-    testImplementation 'org.apache.poi:poi-ooxml:5.4.0'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "com.vaadin:vaadin-bom:$vaadinVersion"
-    }
-    dependencies {
-        // Log4j2 auf die im Projekt vorhandene Version festlegen (die xlsxbuilder ebenfalls nutzt),
-        // statt der vom Spring-Boot-BOM verwalteten älteren Version.
-        dependency 'org.apache.logging.log4j:log4j-api:2.24.3'
-        dependency 'org.apache.logging.log4j:log4j-core:2.24.3'
-    }
-}
-
-test {
-    // Der Performance-Benchmark (@Tag("benchmark")) läuft NICHT im normalen Testlauf,
-    // damit die Suite schnell bleibt; er wird über die Task 'benchmark' ausgeführt.
-    useJUnitPlatform {
-        excludeTags 'benchmark'
-    }
-    finalizedBy jacocoTestReport
-}
-
-// Eigenständige Task nur für den Excel-Export-Benchmark (ohne Jacoco, mit Konsolenausgabe).
-// Zeilenzahl konfigurierbar: ./gradlew benchmark -Prows=50000
-tasks.register('benchmark', Test) {
-    description = 'Vergleicht die Performance der beiden Excel-Exporter (xlsxbuilder vs. Flowingcode).'
-    group = 'verification'
-    testClassesDirs = sourceSets.test.output.classesDirs
-    classpath = sourceSets.test.runtimeClasspath
-    useJUnitPlatform {
-        includeTags 'benchmark'
-    }
-    testLogging {
-        showStandardStreams = true
-    }
-    systemProperty 'benchmark.rows', findProperty('rows') ?: '25000'
-    // Etwas Heap-Reserve: Flowingcode lädt alle Zeilen via POI in den Speicher.
-    maxHeapSize = '1g'
-    outputs.upToDateWhen { false }
-}
-
-jacoco {
-    toolVersion = '0.8.12'
-}
-
-jacocoTestReport {
-    dependsOn test
-    reports {
-        html.required = true
-        csv.required = true
-    }
-    // Reine Demo-/Glue-Klassen (Package ...app) werden nicht gemessen; gemessen wird der
-    // wiederverwendbare Bibliotheks-Code (Package ...export).
-    classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: 'de/makno/vaadinexcelexport/app/**')
-    }))
-}
-
-// --- Bibliotheks-Publishing -------------------------------------------------------------------
-// Spring-Boot wuerde sonst das schlanke Bibliotheks-Jar mit Classifier 'plain' versehen und die
-// ausfuehrbare bootJar zum Hauptartefakt machen. Fuer die Verwendung als normale Abhaengigkeit
-// (de.makno.vaadinexcelexport:VaadinExcelExport, ohne Classifier) wird das jar zum Hauptartefakt
-// gemacht und bootJar deaktiviert. Das Demo-/App-Package (Spring-Application + @Route MainView) darf
-// NICHT mit ausgeliefert werden, sonst kollidiert es in Konsumenten-Apps mit deren
-// AppShellConfigurator/Routes. Die wiederverwendbare Bibliothek ist nur das Package ...export.
-tasks.named('jar') {
-    enabled = true
-    archiveClassifier = ''
-    includeEmptyDirs = false
-    // Positivliste: nur das wiederverwendbare Bibliotheks-Package. Schließt damit App-Klassen UND
-    // alle App-Ressourcen (Demo-PDF, application.properties, evtl. Frontend/VAADIN) zugleich aus.
-    include 'de/makno/vaadinexcelexport/export/**'
-}
-tasks.named('bootJar') {
-    enabled = false
-}
-
-// Konsumenten sollen dem (unten gekürzten) POM folgen, nicht den Gradle-Module-Metadaten – daher
-// deren Erzeugung deaktivieren.
-tasks.withType(GenerateModuleMetadata).configureEach {
-    enabled = false
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            // App-only-Abhaengigkeiten aus dem veroeffentlichten POM entfernen: die Bibliothek
-            // (Package ...export) braucht nur xlsxbuilder + vaadin-grid-flow (als 'api' = compile).
-            pom.withXml {
-                def deps = asNode().dependencies
-                if (deps && !deps.isEmpty()) {
-                    deps.first().children().removeAll { d ->
-                        d.artifactId.text() in ['vaadin-spring-boot-starter', 'grid-exporter-addon', 'h2']
-                    }
-                }
+    // Java 21 ueber die Gradle-Toolchain – reaktiv, sobald ein Subprojekt das Java-Plugin anwendet
+    // (java-library bzw. spring-boot/java). Plattformunabhaengig.
+    plugins.withType(JavaPlugin).configureEach {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
             }
         }
+    }
+
+    // UTF-8 erzwingen: Quellen enthalten Umlaute (ae/oe/ue) in Kommentaren und String-Literalen.
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
+    // Javadoc-Kontrolle: prueft Referenzen/Syntax/HTML (zerbrochene @link schlagen fehl), ignoriert
+    // aber fehlende Kommentare an privaten Members ("-missing"). UTF-8 fuer Umlaute.
+    tasks.withType(Javadoc).configureEach {
+        options.encoding = 'UTF-8'
+        options.addStringOption('Xdoclint:all,-missing', '-quiet')
     }
 }

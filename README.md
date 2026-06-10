@@ -9,12 +9,14 @@ JDBC `ResultSet`). The repository also ships a **demo app** that compares this e
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Vaadin](https://img.shields.io/badge/Vaadin-24-blue.svg)](https://vaadin.com/)
 
-## Two artifacts in one repository
+## Two Gradle modules in one repository
 
-| Package | What it is | Shipped to Maven? |
-|---|---|---|
-| `de.makno.vaadinexcelexport.export` | the reusable **library** (`GridExcelExporter`, `ExcelMeta`, …) | **yes** – the published jar contains *only* this package |
-| `de.makno.vaadinexcelexport.app` | the **demo app** (Spring Boot + Vaadin) comparing both exporters | no – excluded from the published artifact |
+The build is split into two subprojects, so the app can never leak into the published library:
+
+| Module | Package | What it is | Shipped to Maven? |
+|---|---|---|---|
+| `:library` | `de.makno.vaadinexcelexport` | the reusable **library** (`GridExcelExporter`, `ExcelMeta`, …), published as `de.makno.vaadinexcelexport:VaadinExcelExport` | **yes** |
+| `:app` | `de.makno.vaadinexcelexport.app` | the **demo app** (Spring Boot + Vaadin) comparing both exporters; `implementation project(':library')` | no – this module has no `maven-publish` |
 
 ## Highlights
 
@@ -53,9 +55,9 @@ Annotate the grid columns once, then export:
 ```java
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
-import de.makno.vaadinexcelexport.export.ExcelMeta;
-import de.makno.vaadinexcelexport.export.GridExcelExporter;
-import de.makno.xlsxbuilder.builder.ColumnType;
+import de.makno.vaadinexcelexport.ExcelMeta;
+import de.makno.vaadinexcelexport.GridExcelExporter;
+import de.makno.xlsxbuilder.ColumnType;
 
 Grid<Employee> grid = new Grid<>();
 
@@ -77,8 +79,8 @@ exporter consumes an xlsxBuilder `DataProvider`; it closes the `ResultSet`, whil
 `Statement`/`Connection` in a `try-with-resources`:
 
 ```java
-import de.makno.vaadinexcelexport.export.ExportOptions;
-import de.makno.xlsxbuilder.builder.DataProviders;
+import de.makno.vaadinexcelexport.ExportOptions;
+import de.makno.xlsxbuilder.DataProviders;
 
 try (Connection conn = dataSource.getConnection();
      Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)) {
@@ -139,7 +141,7 @@ placeholders, temp-dir handling and the underlying out-of-core engine.
 
 ## Demo app
 
-`./gradlew bootRun` starts a Vaadin app at <http://localhost:8080> that compares both exporters on
+`./gradlew :app:bootRun` starts a Vaadin app at <http://localhost:8080> that compares both exporters on
 one table:
 
 - The grid is backed by a **lazy, SQL-backed** data source (embedded **H2** via plain JDBC; rows are
@@ -162,10 +164,10 @@ first:
 Then:
 
 ```bash
-./gradlew bootRun                 # demo app at http://localhost:8080
-./gradlew test                    # unit tests (JUnit 5) + Jacoco report
-./gradlew benchmark [-Prows=N]    # H2-backed benchmark: both exporters from the database
-./gradlew javadoc                 # API documentation (build/docs/javadoc/index.html)
+./gradlew :app:bootRun                 # demo app at http://localhost:8080
+./gradlew :library:test                # library unit tests (JUnit 5) + Jacoco report
+./gradlew :app:benchmark [-Prows=N]    # H2-backed benchmark: both exporters from the database
+./gradlew :library:javadoc             # API docs (library/build/docs/javadoc/index.html)
 ```
 
 > The benchmark (`@Tag("benchmark")`, class `ExcelExporterBenchmarkTest`) is excluded from the normal
@@ -173,9 +175,10 @@ Then:
 
 ## Use as a library (Maven)
 
-The published artifact `de.makno.vaadinexcelexport:VaadinExcelExport` contains **only** the
-`export` package and declares only its real dependencies (xlsxBuilder + Vaadin Grid – the demo's
-Spring Boot, Flowingcode and H2 dependencies are **not** propagated):
+The published artifact `de.makno.vaadinexcelexport:VaadinExcelExport` is the `:library` module
+(package `de.makno.vaadinexcelexport`) and declares only its real dependencies (xlsxBuilder + Vaadin
+Grid – the demo's Spring Boot, Flowingcode and H2 dependencies live in `:app` and are **not**
+propagated):
 
 ```gradle
 repositories { mavenLocal(); mavenCentral() }
@@ -186,8 +189,8 @@ dependencies {
 }
 ```
 
-Publish it with `./gradlew publishToMavenLocal` (the `jar` task is restricted to the `export`
-package, so no app classes/resources end up in the artifact).
+Publish it with `./gradlew :library:publishToMavenLocal`. Because `:app` is a separate Gradle module
+without `maven-publish`, no app classes/resources can end up in the artifact by construction.
 
 ## Concurrency / server operation
 

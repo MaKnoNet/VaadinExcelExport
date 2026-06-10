@@ -1,0 +1,62 @@
+// Veroeffentlichte Bibliothek: der wiederverwendbare Grid-> .xlsx-Bruecken-Code
+// (Package de.makno.vaadinexcelexport). Enthaelt KEINEN Spring-Boot-/Vaadin-App-Code; daher auch
+// kein Spring-Boot- oder Vaadin-Plugin. Gemeinsame Konfiguration (Toolchain, UTF-8, Spotless, Repos)
+// kommt aus dem Wurzel-Build (subprojects {}).
+plugins {
+    id 'java-library'
+    id 'jacoco'
+    // Stellt das Export-Jar als de.makno.vaadinexcelexport:VaadinExcelExport bereit
+    // (publishToMavenLocal / Nexus) fuer Konsumenten wie web-module-conversion.
+    id 'maven-publish'
+}
+
+dependencies {
+    // ── Bibliotheks-Abhaengigkeiten – als 'api', da die oeffentliche API Vaadin-Grid- und
+    //    xlsxbuilder-Typen exponiert; landen im veroeffentlichten POM (compile).
+    // xlsxbuilder als Binaer-Abhaengigkeit aus mavenLocal (publishToMavenLocal); bringt transitiv
+    // Apache POI und Log4j2 mit.
+    api 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
+    // Vaadin Grid (Flow): liefert Grid/Column/ColumnPathRenderer + transitiv flow-data/flow-server
+    // (DataProvider, LitRenderer, ComponentUtil, ValueProvider) – alles, was die Bibliothek nutzt.
+    api "com.vaadin:vaadin-grid-flow:${vaadinVersion}"
+
+    // JUnit 5 zum Testen des Export-Codes (kein Spring-BOM hier → Versionen explizit).
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+    // POI zum Ruecklesen/Verifizieren der erzeugten .xlsx im Test.
+    testImplementation 'org.apache.poi:poi-ooxml:5.4.0'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacoco {
+    toolVersion = '0.8.12'
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        html.required = true
+        csv.required = true
+    }
+}
+
+// Konsumenten sollen dem POM folgen, nicht den Gradle-Module-Metadaten – daher deren Erzeugung
+// deaktivieren.
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            // Koordinate beibehalten: de.makno.vaadinexcelexport:VaadinExcelExport (das Subprojekt-
+            // Verzeichnis heisst 'library', deshalb die artifactId explizit setzen).
+            artifactId = 'VaadinExcelExport'
+        }
+    }
+}

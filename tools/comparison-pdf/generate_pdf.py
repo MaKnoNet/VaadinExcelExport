@@ -3,7 +3,7 @@
 """Erzeugt die Vergleichs-PDF (GridExcelExporter vs. Flowingcode GridExporter).
 
 Reproduzierbarer Generator fuer
-``src/main/resources/META-INF/resources/excel-export-vergleich.pdf`` – die PDF, die die App ueber
+``app/src/main/resources/META-INF/resources/excel-export-vergleich.pdf`` – die PDF, die die App ueber
 den Button „Vergleich (PDF)" einbettet und die auf GitHub sichtbar ist.
 
 Benoetigt reportlab (>= 4). Auf dieser Maschine vorhanden im Interpreter
@@ -49,6 +49,7 @@ BENCH_FACTOR = "~28x"
 
 OUTPUT = (
     Path(__file__).resolve().parents[2]
+    / "app"
     / "src"
     / "main"
     / "resources"
@@ -310,7 +311,7 @@ def build():
     # Architektur-Kasten
     story.append(callout(
         "Worum geht es?",
-        f"<b>{LEFT_LABEL}</b> (<font name='Helvetica'>de.makno.vaadinexcelexport.export</font>) ist eine schlanke "
+        f"<b>{LEFT_LABEL}</b> (<font name='Helvetica'>de.makno.vaadinexcelexport</font>) ist eine schlanke "
         "Bruecke: sie liest die Spalten des Vaadin-<i>Grid</i> und delegiert das Schreiben an die Bibliothek "
         "<b>xlsxbuilder</b> (<font name='Helvetica'>de.makno.xlsxbuilder</font> &ndash; <font name='Helvetica'>XlsxBuilder</font> "
         "+ <font name='Helvetica'>WorkbookBuilder</font>, auf Apache POI SXSSF, out-of-core streamend). "
@@ -431,7 +432,7 @@ def build():
         kv_table([
             ("Projekt", "VaadinExcelExport (github.com/MaKnoNet/VaadinExcelExport)"),
             ("Stack", "Java 21, Spring Boot 3.3.5, Vaadin 24.5.3"),
-            ("Brueckenklasse", "de.makno.vaadinexcelexport.export.GridExcelExporter (liest Grid-Spalten, delegiert an xlsxbuilder)"),
+            ("Brueckenklasse", "de.makno.vaadinexcelexport.GridExcelExporter (liest Grid-Spalten, delegiert an xlsxbuilder)"),
             ("xlsxbuilder", "de.makno.xlsxbuilder:xlsxbuilder:1.0.0 - XlsxBuilder + WorkbookBuilder (Apache POI SXSSF), Gradle Composite Build"),
             ("Flowingcode", "com.flowingcode.vaadin.addons.gridexporter.GridExporter (org.vaadin.addons.flowingcode:grid-exporter-addon:2.5.0)"),
             ("Testdaten", "H2 2.3.232 (file-basiert, reines JDBC) - lazy geladen / gestreamt"),
