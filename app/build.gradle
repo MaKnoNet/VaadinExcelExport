@@ -1,0 +1,80 @@
+// Demo-/Vergleichs-App (Spring Boot + Vaadin): zeigt den GridExcelExporter gegen den Flowingcode
+// GridExporter. Haengt von der Bibliothek ':library' ab und wird NICHT zu Maven veroeffentlicht
+// (es gibt bewusst kein maven-publish-Plugin). Gemeinsame Konfiguration (Toolchain, UTF-8, Spotless,
+// Repos) kommt aus dem Wurzel-Build (subprojects {}).
+plugins {
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'com.vaadin'
+}
+
+dependencies {
+    // Die wiederverwendbare Bibliothek; bringt transitiv xlsxbuilder + vaadin-grid-flow ('api') mit.
+    implementation project(':library')
+    // Direkt genutzte xlsxbuilder-Typen (DataProviders/ColumnType) explizit deklarieren statt auf die
+    // transitive 'api'-Abhaengigkeit der Bibliothek zu bauen.
+    implementation 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
+
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
+
+    // Flowingcode Grid Exporter – Community-Add-on fuer tabellenbasierten Excel/CSV-Export.
+    // Ausschliesslich auf https://maven.vaadin.com/vaadin-addons verfuegbar (nicht Maven Central).
+    // Aktuelle stabile Version fuer Vaadin 24: 2.5.0 (kompiliert gegen 24.3.9, kompatibel mit 24.5.x).
+    implementation 'org.vaadin.addons.flowingcode:grid-exporter-addon:2.5.0'
+
+    // H2: file-basierte SQL-Datenbank fuer die Testdaten. Reines JDBC via DriverManager
+    // (der Treiber registriert sich via ServiceLoader) – daher genuegt runtimeOnly.
+    runtimeOnly 'com.h2database:h2:2.3.232'
+
+    // JUnit 5 (Version vom Spring-Boot-BOM verwaltet).
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // POI zum Ruecklesen/Verifizieren der erzeugten .xlsx im Test.
+    testImplementation 'org.apache.poi:poi-ooxml:5.4.0'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+    }
+    dependencies {
+        // Log4j2 auf die im Projekt (und in xlsxbuilder) genutzte Version festlegen, statt der vom
+        // Spring-Boot-BOM verwalteten aelteren Version.
+        dependency 'org.apache.logging.log4j:log4j-api:2.24.3'
+        dependency 'org.apache.logging.log4j:log4j-core:2.24.3'
+    }
+}
+
+test {
+    // Der Performance-Benchmark (@Tag("benchmark")) laeuft NICHT im normalen Testlauf, damit die
+    // Suite schnell bleibt; er wird ueber die Task 'benchmark' ausgefuehrt.
+    useJUnitPlatform {
+        excludeTags 'benchmark'
+    }
+}
+
+// Eigenstaendige Task nur fuer den Excel-Export-Benchmark (ohne Jacoco, mit Konsolenausgabe).
+// Zeilenzahl konfigurierbar: ./gradlew :app:benchmark -Prows=50000
+// bootJar wird nicht benoetigt (kein deploybares Fat-Jar; die App laeuft ausschliesslich via
+// 'bootRun'). Deaktivieren vermeidet das Duplicate-Jar-Problem einiger transitiver Abhaengigkeiten.
+tasks.named('bootJar') {
+    enabled = false
+}
+
+tasks.register('benchmark', Test) {
+    description = 'Vergleicht die Performance der beiden Excel-Exporter (xlsxbuilder vs. Flowingcode).'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform {
+        includeTags 'benchmark'
+    }
+    testLogging {
+        showStandardStreams = true
+    }
+    systemProperty 'benchmark.rows', findProperty('rows') ?: '25000'
+    // Etwas Heap-Reserve: Flowingcode laedt alle Zeilen via POI in den Speicher.
+    maxHeapSize = '1g'
+    outputs.upToDateWhen { false }
+}

@@ -1,11 +1,11 @@
 # Vergleichs-PDF-Generator
 
-Erzeugt `src/main/resources/META-INF/resources/excel-export-vergleich.pdf` – die PDF, die die App
+Erzeugt `app/src/main/resources/META-INF/resources/excel-export-vergleich.pdf` – die PDF, die die App
 über den Button **„Vergleich (PDF)"** einbettet und die auf GitHub sichtbar ist.
 
 Verglichen werden die beiden im Projekt genutzten Klassen:
 
-- `de.makno.vaadinexcelexport.export.GridExcelExporter` (baut auf **xlsxbuilder** auf:
+- `de.makno.vaadinexcelexport.GridExcelExporter` (baut auf **xlsxbuilder** auf:
   `de.makno.xlsxbuilder` – `XlsxBuilder` + `WorkbookBuilder`, Apache POI SXSSF, out-of-core)
 - `com.flowingcode.vaadin.addons.gridexporter.GridExporter` (Flowingcode, direkt auf Apache POI)
 

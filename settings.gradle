@@ -10,6 +10,10 @@ pluginManagement {
 
 rootProject.name = 'VaadinExcelExport'
 
+// Zwei-Projekt-Aufbau: ':library' = veroeffentlichte Bruecken-Bibliothek
+// (Package de.makno.vaadinexcelexport), ':app' = Spring-Boot/Vaadin-Demo (nicht veroeffentlicht).
+include 'library', 'app'
+
 // Hinweis: Frueher wurde xlsxbuilder per Composite-Build ('includeBuild ../xlsbuilder') eingebunden.
 // Im Submodul-Layout von web-module-conversion liegt xlsxbuilder unter libs/xlsxBuilder und wird als
 // normale Binaer-Abhaengigkeit (de.makno.xlsxbuilder:xlsxbuilder) aus mavenLocal aufgeloest

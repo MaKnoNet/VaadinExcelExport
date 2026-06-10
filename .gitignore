@@ -13,9 +13,9 @@ tsconfig.json
 types.d.ts
 vite.generated.ts
 vite.config.ts
-src/main/frontend/
-src/main/bundles/
-frontend/generated/
+app/src/main/frontend/
+app/src/main/bundles/
+app/src/main/frontend/generated/
 
 # --- Eclipse ---
 .project
