@@ -15,8 +15,6 @@ subprojects {
         // Lokales Maven-Repo (~/.m2) fuer das selbst publizierte de.makno.xlsxbuilder:xlsxbuilder.
         mavenLocal()
         mavenCentral()
-        // Vaadin Add-ons Repository – wird fuer den Flowingcode Grid Exporter (nur ':app') benoetigt.
-        maven { url = 'https://maven.vaadin.com/vaadin-addons' }
     }
 
     // Java-Quellcode wird mit palantir-java-format formatiert (ueber Spotless).

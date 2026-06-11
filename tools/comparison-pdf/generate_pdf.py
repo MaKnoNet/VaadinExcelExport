@@ -433,7 +433,7 @@ def build():
             ("Projekt", "VaadinExcelExport (github.com/MaKnoNet/VaadinExcelExport)"),
             ("Stack", "Java 21, Spring Boot 3.3.5, Vaadin 24.5.3"),
             ("Brueckenklasse", "de.makno.vaadinexcelexport.GridExcelExporter (liest Grid-Spalten, delegiert an xlsxbuilder)"),
-            ("xlsxbuilder", "de.makno.xlsxbuilder:xlsxbuilder:1.0.0 - XlsxBuilder + WorkbookBuilder (Apache POI SXSSF), Gradle Composite Build"),
+            ("xlsxbuilder", "de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT - XlsxBuilder + WorkbookBuilder (Apache POI SXSSF), Binaer-Abhaengigkeit aus mavenLocal"),
             ("Flowingcode", "com.flowingcode.vaadin.addons.gridexporter.GridExporter (org.vaadin.addons.flowingcode:grid-exporter-addon:2.5.0)"),
             ("Testdaten", "H2 2.3.232 (file-basiert, reines JDBC) - lazy geladen / gestreamt"),
             ("Apache POI", "5.4.0"),

@@ -15,7 +15,7 @@ dependencies {
     //    xlsxbuilder-Typen exponiert; landen im veroeffentlichten POM (compile).
     // xlsxbuilder als Binaer-Abhaengigkeit aus mavenLocal (publishToMavenLocal); bringt transitiv
     // Apache POI und Log4j2 mit.
-    api 'de.makno.xlsxbuilder:xlsxbuilder:1.0.0-SNAPSHOT'
+    api "de.makno.xlsxbuilder:xlsxbuilder:${xlsxbuilderVersion}"
     // Vaadin Grid (Flow): liefert Grid/Column/ColumnPathRenderer + transitiv flow-data/flow-server
     // (DataProvider, LitRenderer, ComponentUtil, ValueProvider) – alles, was die Bibliothek nutzt.
     api "com.vaadin:vaadin-grid-flow:${vaadinVersion}"
@@ -24,7 +24,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
     // POI zum Ruecklesen/Verifizieren der erzeugten .xlsx im Test.
-    testImplementation 'org.apache.poi:poi-ooxml:5.4.0'
+    testImplementation "org.apache.poi:poi-ooxml:${poiVersion}"
 }
 
 test {

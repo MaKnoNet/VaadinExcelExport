@@ -38,7 +38,7 @@ The build is split into two subprojects, so the app can never leak into the publ
 In the bundled benchmark (25,000 rows, streamed from an H2 database) the exporter is **~28× faster**
 than the Flowingcode exporter and uses **constant memory** instead of loading every row into the
 heap. See the full comparison in
-[`excel-export-vergleich.pdf`](src/main/resources/META-INF/resources/excel-export-vergleich.pdf).
+[`excel-export-vergleich.pdf`](app/src/main/resources/META-INF/resources/excel-export-vergleich.pdf).
 
 ## Requirements
 
