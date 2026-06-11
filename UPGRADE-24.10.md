@@ -10,7 +10,7 @@ Online-Build möglich ist, kann auf die im Plan vorgesehene Version 24.10.6 mit 
 vaadinVersion=24.10.6
 ```
 
-## 2. `build.gradle` – Plugin-Version
+## 2. `app/build.gradle` – Plugin-Version
 ```groovy
 id 'org.springframework.boot' version '3.5.3'
 ```
@@ -20,7 +20,7 @@ Optional (online wieder möglich, aber nicht nötig):
 - Statt `org.junit.jupiter:junit-jupiter` kann wieder `org.springframework.boot:spring-boot-starter-test`
   verwendet werden (lädt online die volle Test-Infrastruktur).
 
-## 3. `SampleDataView.java` – Download über `DownloadHandler`
+## 3. `MainView.java` – Download über `DownloadHandler`
 Ab Vaadin 24.8 ist `StreamResource` als Download-Quelle veraltet; stattdessen die
 `DownloadHandler`-API nutzen (schreibt direkt in den Antwort-`OutputStream`).
 
@@ -30,11 +30,11 @@ Ab Vaadin 24.8 ist `StreamResource` als Download-Quelle veraltet; stattdessen di
 **Hinzufügen:** `com.vaadin.flow.server.streams.DownloadHandler`.
 (`java.io.IOException` wird weiter benötigt.)
 
-**Methode `createExportButton(...)` ersetzen und `toExcelStream(...)` löschen:**
+**Den `StreamResource`-Download (`triggerDownload(...)`, `hiddenDownloadAnchor()`) durch einen
+`DownloadHandler`-Anchor ersetzen, schematisch:**
 ```java
-private Anchor createExportButton(
-        List<ExcelColumn<SampleRow>> columns, ListDataProvider<SampleRow> dataProvider) {
-    GridExcelExporter<SampleRow> exporter = new GridExcelExporter<>(SHEET_NAME, columns);
+private Anchor createExportButton(Grid<SampleRow> grid, ListDataProvider<SampleRow> dataProvider) {
+    GridExcelExporter<SampleRow> exporter = GridExcelExporter.from(SHEET_NAME, grid);
     DownloadHandler handler = event -> {
         event.setFileName(FILE_NAME);
         event.setContentType(XLSX_MIME_TYPE);
@@ -56,5 +56,5 @@ gradlew test
 gradlew bootRun        # http://localhost:8080  -> Button "Excel-Export"
 ```
 
-> Der **Kern** (`de.makno.vaadinexcelexport.GridExcelExporter` und `ExcelColumn`) bleibt beim
+> Der **Kern** (`de.makno.vaadinexcelexport.GridExcelExporter` und `ExcelMeta`) bleibt beim
 > Upgrade **unverändert** – nur die Demo-View und die Versionsnummern ändern sich.
