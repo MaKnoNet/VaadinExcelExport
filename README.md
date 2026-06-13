@@ -115,6 +115,9 @@ ExcelMeta.group(column, "Personal data");                                       
   for every typed column pass the value provider explicitly via `type(column, type, valueProvider)`.
 - Columns **without** `ExcelMeta.type(...)` (or without a key) are skipped on export.
 - `FORMULA` columns return the formula text (e.g. `"E{row}*0.19"`); `{row}` becomes the real row.
+  For `HYPERLINK(...)` cells, build the formula text with `ExcelFormulas.hyperlink(url, name)`: it
+  escapes embedded quotes and restricts the URL scheme to `http`/`https`/`mailto`, so values cannot
+  break out of the formula (formula injection).
 
 ### `GridExcelExporter<T>`
 
@@ -127,6 +130,10 @@ Reads the exportable columns from the grid and writes the sheet.
 | `export(DataProvider<T,?>, out)` | export unsorted, from a Vaadin data provider |
 | `export(DataProvider<T,?>, Comparator<T>, out)` | export following an in-memory sort (e.g. the grid's) |
 | `export(xlsxbuilder DataProvider<T>, out[, ExportOptions])` | **out-of-core** export from an xlsxBuilder source |
+
+> The two `DataProvider<T,?>` overloads request **all** rows at once (fine for in-memory / small
+> data); for large or lazy/DB-backed sources prefer the **out-of-core** xlsxBuilder `DataProvider`
+> overload above.
 
 `ExportOptions` (immutable) bundles optional extras: `withFooter(...)`, `withSumColumns(...)`
 (enables the summary row and `{sum:Column}` placeholders) and `withParallel(boolean)`. Joined
