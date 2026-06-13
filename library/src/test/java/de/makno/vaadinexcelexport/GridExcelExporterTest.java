@@ -297,7 +297,8 @@ class GridExcelExporterTest {
     void exportsHyperlinkAsFormula() throws Exception {
         Grid<Person> grid = new Grid<>();
         Column<Person> link = grid.addColumn(Person::name).setKey("Webseite");
-        ExcelMeta.type(link, ColumnType.FORMULA, p -> "HYPERLINK(\"https://x/" + p.name() + "\",\"" + p.name() + "\")");
+        // Sicheres Muster: Formeltext über den Library-Helper (escaped + Schema-Whitelist).
+        ExcelMeta.type(link, ColumnType.FORMULA, p -> ExcelFormulas.hyperlink("https://x/" + p.name(), p.name()));
         grid.setItems(people());
 
         GridExcelExporter<Person> exporter = GridExcelExporter.from("Test", grid);

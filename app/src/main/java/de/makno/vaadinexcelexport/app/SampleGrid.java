@@ -10,6 +10,7 @@ import com.vaadin.flow.data.provider.QuerySortOrder;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.function.ValueProvider;
+import de.makno.vaadinexcelexport.ExcelFormulas;
 import de.makno.vaadinexcelexport.ExcelMeta;
 import de.makno.xlsxbuilder.ColumnType;
 import java.math.BigDecimal;
@@ -193,12 +194,7 @@ final class SampleGrid {
                 .setHeader("Webseite")
                 .setAutoWidth(true)
                 .setSortProperty("webseite_name");
-        ExcelMeta.type(col, ColumnType.FORMULA, row -> hyperlinkFormula(row.webseite(), row.webseiteName()));
-    }
-
-    /** Baut eine Excel-{@code HYPERLINK(ziel, anzeigename)}-Formel (ohne führendes {@code =}). */
-    private static String hyperlinkFormula(String url, String name) {
-        return "HYPERLINK(\"" + url + "\",\"" + name + "\")";
+        ExcelMeta.type(col, ColumnType.FORMULA, row -> ExcelFormulas.hyperlink(row.webseite(), row.webseiteName()));
     }
 
     // ─────────────────────────────────────────── ORDER BY aus der Grid-Sortierung
