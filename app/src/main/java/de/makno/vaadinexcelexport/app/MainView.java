@@ -26,7 +26,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import java.io.ByteArrayInputStream;
-import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -58,12 +57,16 @@ public class MainView extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
 
+    private static final System.Logger LOG = System.getLogger(MainView.class.getName());
+
     private static final String PDF_URL = "/excel-export-vergleich.pdf";
     private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String MAKNOS_FILE_BASE = "maknos-export";
     private static final String VAADINS_FILE_BASE = "vaadins-export";
     private static final int DEFAULT_PAGE_SIZE = 1000;
-    private static final NumberFormat ROW_FORMAT = NumberFormat.getIntegerInstance(Locale.GERMANY);
+
+    /** Obergrenze der generierbaren Testzeilen (Schutz vor versehentlichem/böswilligem Massen-Insert). */
+    private static final int MAX_ROW_COUNT = 1_000_000;
 
     /** Zeitstempel ohne {@code :} – gültig als Dateiname auf Windows/Linux/macOS. */
     private static final DateTimeFormatter FILE_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
@@ -131,6 +134,7 @@ public class MainView extends VerticalLayout {
         rowCountField.setLabel("Anzahl Testdaten");
         rowCountField.setValue(SampleData.DEFAULT_ROW_COUNT);
         rowCountField.setMin(1);
+        rowCountField.setMax(MAX_ROW_COUNT);
         rowCountField.setStep(1000);
         rowCountField.setStepButtonsVisible(true);
         rowCountField.setWidth("11em");
@@ -187,6 +191,11 @@ public class MainView extends VerticalLayout {
             Notification.show("Bitte eine Zeilenzahl ≥ 1 angeben.");
             return;
         }
+        // Server-seitiger Guard: die UI-Begrenzung (setMax) lässt sich clientseitig umgehen.
+        if (count > MAX_ROW_COUNT) {
+            Notification.show("Bitte höchstens " + formatRowCount(MAX_ROW_COUNT) + " Zeilen angeben.");
+            return;
+        }
         int pageSize = currentPageSize();
         db.seed(count);
         seededRows = count;
@@ -195,7 +204,16 @@ public class MainView extends VerticalLayout {
         searchField.clear();
         grid.setPageSize(pageSize);
         grid.sort(Collections.<GridSortOrder<SampleRow>>emptyList()); // unsortiert (Default ORDER BY id)
-        Notification.show(ROW_FORMAT.format(count) + " Zeilen in der DB · PageSize " + pageSize + ".");
+        Notification.show(formatRowCount(count) + " Zeilen in der DB · PageSize " + pageSize + ".");
+    }
+
+    /**
+     * Formatiert eine Zeilenzahl mit Tausendertrennung (de-DE). Bewusst über {@link String#format}
+     * statt eines geteilten {@link java.text.NumberFormat} – {@code NumberFormat} ist nicht
+     * thread-safe und diese Methode wird aus mehreren UI-/Session-Kontexten aufgerufen.
+     */
+    private static String formatRowCount(long count) {
+        return String.format(Locale.GERMANY, "%,d", count);
     }
 
     /** Setzt den aktiven Grid-Filter; wirkt sofort auf die Anzeige und auf beide Exporte. */
@@ -297,7 +315,10 @@ public class MainView extends VerticalLayout {
                     });
                 }
             } catch (RuntimeException ex) {
-                ui.access(() -> Notification.show("Testfehler: " + ex.getMessage()));
+                // Details server-seitig protokollieren, dem Client nur eine generische Meldung zeigen
+                // (keine internen Pfade/SQL-Meldungen ins UI leaken).
+                LOG.log(System.Logger.Level.ERROR, "Export-Testlauf fehlgeschlagen", ex);
+                ui.access(() -> Notification.show("Testlauf fehlgeschlagen – Details siehe Server-Log."));
             } finally {
                 ui.access(() -> {
                     progressBar.setVisible(false);
@@ -348,7 +369,7 @@ public class MainView extends VerticalLayout {
                 metrics.durationText(),
                 metrics.allocatedText(),
                 metrics.outputText(),
-                ROW_FORMAT.format(metrics.rowCount())));
+                formatRowCount(metrics.rowCount())));
     }
 
     // ─────────────────────────────────────────────────────── Download
