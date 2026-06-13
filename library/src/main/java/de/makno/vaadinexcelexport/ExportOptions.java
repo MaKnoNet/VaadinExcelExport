@@ -32,13 +32,15 @@ public record ExportOptions(List<String> footerLines, List<String> sumColumns, b
         return NONE;
     }
 
-    /** Kopie mit gesetzten Fußzeilen. */
+    /** Kopie mit gesetzten Fußzeilen (kein {@code null}-Array, keine {@code null}-Zeilen). */
     public ExportOptions withFooter(String... lines) {
+        Objects.requireNonNull(lines, "lines");
         return new ExportOptions(List.of(lines), sumColumns, parallel);
     }
 
-    /** Kopie mit gesetzten Summenspalten. */
+    /** Kopie mit gesetzten Summenspalten (kein {@code null}-Array, keine {@code null}-Namen). */
     public ExportOptions withSumColumns(String... columns) {
+        Objects.requireNonNull(columns, "columns");
         return new ExportOptions(footerLines, List.of(columns), parallel);
     }
 

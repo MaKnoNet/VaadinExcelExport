@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -48,7 +47,7 @@ import java.util.stream.Stream;
  *
  * <p><b>Thread-Sicherheit:</b> Die Instanz hält nur unveränderliche Felder und ist nach der
  * Konstruktion gefahrlos teilbar. {@link #export} arbeitet ausschließlich auf request-lokalen
- * Ressourcen (übergebener {@link OutputStream}, frisch erzeugter {@link ColumnValueExtractor})
+ * Ressourcen (übergebener {@link OutputStream}) und dem zustandslosen {@link ColumnValueExtractor}
  * und hält keinen veränderlichen Zustand.
  *
  * @param <T> Datentyp einer Tabellenzeile
@@ -108,7 +107,7 @@ public final class GridExcelExporter<T> {
                 : columnKeyOrder.stream()
                         .map(exportableByKey::get)
                         .filter(Objects::nonNull)
-                        .collect(Collectors.toList());
+                        .toList();
         return new GridExcelExporter<>(sheetName, ordered);
     }
 
@@ -116,6 +115,10 @@ public final class GridExcelExporter<T> {
      * Schreibt die Tabelle <em>unsortiert</em> (in Datenbestand-Reihenfolge) als {@code .xlsx} in
      * den Stream. Kurzform für {@link #export(DataProvider, Comparator, OutputStream)} mit
      * {@code null}-Sortierung. Der Stream wird <em>nicht</em> geschlossen.
+     *
+     * <p><b>Speicher:</b> wie {@link #export(DataProvider, Comparator, OutputStream)} – fordert alle
+     * Zeilen des {@link DataProvider} auf einmal an. Für große, lazy geladene Quellen stattdessen
+     * {@link #export(de.makno.xlsxbuilder.DataProvider, OutputStream)} verwenden.
      */
     public void export(DataProvider<T, ?> dataProvider, OutputStream out) throws IOException {
         export(dataProvider, null, out);
@@ -126,6 +129,14 @@ public final class GridExcelExporter<T> {
      * In-Memory-Sortierung, sodass die Zeilenreihenfolge der Excel-Datei der sortierten Tabelle
      * entspricht. xlsxbuilder schreibt die Zeilen genau in Stream-Reihenfolge – die Reihenfolge wird
      * also allein durch den {@code inMemorySort}-Comparator bestimmt.
+     *
+     * <p><b>Speicher (wichtig):</b> Diese Überladung fragt den Vaadin-{@link DataProvider} mit
+     * unbeschränktem Limit ab und materialisiert damit <em>alle</em> Zeilen. Das ist für
+     * In-Memory-Quellen (z. B. {@code ListDataProvider}) und kleine Datenmengen gedacht. Für große
+     * oder lazy/Callback-basierte Quellen (DB) führt das zu einem Heap-Verbrauch proportional zum
+     * Gesamtbestand – dort stattdessen den out-of-core-Pfad
+     * {@link #export(de.makno.xlsxbuilder.DataProvider, OutputStream)} (z. B. mit einem gestreamten
+     * {@code ResultSet}) nutzen.
      *
      * @param dataProvider Datenquelle der Tabelle
      * @param inMemorySort In-Memory-Sortierung (z. B. {@code grid.getDataCommunicator()
@@ -181,11 +192,10 @@ public final class GridExcelExporter<T> {
      */
     private XlsxBuilder<T> newSheetWithColumns(ExportOptions options) {
         XlsxBuilder<T> sheet = XlsxBuilder.<T>create().sheetName(sheetName).columnHeaders(true);
-        ColumnValueExtractor<T> extractor = new ColumnValueExtractor<>();
 
         for (Column<T> column : columns) {
             // column.getKey() ist als Spaltenüberschrift definiert (equals der setKey-Wert)
-            sheet.column(column.getKey(), item -> extractor.extract(item, column))
+            sheet.column(column.getKey(), item -> ColumnValueExtractor.extract(item, column))
                     .ofType(ExcelMeta.getType(column));
 
             String format = ExcelMeta.getFormat(column);
@@ -246,11 +256,14 @@ public final class GridExcelExporter<T> {
     /**
      * Holt alle Zeilen des Vaadin-DataProviders als Stream. Die {@link Query} überträgt die
      * In-Memory-Sortierung (offset 0, unbeschränktes Limit, kein Filter); {@code null} = unsortiert.
-     * Der rohe Cast überbrückt den Wildcard-Filtertyp von {@code DataProvider<T, ?>}.
+     *
+     * <p>Der Filtertyp wird auf {@link Object} fixiert (Filter ist hier stets {@code null}); der
+     * unchecked-Cast überbrückt den Wildcard-Filtertyp von {@code DataProvider<T, ?>}, ohne auf
+     * Raw-Types zurückzufallen.
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     private static <T> Stream<T> fetchAll(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort) {
-        Query query = new Query(0, Integer.MAX_VALUE, null, inMemorySort, null);
-        return ((DataProvider) dataProvider).fetch(query);
+        DataProvider<T, Object> typed = (DataProvider<T, Object>) dataProvider;
+        return typed.fetch(new Query<>(0, Integer.MAX_VALUE, null, inMemorySort, null));
     }
 }

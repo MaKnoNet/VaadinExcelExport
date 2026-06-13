@@ -23,18 +23,38 @@ import java.lang.reflect.Field;
  *       für {@link de.makno.xlsxbuilder.ColumnType#STRING}.</li>
  * </ol>
  *
- * <p><b>Thread-Sicherheit:</b> Nicht thread-safe; eine Instanz pro Export-Aufruf.
- *
- * @param <T> Datentyp einer Tabellenzeile
+ * <p><b>Thread-Sicherheit:</b> Zustandslos (nur statische Methoden, keine Felder) und damit
+ * gefahrlos nebenläufig nutzbar.
  */
-final class ColumnValueExtractor<T> {
+final class ColumnValueExtractor {
+
+    /**
+     * Vaadin-internes Feld {@code ColumnPathRenderer.provider}, einmalig per Reflexion aufgelöst und
+     * zwischengespeichert. {@code null}, wenn das Feld in der vorliegenden Vaadin-Version fehlt oder
+     * unter dem Java-Modulsystem nicht zugänglich gemacht werden kann; in dem Fall meldet der Fallback
+     * den fehlenden Zugriff klar beim Gebrauch (statt bei jedem Aufruf neu zu reflektieren).
+     */
+    private static final Field COLUMN_PATH_PROVIDER_FIELD = resolveColumnPathProviderField();
+
+    private ColumnValueExtractor() {}
+
+    private static Field resolveColumnPathProviderField() {
+        try {
+            Field field = ColumnPathRenderer.class.getDeclaredField("provider");
+            field.setAccessible(true);
+            return field;
+        } catch (NoSuchFieldException | RuntimeException e) {
+            // RuntimeException deckt InaccessibleObjectException (Modulsystem) und SecurityException ab.
+            return null;
+        }
+    }
 
     /**
      * Extrahiert den Wert der Spalte für das übergebene Element.
      *
      * @throws IllegalStateException wenn kein Wert ermittelt werden konnte
      */
-    Object extract(T item, Column<T> column) {
+    static <T> Object extract(T item, Column<T> column) {
         // 1. Expliziter ValueProvider aus ExcelMeta (Hauptpfad für typisierte Spalten)
         ValueProvider<T, ?> explicit = ExcelMeta.getValueProvider(column);
         if (explicit != null) {
@@ -42,16 +62,16 @@ final class ColumnValueExtractor<T> {
         }
 
         // 2. LitRenderer – bei genau einem ValueProvider oder Provider namens "name"
-        if (column.getRenderer() instanceof LitRenderer) {
-            Object value = extractFromLitRenderer(item, (LitRenderer<T>) column.getRenderer());
+        if (column.getRenderer() instanceof LitRenderer<T> litRenderer) {
+            Object value = extractFromLitRenderer(item, litRenderer);
             if (value != null) {
                 return value;
             }
         }
 
         // 3. ColumnPathRenderer – Fallback; liefert den string-formatierten Wert (für STRING ok)
-        if (column.getRenderer() instanceof ColumnPathRenderer) {
-            return extractFromColumnPathRenderer(item, (ColumnPathRenderer<T>) column.getRenderer());
+        if (column.getRenderer() instanceof ColumnPathRenderer<T> pathRenderer) {
+            return extractFromColumnPathRenderer(item, pathRenderer);
         }
 
         String key = column.getKey() != null ? column.getKey() : "(kein Key)";
@@ -59,8 +79,7 @@ final class ColumnValueExtractor<T> {
                 + "ExcelMeta.type(col, type, valueProvider) explizit setzen.");
     }
 
-    @SuppressWarnings("unchecked")
-    private Object extractFromLitRenderer(T item, LitRenderer<T> renderer) {
+    private static <T> Object extractFromLitRenderer(T item, LitRenderer<T> renderer) {
         var providers = renderer.getValueProviders();
         if (providers.size() == 1) {
             return providers.values().iterator().next().apply(item);
@@ -78,13 +97,16 @@ final class ColumnValueExtractor<T> {
      * {@link de.makno.xlsxbuilder.ColumnType#STRING}).
      */
     @SuppressWarnings("unchecked")
-    private Object extractFromColumnPathRenderer(T item, ColumnPathRenderer<T> renderer) {
+    private static <T> Object extractFromColumnPathRenderer(T item, ColumnPathRenderer<T> renderer) {
+        if (COLUMN_PATH_PROVIDER_FIELD == null) {
+            throw new IllegalStateException("ColumnPathRenderer-Fallback nicht verfügbar: Vaadin-internes Feld "
+                    + "'provider' ist nicht zugänglich (Vaadin-Version geändert oder Modulsystem). "
+                    + "ExcelMeta.type(col, type, valueProvider) explizit setzen oder --add-opens konfigurieren.");
+        }
         try {
-            Field field = ColumnPathRenderer.class.getDeclaredField("provider");
-            field.setAccessible(true);
-            ValueProvider<T, ?> provider = (ValueProvider<T, ?>) field.get(renderer);
+            ValueProvider<T, ?> provider = (ValueProvider<T, ?>) COLUMN_PATH_PROVIDER_FIELD.get(renderer);
             return provider.apply(item);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             throw new IllegalStateException("Wert konnte nicht via ColumnPathRenderer-Reflexion ermittelt werden", e);
         }
     }
