@@ -1,5 +1,12 @@
 # Update Log
 
+## 2026-07-06
+
+* **Creation**: new concept
+  [Entwicklerdoku – OKF-Wissensdatenbank pflegen](/conventions/okf-entwicklerdoku.md) —
+  bundle structure, frontmatter convention, step-by-step "add a new concept",
+  automation/hybrid strategy, known pitfalls.
+
 ## 2026-07-04
 
 * **Initialization**: OKF bundle created — components
