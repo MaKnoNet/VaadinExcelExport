@@ -29,8 +29,29 @@ Two source modes:
 | Summary row | `withSumColumns("Salary")` |
 | Joined (grouped) headers | `ExcelMeta.group(column, "Label")`, merged across ranges |
 | Export column order | overridable independently of the on-screen order |
-| Formulas / hyperlinks | `FORMULA` columns (`"E{row}*0.19"`), `HYPERLINK(...)` cells |
+| Formulas / hyperlinks | `FORMULA` columns (`"E{row}*0.19"`), `HYPERLINK(...)` via [ExcelFormulas](/components/excel-formulas.md) |
 | Parallelism | optional pipeline parallelism, passed through to xlsxBuilder |
+
+## ExportOptions (immutable)
+
+`ExportOptions` bundles the export extras as a record (`footerLines`, `sumColumns`,
+`parallel`) — passed per call rather than held as mutable state, so `GridExcelExporter`
+keeps its thread-safety contract. `ExportOptions.none()` is the empty default;
+`withFooter(...)`/`withSumColumns(...)`/`withParallel(...)` return a fresh copy each
+(defensive `List.copyOf`, non-null checks).
+
+## ColumnValueExtractor (internal fallback chain)
+
+Package-private helper that resolves a column's export value in three steps, tried in
+order: (1) the explicit `ExcelMeta` value provider (the recommended path for every typed
+column), (2) a `LitRenderer`'s value provider (for columns built via
+`Grid.addColumn(LitRenderer.of(...))`), (3) a reflection-based fallback into Vaadin's
+internal `ColumnPathRenderer.provider` field for plain `Grid.addColumn(ValueProvider)`
+columns (string-formatted, so only suitable for `ColumnType.STRING`). Stateless (only
+static methods), so it is safe under concurrency. The reflective field lookup happens
+once and is cached; if it's unavailable (Vaadin version change, Java module system
+blocking access) the fallback fails clearly at first use instead of retrying reflection
+on every call.
 
 # Examples
 

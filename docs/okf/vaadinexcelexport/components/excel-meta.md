@@ -24,7 +24,10 @@ Columns **without** `ExcelMeta.type(...)` (or without a key) are simply skipped 
 
 Supported `ColumnType`s: `STRING, INTEGER, LONG, DOUBLE, DECIMAL, BOOLEAN, DATE, DATETIME,
 TIME, FORMULA, HYPERLINK` (from xlsxBuilder). `FORMULA` columns return the formula text
-(e.g. `"E{row}*0.19"`); `{row}` becomes the real row number.
+(e.g. `"E{row}*0.19"`); `{row}` becomes the real row number. For `HYPERLINK(...)` cells,
+build the formula text with [ExcelFormulas](/components/excel-formulas.md).hyperlink(...)
+instead of concatenating strings by hand — it escapes embedded quotes and restricts the
+URL scheme, preventing formula injection.
 
 # Examples
 

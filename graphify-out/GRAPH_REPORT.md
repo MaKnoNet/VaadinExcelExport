@@ -1,16 +1,16 @@
 # Graph Report - VaadinExcelExport  (2026-07-04)
 
 ## Corpus Check
-- 32 files · ~16,878 words
+- 47 files · ~20,093 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 342 nodes · 684 edges · 24 communities (23 shown, 1 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 92 edges (avg confidence: 0.8)
+- 417 nodes · 767 edges · 38 communities (33 shown, 5 thin omitted)
+- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 101 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7f1f0e52`
+- Built from commit: `1e1c8a8e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -34,15 +34,29 @@
 - [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 17|Community 17]]
 - [[_COMMUNITY_Community 18|Community 18]]
+- [[_COMMUNITY_Community 24|Community 24]]
+- [[_COMMUNITY_Community 25|Community 25]]
+- [[_COMMUNITY_Community 26|Community 26]]
+- [[_COMMUNITY_Community 27|Community 27]]
+- [[_COMMUNITY_Community 28|Community 28]]
+- [[_COMMUNITY_Community 29|Community 29]]
+- [[_COMMUNITY_Community 30|Community 30]]
+- [[_COMMUNITY_Community 31|Community 31]]
+- [[_COMMUNITY_Community 32|Community 32]]
+- [[_COMMUNITY_Community 33|Community 33]]
+- [[_COMMUNITY_Community 34|Community 34]]
+- [[_COMMUNITY_Community 35|Community 35]]
+- [[_COMMUNITY_Community 36|Community 36]]
+- [[_COMMUNITY_Community 37|Community 37]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `MainView` - 21 edges
+1. `MainView` - 22 edges
 2. `GridExcelExporterTest` - 18 edges
 3. `SampleGrid` - 13 edges
 4. `TestDataDatabase` - 12 edges
 5. `Test` - 12 edges
-6. `ExcelExporterBenchmarkTest` - 11 edges
-7. `VaadinExcelExport` - 11 edges
+6. `VaadinExcelExport` - 12 edges
+7. `ExcelExporterBenchmarkTest` - 11 edges
 8. `ExcelMeta` - 9 edges
 9. `Column` - 9 edges
 10. `Stream` - 9 edges
@@ -53,27 +67,27 @@
 ## Import Cycles
 - None detected.
 
-## Communities (24 total, 1 thin omitted)
+## Communities (38 total, 5 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
 Nodes (20): SampleData, SampleRow, List, Object, Override, Path, ResultSet, SampleRow (+12 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.11
-Nodes (14): Anchor, EngineTask, MainView, List, Override, Result, String, VaadinSession (+6 more)
+Cohesion: 0.10
+Nodes (19): Anchor, allocatedText(), durationText(), outputText(), EngineTask, MainView, String, List (+11 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.14
-Nodes (16): allocatedText(), durationText(), outputText(), String, Builder, ExportMetrics, Function, Column (+8 more)
+Cohesion: 0.18
+Nodes (11): Builder, Function, Column, ColumnType, Object, String, SuppressWarnings, T (+3 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.11
-Nodes (22): SampleDataProvider, Grid, SampleRow, String, TestDataDatabase, ColumnGroup, Comparator, ConfigurableFilterDataProvider (+14 more)
+Nodes (21): SampleDataProvider, Grid, SampleRow, String, TestDataDatabase, ColumnGroup, Comparator, ConfigurableFilterDataProvider (+13 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.20
-Nodes (9): Grid, List, String, Test, Person, Row, Sheet, V (+1 more)
+Cohesion: 0.19
+Nodes (10): Grid, List, String, Test, Person, Row, Sheet, Stream (+2 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.19
@@ -88,8 +102,8 @@ Cohesion: 0.18
 Nodes (13): ExportRunner, Grid, List, Result, SampleRow, String, TestDataDatabase, VaadinSession (+5 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.13
-Nodes (14): Build & run, Concepts, Concurrency / server operation, Demo app, Eclipse, `ExcelMeta` – per-column export metadata, `GridExcelExporter<T>`, Highlights (+6 more)
+Cohesion: 0.12
+Nodes (15): Build & run, Concepts, Concurrency / server operation, Demo app, Eclipse, `ExcelMeta` – per-column export metadata, `GridExcelExporter<T>`, Highlights (+7 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.21
@@ -108,8 +122,8 @@ Cohesion: 0.35
 Nodes (10): band(), benchmark_table(), build(), callout(), feature_table(), kv_table(), mark(), value: True -> gruener Haken, False -> rotes Kreuz, sonst Text (z. B. '~' oder ' (+2 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.36
-Nodes (7): ColumnPathRenderer, Column, Object, SuppressWarnings, T, LitRenderer, ColumnValueExtractor
+Cohesion: 0.26
+Nodes (8): ColumnPathRenderer, Field, Column, Object, SuppressWarnings, T, LitRenderer, ColumnValueExtractor
 
 ### Community 14 - "Community 14"
 Cohesion: 0.40
@@ -127,25 +141,63 @@ Nodes (3): Application, String, AppShellConfigurator
 Cohesion: 0.40
 Nodes (4): Aufruf, Pflege, Vergleichs-PDF-Generator, Voraussetzung
 
+### Community 24 - "Community 24"
+Cohesion: 0.25
+Nodes (4): String, Test, ExcelFormulas, ExcelFormulasTest
+
+### Community 25 - "Community 25"
+Cohesion: 0.29
+Nodes (6): Citations, ColumnValueExtractor (internal fallback chain), Examples, ExportOptions (immutable), Overview, Schema
+
+### Community 26 - "Community 26"
+Cohesion: 0.40
+Nodes (4): Citations, Guardrails, Overview, The xlsxBuilder dependency
+
+### Community 27 - "Community 27"
+Cohesion: 0.40
+Nodes (4): Benchmark, Citations, Examples, Overview
+
+### Community 28 - "Community 28"
+Cohesion: 0.40
+Nodes (4): End-of-Session-Routine (Pflicht bei Code-/Architekturänderungen), Graph-First-Regel, Knowledge Base (graphify + OKF), Projekt-Konventionen - VaadinExcelExport
+
+### Community 29 - "Community 29"
+Cohesion: 0.40
+Nodes (4): Benchmark-Architektur, Citations, Schema, Überblick
+
+### Community 30 - "Community 30"
+Cohesion: 0.40
+Nodes (4): Citations, Examples, Overview, Schema
+
+### Community 31 - "Community 31"
+Cohesion: 0.40
+Nodes (4): Citations, Examples, Overview, Schema
+
+### Community 32 - "Community 32"
+Cohesion: 0.50
+Nodes (3): Citations, Commands, Rules
+
+### Community 33 - "Community 33"
+Cohesion: 0.50
+Nodes (3): 2026-07-04, 2026-07-05, Update Log
+
 ## Knowledge Gaps
-- **47 isolated node(s):** `version`, `configurations`, `String`, `String`, `Result` (+42 more)
+- **86 isolated node(s):** `version`, `configurations`, `String`, `String`, `Result` (+81 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `MainView` connect `Community 1` to `Community 2`?**
-  _High betweenness centrality (0.071) - this node is a cross-community bridge._
-- **Why does `Stream` connect `Community 3` to `Community 0`, `Community 4`, `Community 5`, `Community 6`?**
-  _High betweenness centrality (0.068) - this node is a cross-community bridge._
+- **Why does `Stream` connect `Community 4` to `Community 0`, `Community 3`, `Community 5`, `Community 6`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **What connects `version`, `configurations`, `String` to the rest of the system?**
-  _53 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _92 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.08194905869324474 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.1140819964349376 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.13548387096774195 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09634551495016612 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.11182795698924732 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1103448275862069 - nodes in this community are weakly interconnected._
+- **Should `Community 8` be split into smaller, more focused modules?**
+  _Cohesion score 0.125 - nodes in this community are weakly interconnected._
