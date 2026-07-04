@@ -13,8 +13,9 @@ tsconfig.json
 types.d.ts
 vite.generated.ts
 vite.config.ts
-app/src/main/frontend/
-app/src/main/bundles/
+**/src/main/frontend/
+**/src/main/bundles/
+target/
 
 # --- Eclipse ---
 .project
@@ -24,6 +25,10 @@ app/src/main/bundles/
 # --- IDEA ---
 .idea/
 *.iml
+
+# --- Betriebssystem ---
+Thumbs.db
+.DS_Store
 
 # --- Sonstiges ---
 *.xlsx
