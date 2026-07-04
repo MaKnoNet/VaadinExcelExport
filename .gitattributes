@@ -16,3 +16,6 @@
 # Gradle-Wrapper-Skripte mit festen Zeilenenden.
 *.bat  text eol=crlf
 gradlew text eol=lf
+
+# Team-Git-Hooks: immer LF, sonst scheitert sh unter Git fuer Windows
+.githooks/* text eol=lf
