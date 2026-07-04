@@ -254,4 +254,3 @@ public final class GridExcelExporter<T> {
         return ((DataProvider) dataProvider).fetch(query);
     }
 }
-// KB-Verifikationstest (wird revertiert)
