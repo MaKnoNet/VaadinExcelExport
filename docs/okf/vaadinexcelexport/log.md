@@ -1,5 +1,23 @@
 # Update Log
 
+## 2026-07-07
+
+* **Creation**: new `api-reference/` category (5 files, one per class in
+  `library/src/main/java/de/makno/vaadinexcelexport/`) — exhaustive, code-verified
+  constructor/method reference (parameters, null-handling, return semantics,
+  actually-thrown exceptions), complementing the narrative `components/` docs.
+  Cross-checked against the real implementation and the xlsxBuilder dependency source
+  it delegates to, rather than trusting Javadoc comments blindly; found 4
+  discrepancies/omissions — e.g. `ColumnValueExtractor.extract`'s Javadoc documents
+  only one `IllegalStateException` trigger while the code has a second, distinct one;
+  `ExcelFormulas.hyperlink`'s Javadoc doesn't state that `url` may be `null`;
+  `GridExcelExporter.from(...)` throws the identical exception message for two
+  different root causes (no exportable columns vs. non-matching `columnKeyOrder`).
+  Full details in the respective `api-reference/*.md` files.
+* **Update**: [developer guide](/conventions/okf-entwicklerdoku.md) and `AGENTS.md`
+  extended with the `api-reference/` convention (purpose, distinction from
+  `components/`, mandatory code verification).
+
 ## 2026-07-06 (2)
 
 * **Update**: project conventions migrated from `CLAUDE.md` to `AGENTS.md` (vendor-neutral

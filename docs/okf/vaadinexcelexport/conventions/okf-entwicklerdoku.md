@@ -30,7 +30,9 @@ docs/okf/vaadinexcelexport/
 ├── log.md               # Änderungshistorie, ISO-Datum, neueste zuerst
 ├── architecture/         # Architektur-Entscheidungen, Entwurfsmuster
 │   └── index.md          # GENERIERT
-├── components/           # Öffentliche/wichtige Klassen und Komponenten
+├── components/           # Narrative Übersicht über Klassen/Komponenten
+│   └── index.md          # GENERIERT
+├── api-reference/         # Erschöpfende, verifizierte Methoden-Ebene (siehe unten)
 │   └── index.md          # GENERIERT
 └── conventions/          # Build/Release/Code-Stil/Prozess (auch diese Datei)
     └── index.md          # GENERIERT
@@ -40,6 +42,25 @@ Jede `.md`-Datei außer `index.md`/`log.md` ist ein **Concept** (eigenständiges
 Wissensdokument). `index.md`-Dateien fassen den Inhalt eines Verzeichnisses zusammen
 (Progressive Disclosure) und werden von `tools/kb/generate_okf_index.py` erzeugt —
 **Handänderungen daran gehen beim nächsten Commit verloren.**
+
+## api-reference/ vs. components/
+
+`components/` (bzw. `architecture/`) beschreibt eine Klasse/ein Konzept **narrativ**:
+Zweck, Design-Entscheidungen, Beispiele — üblicherweise mehrere Klassen pro Datei
+gebündelt. `api-reference/` ist die **erschöpfende Methoden-Ebene**: eine Datei pro
+Klasse (`type: API Reference`), die **jeden** Konstruktor und jede öffentliche/
+paketsichtbare Methode auflistet — mit Parametern, ob `null` erlaubt ist, Rückgabewert-
+Semantik und tatsächlich geworfenen Exceptions.
+
+**Zwingend: gegen den echten Code verifizieren, nicht nur Javadoc kopieren.** Javadoc-
+Kommentare können veraltet, unvollständig oder schlicht falsch sein (in diesem Projekt
+wurden bereits mehrere solcher Fälle gefunden und in den jeweiligen `api-reference/`-
+Dateien richtiggestellt — z. B. eine irreführende gemeinsame Fehlermeldung in
+`GridExcelExporter.from(...)`, wenn Grid ohne exportierbare Spalten vs. nicht
+passende `columnKeyOrder` unterschieden werden sollten, aber dieselbe Meldung
+liefern). Bei jeder Änderung an einer Methoden-Signatur, einem Null-Check oder einer
+geworfenen Exception **muss** die zugehörige `api-reference/`-Datei aktualisiert
+werden — Teil der Pre-Commit-Routine (siehe unten).
 
 # Frontmatter-Konvention
 
