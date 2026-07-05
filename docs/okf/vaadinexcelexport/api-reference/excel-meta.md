@@ -24,6 +24,35 @@ another reads) are not synchronized and are not this class's contract to guard a
 relies on Vaadin UI code running single-threaded per `UI`/session, consistent with normal
 Vaadin usage.
 
+# Inheritance Hierarchy
+
+**Forward (own declaration):** verified declaration line —
+
+```java
+public final class ExcelMeta {
+```
+
+No `extends` clause (implicit `java.lang.Object` only) and no `implements` clause. The nested
+`Builder<T>` has its own, separate declaration:
+
+```java
+public static final class Builder<T> {
+```
+
+`Builder<T>` likewise has no `extends` and no `implements` clause — it is a standalone static
+nested class, not a subclass of `ExcelMeta` itself (Java nested classes do not inherit from
+their enclosing class merely by nesting).
+
+**Backward (project-internal subtypes):** none for either `ExcelMeta` or `ExcelMeta.Builder`.
+Verified by grep across `library/src/main/java/de/makno/vaadinexcelexport/` and
+`library/src/test/java/...` for `extends ExcelMeta` / `implements ExcelMeta` — no matches.
+Both classes are `final`, ruling out subclassing entirely regardless.
+
+**Summary:** keine Ober-/Unterklassen für `ExcelMeta` und `ExcelMeta.Builder`; beide sind
+`final class`, erweitern nur `java.lang.Object`, implementieren keine Interfaces. `ExcelMeta`
+also has a private no-arg constructor (non-instantiable static-utility class); `Builder` is
+instantiated only internally, via a package-private constructor called from `ExcelMeta.type(...)`.
+
 # Constructors
 
 | Signature | Parameters | Null allowed | On invalid input |

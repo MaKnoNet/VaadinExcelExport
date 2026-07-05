@@ -23,6 +23,36 @@ and is safely shareable after construction. Each `export(...)` call creates its 
 `XlsxBuilder` every call) — no shared mutable state across concurrent `export` calls on the
 same `GridExcelExporter` instance.
 
+# Inheritance Hierarchy
+
+**Forward (own declaration):** verified declaration line —
+
+```java
+public final class GridExcelExporter<T> {
+```
+
+No `extends` clause (implicit `java.lang.Object` only) and no `implements` clause —
+`GridExcelExporter` does **not** implement any xlsxBuilder interface. It uses several
+xlsxBuilder types heavily (`ColumnGroup`, `DataProviders`, `WorkbookBuilder`, `XlsxBuilder`,
+and `de.makno.xlsxbuilder.DataProvider`, plus `ResultSetRowMapper` mentioned in Javadoc), but
+verified in the imports and method bodies: every one of these appears only as a method
+parameter, return type, or local variable type — pure composition/collaboration, never as a
+supertype in a `class ... extends`/`implements` clause. Likewise it neither extends nor
+implements any Vaadin type (`Grid`, `Grid.Column`, `DataProvider` from
+`com.vaadin.flow.data.provider` are all used the same collaborator way, not inherited from).
+
+**Backward (project-internal subtypes):** none. Verified by grep across
+`library/src/main/java/de/makno/vaadinexcelexport/` and `library/src/test/java/...` for
+`extends GridExcelExporter` / `implements GridExcelExporter` — no matches. `final` also
+precludes it.
+
+**Summary:** keine Ober-/Unterklassen; `final class`, erweitert nur `java.lang.Object`,
+implementiert keine Interfaces — including none from its own `de.makno.xlsxbuilder` dependency,
+despite deep collaboration with `WorkbookBuilder`/`XlsxBuilder`/`DataProvider` at the method
+level. Its only constructor is `private`, reachable solely through the static `from(...)`
+factory methods, further underscoring that this is a closed, non-extensible bridge type rather
+than a base class meant for subclassing.
+
 # Constructors
 
 ## `private GridExcelExporter(String sheetName, List<Column<T>> columns)`

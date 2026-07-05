@@ -18,6 +18,32 @@ overview ("ExportOptions (immutable)" section).
 **Thread-safety:** immutable by construction (compact constructor defensively copies both
 lists via `List.copyOf`); safe to share and reuse across threads and requests.
 
+# Inheritance Hierarchy
+
+**Forward (own declaration):** verified declaration line —
+
+```java
+public record ExportOptions(List<String> footerLines, List<String> sumColumns, boolean parallel) {
+```
+
+No explicit `extends` clause is written, but this is a Java `record`: every record implicitly
+and non-negotiably extends `java.lang.Record` (an abstract class in `java.lang`) — this is a
+JDK language rule, not a project decision, and cannot be overridden (records cannot extend any
+other class, and `Record` itself is not further subclassable outside the record mechanism). No
+`implements` clause — `ExportOptions` implements no interface, project-internal or
+JDK/framework.
+
+**Backward (project-internal subtypes):** none, and none possible. Verified by grep across
+`library/src/main/java/de/makno/vaadinexcelexport/` and `library/src/test/java/...` for
+`extends ExportOptions` — no matches. This is additionally enforced by the JDK itself: all
+Java records are implicitly `final` and can never be extended by any class, so no subclass
+could exist even if one were attempted.
+
+**Summary:** keine Ober-/Unterklassen im Projektsinn; `record` (implizit `final`, erweitert
+zwingend `java.lang.Record`), implementiert keine Interfaces. The record's own accessor methods
+(`footerLines()`, `sumColumns()`, `parallel()`) and `equals`/`hashCode`/`toString` are
+JDK-generated from the record components, not inherited business logic.
+
 # Constructors
 
 ## Canonical constructor (compact form): `public ExportOptions(List<String> footerLines, List<String> sumColumns, boolean parallel)`

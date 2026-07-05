@@ -1,5 +1,16 @@
 # Update Log
 
+## 2026-07-07 (2)
+
+* **Update**: all 5 `api-reference/*.md` files extended with a verified
+  `# Inheritance Hierarchy` section (superclass/interfaces forward, known
+  implementers/subclasses backward, verified by grepping the whole source
+  tree). Notable finding: `GridExcelExporter` heavily uses xlsxBuilder and
+  Vaadin types (`ColumnGroup`, `WorkbookBuilder`, `Grid`, `DataProvider`) via
+  pure composition — verified it extends/implements none of them. `ExportOptions`
+  as a Java record implicitly extends `java.lang.Record` and can never be
+  subclassed (JDK language rule).
+
 ## 2026-07-07
 
 * **Creation**: new `api-reference/` category (5 files, one per class in

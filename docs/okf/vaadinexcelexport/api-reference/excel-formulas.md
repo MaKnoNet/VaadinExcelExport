@@ -17,6 +17,25 @@ parameter/exception contract.
 **Thread-safety:** stateless, safe for concurrent use (verified: no fields other than
 `private static final String` scheme constants).
 
+# Inheritance Hierarchy
+
+**Forward (own declaration):** verified declaration line —
+
+```java
+public final class ExcelFormulas {
+```
+
+No `extends` clause (implicit `java.lang.Object` only) and no `implements` clause.
+
+**Backward (project-internal subtypes):** none. Verified by grep across
+`library/src/main/java/de/makno/vaadinexcelexport/` and `library/src/test/java/...` for
+`extends ExcelFormulas` / `implements ExcelFormulas` — no matches. `final` also makes this
+impossible outside reflection tricks.
+
+**Summary:** keine Ober-/Unterklassen; `final class`, erweitert nur `java.lang.Object`,
+implementiert keine Interfaces — a private no-arg constructor also prevents instantiation
+entirely (pure static-method utility class).
+
 # Constructors
 
 | Signature | Parameters | Null allowed | On invalid input |

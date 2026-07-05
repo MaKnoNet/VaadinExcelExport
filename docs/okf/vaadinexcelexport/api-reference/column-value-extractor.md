@@ -24,6 +24,28 @@ This class is package-private; it has no public API surface. It is documented he
 `GridExcelExporter` calls directly into it and its null/exception behavior is part of the
 export contract.
 
+# Inheritance Hierarchy
+
+**Forward (own declaration):** verified declaration line —
+
+```java
+final class ColumnValueExtractor {
+```
+
+No `extends` clause (implicit `java.lang.Object` only) and no `implements` clause — this class
+implements no interface, project-internal or JDK/framework.
+
+**Backward (project-internal subtypes):** none. Verified by grep across
+`library/src/main/java/de/makno/vaadinexcelexport/` and `library/src/test/java/...` for
+`extends ColumnValueExtractor` / `implements ColumnValueExtractor` — no matches. The class is
+also package-private, so it could not be subclassed from outside this package even if it were
+not `final`.
+
+**Summary:** keine Ober-/Unterklassen; `final class`, erweitert nur `java.lang.Object`,
+implementiert keine Interfaces. It also carries a private no-arg constructor, reinforcing that
+it is a non-instantiable static-utility class rather than a type meant to participate in any
+hierarchy.
+
 # Constructors
 
 | Signature | Parameters | Null allowed | On invalid input |
