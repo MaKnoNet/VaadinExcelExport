@@ -756,7 +756,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L1",
       "id": "app_sampledataprovider",
-      "community": 3,
+      "community": 40,
       "norm_label": "sampledataprovider.java"
     },
     {
@@ -765,7 +765,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L17",
       "id": "app_sampledataprovider_sampledataprovider",
-      "community": 3,
+      "community": 40,
       "norm_label": "sampledataprovider"
     },
     {
@@ -774,7 +774,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L19",
       "id": "app_sampledataprovider_sampledataprovider_sampledataprovider",
-      "community": 3,
+      "community": 40,
       "norm_label": ".sampledataprovider()"
     },
     {
@@ -783,7 +783,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "app_sampledataprovider_sampledataprovider_bind",
-      "community": 3,
+      "community": 40,
       "norm_label": ".bind()"
     },
     {
@@ -792,7 +792,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "app_src_main_java_de_makno_vaadinexcelexport_app_sampledataprovider_java_grid",
-      "community": 3,
+      "community": 40,
       "norm_label": "grid"
     },
     {
@@ -801,7 +801,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "app_src_main_java_de_makno_vaadinexcelexport_app_sampledataprovider_java_samplerow",
-      "community": 3,
+      "community": 40,
       "norm_label": "samplerow"
     },
     {
@@ -810,7 +810,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "app_src_main_java_de_makno_vaadinexcelexport_app_sampledataprovider_java_testdatadatabase",
-      "community": 3,
+      "community": 40,
       "norm_label": "testdatadatabase"
     },
     {
@@ -819,7 +819,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "configurablefilterdataprovider",
-      "community": 3,
+      "community": 40,
       "norm_label": "configurablefilterdataprovider"
     },
     {
@@ -828,7 +828,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "void",
-      "community": 3,
+      "community": 40,
       "norm_label": "void"
     },
     {
@@ -837,7 +837,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleDataProvider.java",
       "source_location": "L28",
       "id": "app_src_main_java_de_makno_vaadinexcelexport_app_sampledataprovider_java_string",
-      "community": 3,
+      "community": 40,
       "norm_label": "string"
     },
     {
@@ -990,7 +990,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleGrid.java",
       "source_location": "L206",
       "id": "query",
-      "community": 3,
+      "community": 6,
       "norm_label": "query"
     },
     {
@@ -1017,7 +1017,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleGrid.java",
       "source_location": "L218",
       "id": "gridsortorder",
-      "community": 6,
+      "community": 1,
       "norm_label": "gridsortorder"
     },
     {
@@ -1152,7 +1152,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/SampleSearch.java",
       "source_location": "L39",
       "id": "app_samplesearch_isempty",
-      "community": 10,
+      "community": 3,
       "norm_label": "isempty()"
     },
     {
@@ -1197,7 +1197,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java",
       "source_location": "L1",
       "id": "app_testdatadatabase",
-      "community": 0,
+      "community": 3,
       "norm_label": "testdatadatabase.java"
     },
     {
@@ -1215,7 +1215,7 @@
       "source_file": "",
       "source_location": "",
       "id": "autocloseable",
-      "community": 0,
+      "community": 3,
       "norm_label": "autocloseable"
     },
     {
@@ -1386,7 +1386,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java",
       "source_location": "L254",
       "id": "app_testdatadatabase_streamingresult",
-      "community": 0,
+      "community": 3,
       "norm_label": "streamingresult"
     },
     {
@@ -1395,7 +1395,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java",
       "source_location": "L259",
       "id": "app_testdatadatabase_streamingresult_streamingresult",
-      "community": 0,
+      "community": 3,
       "norm_label": ".streamingresult()"
     },
     {
@@ -1404,7 +1404,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java",
       "source_location": "L259",
       "id": "statement",
-      "community": 0,
+      "community": 3,
       "norm_label": "statement"
     },
     {
@@ -1413,7 +1413,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java",
       "source_location": "L259",
       "id": "app_src_main_java_de_makno_vaadinexcelexport_app_testdatadatabase_java_resultset",
-      "community": 0,
+      "community": 3,
       "norm_label": "resultset"
     },
     {
@@ -1422,7 +1422,7 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java",
       "source_location": "L265",
       "id": "app_testdatadatabase_streamingresult_resultset",
-      "community": 0,
+      "community": 3,
       "norm_label": ".resultset()"
     },
     {
@@ -2457,7 +2457,7 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/GridExcelExporter.java",
       "source_location": "L264",
       "id": "stream",
-      "community": 4,
+      "community": 3,
       "norm_label": "stream"
     },
     {
@@ -3019,6 +3019,51 @@
       "norm_label": "warn-only okf-checks: type-pflichtfeld, keine relativen ../-links."
     },
     {
+      "label": "AGENTS.md",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "id": "agents",
+      "community": 46,
+      "norm_label": "agents.md"
+    },
+    {
+      "label": "Projekt-Konventionen - VaadinExcelExport",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "id": "agents_projekt_konventionen_vaadinexcelexport",
+      "community": 46,
+      "norm_label": "projekt-konventionen - vaadinexcelexport"
+    },
+    {
+      "label": "Knowledge Base (graphify + OKF)",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L7",
+      "id": "agents_knowledge_base_graphify_okf",
+      "community": 46,
+      "norm_label": "knowledge base (graphify + okf)"
+    },
+    {
+      "label": "Graph-First-Regel",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L18",
+      "id": "agents_graph_first_regel",
+      "community": 46,
+      "norm_label": "graph-first-regel"
+    },
+    {
+      "label": "Pre-Commit-Routine (Pflicht vor JEDEM Commit mit Code-/Architektur\u00e4nderungen)",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L24",
+      "id": "agents_pre_commit_routine_pflicht_vor_jedem_commit_mit_code_architektur\u00e4nderungen",
+      "community": 46,
+      "norm_label": "pre-commit-routine (pflicht vor jedem commit mit code-/architekturanderungen)"
+    },
+    {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
@@ -3028,40 +3073,13 @@
       "norm_label": "claude.md"
     },
     {
-      "label": "Projekt-Konventionen - VaadinExcelExport",
+      "label": "Claude Code \u2013 Projekt-Instruktionen",
       "file_type": "document",
       "source_file": "CLAUDE.md",
       "source_location": "L1",
-      "id": "claude_projekt_konventionen_vaadinexcelexport",
+      "id": "claude_claude_code_projekt_instruktionen",
       "community": 28,
-      "norm_label": "projekt-konventionen - vaadinexcelexport"
-    },
-    {
-      "label": "Knowledge Base (graphify + OKF)",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L7",
-      "id": "claude_knowledge_base_graphify_okf",
-      "community": 28,
-      "norm_label": "knowledge base (graphify + okf)"
-    },
-    {
-      "label": "Graph-First-Regel",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L18",
-      "id": "claude_graph_first_regel",
-      "community": 28,
-      "norm_label": "graph-first-regel"
-    },
-    {
-      "label": "End-of-Session-Routine (Pflicht bei Code-/Architektur\u00e4nderungen)",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L24",
-      "id": "claude_end_of_session_routine_pflicht_bei_code_architektur\u00e4nderungen",
-      "community": 28,
-      "norm_label": "end-of-session-routine (pflicht bei code-/architekturanderungen)"
+      "norm_label": "claude code \u2013 projekt-instruktionen"
     },
     {
       "label": "README.md",
@@ -3260,6 +3278,1455 @@
       "id": "upgrade_24_10_4_bauen_verifizieren",
       "community": 15,
       "norm_label": "4. bauen & verifizieren"
+    },
+    {
+      "label": "column-value-extractor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_column_value_extractor",
+      "community": 41,
+      "norm_label": "column-value-extractor.md"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L10",
+      "id": "column_value_extractor_column_value_extractor_overview",
+      "community": 41,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Fields",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L27",
+      "id": "column_value_extractor_column_value_extractor_fields",
+      "community": 41,
+      "norm_label": "fields"
+    },
+    {
+      "label": "Thread-Safety",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L36",
+      "id": "column_value_extractor_column_value_extractor_thread_safety",
+      "community": 41,
+      "norm_label": "thread-safety"
+    },
+    {
+      "label": "Serialization",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L45",
+      "id": "column_value_extractor_column_value_extractor_serialization",
+      "community": 41,
+      "norm_label": "serialization"
+    },
+    {
+      "label": "equals/hashCode/toString",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L51",
+      "id": "column_value_extractor_column_value_extractor_equals_hashcode_tostring",
+      "community": 41,
+      "norm_label": "equals/hashcode/tostring"
+    },
+    {
+      "label": "Inheritance Hierarchy",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L58",
+      "id": "column_value_extractor_column_value_extractor_inheritance_hierarchy",
+      "community": 41,
+      "norm_label": "inheritance hierarchy"
+    },
+    {
+      "label": "Constructors",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L81",
+      "id": "column_value_extractor_column_value_extractor_constructors",
+      "community": 41,
+      "norm_label": "constructors"
+    },
+    {
+      "label": "Methods",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L85",
+      "id": "column_value_extractor_column_value_extractor_methods",
+      "community": 41,
+      "norm_label": "methods"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L92",
+      "id": "column_value_extractor_column_value_extractor_citations",
+      "community": 41,
+      "norm_label": "citations"
+    },
+    {
+      "label": "constructor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/constructor.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_constructor",
+      "community": 76,
+      "norm_label": "constructor.md"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/constructor.md",
+      "source_location": "L15",
+      "id": "column_value_extractor_constructor_citations",
+      "community": 76,
+      "norm_label": "citations"
+    },
+    {
+      "label": "extract-from-column-path-renderer.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-column-path-renderer.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_extract_from_column_path_renderer",
+      "community": 50,
+      "norm_label": "extract-from-column-path-renderer.md"
+    },
+    {
+      "label": "`private static <T> Object extractFromColumnPathRenderer(T item, ColumnPathRenderer<T> renderer)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-column-path-renderer.md",
+      "source_location": "L10",
+      "id": "column_value_extractor_extract_from_column_path_renderer_private_static_t_object_extractfromcolumnpathrenderer_t_item_columnpathrenderer_t_renderer",
+      "community": 50,
+      "norm_label": "`private static <t> object extractfromcolumnpathrenderer(t item, columnpathrenderer<t> renderer)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-column-path-renderer.md",
+      "source_location": "L34",
+      "id": "column_value_extractor_extract_from_column_path_renderer_citations",
+      "community": 50,
+      "norm_label": "citations"
+    },
+    {
+      "label": "extract-from-lit-renderer.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-lit-renderer.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_extract_from_lit_renderer",
+      "community": 51,
+      "norm_label": "extract-from-lit-renderer.md"
+    },
+    {
+      "label": "`private static <T> Object extractFromLitRenderer(T item, LitRenderer<T> renderer)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-lit-renderer.md",
+      "source_location": "L10",
+      "id": "column_value_extractor_extract_from_lit_renderer_private_static_t_object_extractfromlitrenderer_t_item_litrenderer_t_renderer",
+      "community": 51,
+      "norm_label": "`private static <t> object extractfromlitrenderer(t item, litrenderer<t> renderer)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-lit-renderer.md",
+      "source_location": "L38",
+      "id": "column_value_extractor_extract_from_lit_renderer_citations",
+      "community": 51,
+      "norm_label": "citations"
+    },
+    {
+      "label": "extract.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_extract",
+      "community": 49,
+      "norm_label": "extract.md"
+    },
+    {
+      "label": "`static <T> Object extract(T item, Column<T> column)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract.md",
+      "source_location": "L10",
+      "id": "column_value_extractor_extract_static_t_object_extract_t_item_column_t_column",
+      "community": 49,
+      "norm_label": "`static <t> object extract(t item, column<t> column)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract.md",
+      "source_location": "L50",
+      "id": "column_value_extractor_extract_citations",
+      "community": 49,
+      "norm_label": "citations"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/index.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_index",
+      "community": 77,
+      "norm_label": "index.md"
+    },
+    {
+      "label": "Konzepte",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/index.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_index_konzepte",
+      "community": 77,
+      "norm_label": "konzepte"
+    },
+    {
+      "label": "resolve-column-path-provider-field.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/resolve-column-path-provider-field.md",
+      "source_location": "L1",
+      "id": "column_value_extractor_resolve_column_path_provider_field",
+      "community": 52,
+      "norm_label": "resolve-column-path-provider-field.md"
+    },
+    {
+      "label": "`private static Field resolveColumnPathProviderField()`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/resolve-column-path-provider-field.md",
+      "source_location": "L10",
+      "id": "column_value_extractor_resolve_column_path_provider_field_private_static_field_resolvecolumnpathproviderfield",
+      "community": 52,
+      "norm_label": "`private static field resolvecolumnpathproviderfield()`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/resolve-column-path-provider-field.md",
+      "source_location": "L26",
+      "id": "column_value_extractor_resolve_column_path_provider_field_citations",
+      "community": 52,
+      "norm_label": "citations"
+    },
+    {
+      "label": "constructor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/constructor.md",
+      "source_location": "L1",
+      "id": "excel_formulas_constructor",
+      "community": 78,
+      "norm_label": "constructor.md"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/constructor.md",
+      "source_location": "L15",
+      "id": "excel_formulas_constructor_citations",
+      "community": 78,
+      "norm_label": "citations"
+    },
+    {
+      "label": "escape.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/escape.md",
+      "source_location": "L1",
+      "id": "excel_formulas_escape",
+      "community": 53,
+      "norm_label": "escape.md"
+    },
+    {
+      "label": "`private static String escape(String value)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/escape.md",
+      "source_location": "L10",
+      "id": "excel_formulas_escape_private_static_string_escape_string_value",
+      "community": 53,
+      "norm_label": "`private static string escape(string value)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/escape.md",
+      "source_location": "L24",
+      "id": "excel_formulas_escape_citations",
+      "community": 53,
+      "norm_label": "citations"
+    },
+    {
+      "label": "excel-formulas.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L1",
+      "id": "excel_formulas_excel_formulas",
+      "community": 42,
+      "norm_label": "excel-formulas.md"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L10",
+      "id": "excel_formulas_excel_formulas_overview",
+      "community": 42,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Fields",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L20",
+      "id": "excel_formulas_excel_formulas_fields",
+      "community": 42,
+      "norm_label": "fields"
+    },
+    {
+      "label": "Thread-Safety",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L31",
+      "id": "excel_formulas_excel_formulas_thread_safety",
+      "community": 42,
+      "norm_label": "thread-safety"
+    },
+    {
+      "label": "Serialization",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L37",
+      "id": "excel_formulas_excel_formulas_serialization",
+      "community": 42,
+      "norm_label": "serialization"
+    },
+    {
+      "label": "equals/hashCode/toString",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L43",
+      "id": "excel_formulas_excel_formulas_equals_hashcode_tostring",
+      "community": 42,
+      "norm_label": "equals/hashcode/tostring"
+    },
+    {
+      "label": "Inheritance Hierarchy",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L49",
+      "id": "excel_formulas_excel_formulas_inheritance_hierarchy",
+      "community": 42,
+      "norm_label": "inheritance hierarchy"
+    },
+    {
+      "label": "Constructors",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L69",
+      "id": "excel_formulas_excel_formulas_constructors",
+      "community": 42,
+      "norm_label": "constructors"
+    },
+    {
+      "label": "Methods",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L73",
+      "id": "excel_formulas_excel_formulas_methods",
+      "community": 42,
+      "norm_label": "methods"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L79",
+      "id": "excel_formulas_excel_formulas_citations",
+      "community": 42,
+      "norm_label": "citations"
+    },
+    {
+      "label": "hyperlink.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/hyperlink.md",
+      "source_location": "L1",
+      "id": "excel_formulas_hyperlink",
+      "community": 54,
+      "norm_label": "hyperlink.md"
+    },
+    {
+      "label": "`public static String hyperlink(String url, String displayName)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/hyperlink.md",
+      "source_location": "L10",
+      "id": "excel_formulas_hyperlink_public_static_string_hyperlink_string_url_string_displayname",
+      "community": 54,
+      "norm_label": "`public static string hyperlink(string url, string displayname)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/hyperlink.md",
+      "source_location": "L40",
+      "id": "excel_formulas_hyperlink_citations",
+      "community": 54,
+      "norm_label": "citations"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/index.md",
+      "source_location": "L1",
+      "id": "excel_formulas_index",
+      "community": 79,
+      "norm_label": "index.md"
+    },
+    {
+      "label": "Konzepte",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/index.md",
+      "source_location": "L1",
+      "id": "excel_formulas_index_konzepte",
+      "community": 79,
+      "norm_label": "konzepte"
+    },
+    {
+      "label": "sanitize-url.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/sanitize-url.md",
+      "source_location": "L1",
+      "id": "excel_formulas_sanitize_url",
+      "community": 55,
+      "norm_label": "sanitize-url.md"
+    },
+    {
+      "label": "`private static String sanitizeUrl(String url)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/sanitize-url.md",
+      "source_location": "L10",
+      "id": "excel_formulas_sanitize_url_private_static_string_sanitizeurl_string_url",
+      "community": 55,
+      "norm_label": "`private static string sanitizeurl(string url)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/sanitize-url.md",
+      "source_location": "L23",
+      "id": "excel_formulas_sanitize_url_citations",
+      "community": 55,
+      "norm_label": "citations"
+    },
+    {
+      "label": "builder-constructor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-constructor.md",
+      "source_location": "L1",
+      "id": "excel_meta_builder_constructor",
+      "community": 56,
+      "norm_label": "builder-constructor.md"
+    },
+    {
+      "label": "`Builder(Column<T> column)` (package-private constructor)",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-constructor.md",
+      "source_location": "L10",
+      "id": "excel_meta_builder_constructor_builder_column_t_column_package_private_constructor",
+      "community": 56,
+      "norm_label": "`builder(column<t> column)` (package-private constructor)"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-constructor.md",
+      "source_location": "L18",
+      "id": "excel_meta_builder_constructor_citations",
+      "community": 56,
+      "norm_label": "citations"
+    },
+    {
+      "label": "builder-converter.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-converter.md",
+      "source_location": "L1",
+      "id": "excel_meta_builder_converter",
+      "community": 57,
+      "norm_label": "builder-converter.md"
+    },
+    {
+      "label": "`public Builder<T> converter(Function<Object, ?> converter)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-converter.md",
+      "source_location": "L10",
+      "id": "excel_meta_builder_converter_public_builder_t_converter_function_object_converter",
+      "community": 57,
+      "norm_label": "`public builder<t> converter(function<object, ?> converter)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-converter.md",
+      "source_location": "L23",
+      "id": "excel_meta_builder_converter_citations",
+      "community": 57,
+      "norm_label": "citations"
+    },
+    {
+      "label": "builder-format.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-format.md",
+      "source_location": "L1",
+      "id": "excel_meta_builder_format",
+      "community": 58,
+      "norm_label": "builder-format.md"
+    },
+    {
+      "label": "`public Builder<T> format(String format)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-format.md",
+      "source_location": "L10",
+      "id": "excel_meta_builder_format_public_builder_t_format_string_format",
+      "community": 58,
+      "norm_label": "`public builder<t> format(string format)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-format.md",
+      "source_location": "L22",
+      "id": "excel_meta_builder_format_citations",
+      "community": 58,
+      "norm_label": "citations"
+    },
+    {
+      "label": "builder-group.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-group.md",
+      "source_location": "L1",
+      "id": "excel_meta_builder_group",
+      "community": 59,
+      "norm_label": "builder-group.md"
+    },
+    {
+      "label": "`public Builder<T> group(String label)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-group.md",
+      "source_location": "L10",
+      "id": "excel_meta_builder_group_public_builder_t_group_string_label",
+      "community": 59,
+      "norm_label": "`public builder<t> group(string label)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-group.md",
+      "source_location": "L20",
+      "id": "excel_meta_builder_group_citations",
+      "community": 59,
+      "norm_label": "citations"
+    },
+    {
+      "label": "constructor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/constructor.md",
+      "source_location": "L1",
+      "id": "excel_meta_constructor",
+      "community": 80,
+      "norm_label": "constructor.md"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/constructor.md",
+      "source_location": "L15",
+      "id": "excel_meta_constructor_citations",
+      "community": 80,
+      "norm_label": "citations"
+    },
+    {
+      "label": "excel-meta.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L1",
+      "id": "excel_meta_excel_meta",
+      "community": 39,
+      "norm_label": "excel-meta.md"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L10",
+      "id": "excel_meta_excel_meta_overview",
+      "community": 39,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Fields",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L27",
+      "id": "excel_meta_excel_meta_fields",
+      "community": 39,
+      "norm_label": "fields"
+    },
+    {
+      "label": "Thread-Safety",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L47",
+      "id": "excel_meta_excel_meta_thread_safety",
+      "community": 39,
+      "norm_label": "thread-safety"
+    },
+    {
+      "label": "Serialization",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L60",
+      "id": "excel_meta_excel_meta_serialization",
+      "community": 39,
+      "norm_label": "serialization"
+    },
+    {
+      "label": "equals/hashCode/toString",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L66",
+      "id": "excel_meta_excel_meta_equals_hashcode_tostring",
+      "community": 39,
+      "norm_label": "equals/hashcode/tostring"
+    },
+    {
+      "label": "Inheritance Hierarchy",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L75",
+      "id": "excel_meta_excel_meta_inheritance_hierarchy",
+      "community": 39,
+      "norm_label": "inheritance hierarchy"
+    },
+    {
+      "label": "Constructors",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L105",
+      "id": "excel_meta_excel_meta_constructors",
+      "community": 39,
+      "norm_label": "constructors"
+    },
+    {
+      "label": "Methods",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L109",
+      "id": "excel_meta_excel_meta_methods",
+      "community": 39,
+      "norm_label": "methods"
+    },
+    {
+      "label": "Nested class: `ExcelMeta.Builder<T>`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L119",
+      "id": "excel_meta_excel_meta_nested_class_excelmeta_builder_t",
+      "community": 39,
+      "norm_label": "nested class: `excelmeta.builder<t>`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L134",
+      "id": "excel_meta_excel_meta_citations",
+      "community": 39,
+      "norm_label": "citations"
+    },
+    {
+      "label": "get-converter.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-converter.md",
+      "source_location": "L1",
+      "id": "excel_meta_get_converter",
+      "community": 60,
+      "norm_label": "get-converter.md"
+    },
+    {
+      "label": "`static <T> Function<Object, ?> getConverter(Column<T> column)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-converter.md",
+      "source_location": "L10",
+      "id": "excel_meta_get_converter_static_t_function_object_getconverter_column_t_column",
+      "community": 60,
+      "norm_label": "`static <t> function<object, ?> getconverter(column<t> column)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-converter.md",
+      "source_location": "L22",
+      "id": "excel_meta_get_converter_citations",
+      "community": 60,
+      "norm_label": "citations"
+    },
+    {
+      "label": "get-format.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-format.md",
+      "source_location": "L1",
+      "id": "excel_meta_get_format",
+      "community": 61,
+      "norm_label": "get-format.md"
+    },
+    {
+      "label": "`static String getFormat(Column<?> column)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-format.md",
+      "source_location": "L10",
+      "id": "excel_meta_get_format_static_string_getformat_column_column",
+      "community": 61,
+      "norm_label": "`static string getformat(column<?> column)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-format.md",
+      "source_location": "L18",
+      "id": "excel_meta_get_format_citations",
+      "community": 61,
+      "norm_label": "citations"
+    },
+    {
+      "label": "get-group.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-group.md",
+      "source_location": "L1",
+      "id": "excel_meta_get_group",
+      "community": 62,
+      "norm_label": "get-group.md"
+    },
+    {
+      "label": "`static String getGroup(Column<?> column)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-group.md",
+      "source_location": "L10",
+      "id": "excel_meta_get_group_static_string_getgroup_column_column",
+      "community": 62,
+      "norm_label": "`static string getgroup(column<?> column)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-group.md",
+      "source_location": "L18",
+      "id": "excel_meta_get_group_citations",
+      "community": 62,
+      "norm_label": "citations"
+    },
+    {
+      "label": "get-type.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-type.md",
+      "source_location": "L1",
+      "id": "excel_meta_get_type",
+      "community": 63,
+      "norm_label": "get-type.md"
+    },
+    {
+      "label": "`static ColumnType getType(Column<?> column)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-type.md",
+      "source_location": "L10",
+      "id": "excel_meta_get_type_static_columntype_gettype_column_column",
+      "community": 63,
+      "norm_label": "`static columntype gettype(column<?> column)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-type.md",
+      "source_location": "L25",
+      "id": "excel_meta_get_type_citations",
+      "community": 63,
+      "norm_label": "citations"
+    },
+    {
+      "label": "get-value-provider.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-value-provider.md",
+      "source_location": "L1",
+      "id": "excel_meta_get_value_provider",
+      "community": 64,
+      "norm_label": "get-value-provider.md"
+    },
+    {
+      "label": "`static <T> ValueProvider<T, ?> getValueProvider(Column<T> column)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-value-provider.md",
+      "source_location": "L10",
+      "id": "excel_meta_get_value_provider_static_t_valueprovider_t_getvalueprovider_column_t_column",
+      "community": 64,
+      "norm_label": "`static <t> valueprovider<t, ?> getvalueprovider(column<t> column)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-value-provider.md",
+      "source_location": "L22",
+      "id": "excel_meta_get_value_provider_citations",
+      "community": 64,
+      "norm_label": "citations"
+    },
+    {
+      "label": "group.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/group.md",
+      "source_location": "L1",
+      "id": "excel_meta_group",
+      "community": 65,
+      "norm_label": "group.md"
+    },
+    {
+      "label": "`public static void group(Column<?> column, String label)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/group.md",
+      "source_location": "L10",
+      "id": "excel_meta_group_public_static_void_group_column_column_string_label",
+      "community": 65,
+      "norm_label": "`public static void group(column<?> column, string label)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/group.md",
+      "source_location": "L31",
+      "id": "excel_meta_group_citations",
+      "community": 65,
+      "norm_label": "citations"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/index.md",
+      "source_location": "L1",
+      "id": "excel_meta_index",
+      "community": 81,
+      "norm_label": "index.md"
+    },
+    {
+      "label": "Konzepte",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/index.md",
+      "source_location": "L1",
+      "id": "excel_meta_index_konzepte",
+      "community": 81,
+      "norm_label": "konzepte"
+    },
+    {
+      "label": "type.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L1",
+      "id": "excel_meta_type",
+      "community": 47,
+      "norm_label": "type.md"
+    },
+    {
+      "label": "`public static <T> Builder<T> type(Column<T> column, ColumnType type, ValueProvider<T, ?> valueProvider)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L10",
+      "id": "excel_meta_type_public_static_t_builder_t_type_column_t_column_columntype_type_valueprovider_t_valueprovider",
+      "community": 47,
+      "norm_label": "`public static <t> builder<t> type(column<t> column, columntype type, valueprovider<t, ?> valueprovider)`"
+    },
+    {
+      "label": "`public static <T> Builder<T> type(Column<T> column, ColumnType type)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L34",
+      "id": "excel_meta_type_public_static_t_builder_t_type_column_t_column_columntype_type",
+      "community": 47,
+      "norm_label": "`public static <t> builder<t> type(column<t> column, columntype type)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L51",
+      "id": "excel_meta_type_citations",
+      "community": 47,
+      "norm_label": "citations"
+    },
+    {
+      "label": "constructor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/constructor.md",
+      "source_location": "L1",
+      "id": "export_options_constructor",
+      "community": 66,
+      "norm_label": "constructor.md"
+    },
+    {
+      "label": "Canonical constructor (compact form): `public ExportOptions(List<String> footerLines, List<String> sumColumns, boolean parallel)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/constructor.md",
+      "source_location": "L11",
+      "id": "export_options_constructor_canonical_constructor_compact_form_public_exportoptions_list_string_footerlines_list_string_sumcolumns_boolean_parallel",
+      "community": 66,
+      "norm_label": "canonical constructor (compact form): `public exportoptions(list<string> footerlines, list<string> sumcolumns, boolean parallel)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/constructor.md",
+      "source_location": "L37",
+      "id": "export_options_constructor_citations",
+      "community": 66,
+      "norm_label": "citations"
+    },
+    {
+      "label": "export-options.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L1",
+      "id": "export_options_export_options",
+      "community": 43,
+      "norm_label": "export-options.md"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L10",
+      "id": "export_options_export_options_overview",
+      "community": 43,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Fields",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L21",
+      "id": "export_options_export_options_fields",
+      "community": 43,
+      "norm_label": "fields"
+    },
+    {
+      "label": "Thread-Safety",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L33",
+      "id": "export_options_export_options_thread_safety",
+      "community": 43,
+      "norm_label": "thread-safety"
+    },
+    {
+      "label": "Serialization",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L41",
+      "id": "export_options_export_options_serialization",
+      "community": 43,
+      "norm_label": "serialization"
+    },
+    {
+      "label": "equals/hashCode/toString",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L48",
+      "id": "export_options_export_options_equals_hashcode_tostring",
+      "community": 43,
+      "norm_label": "equals/hashcode/tostring"
+    },
+    {
+      "label": "Inheritance Hierarchy",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L56",
+      "id": "export_options_export_options_inheritance_hierarchy",
+      "community": 43,
+      "norm_label": "inheritance hierarchy"
+    },
+    {
+      "label": "Constructors",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L83",
+      "id": "export_options_export_options_constructors",
+      "community": 43,
+      "norm_label": "constructors"
+    },
+    {
+      "label": "Methods",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L87",
+      "id": "export_options_export_options_methods",
+      "community": 43,
+      "norm_label": "methods"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L94",
+      "id": "export_options_export_options_citations",
+      "community": 43,
+      "norm_label": "citations"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/index.md",
+      "source_location": "L1",
+      "id": "export_options_index",
+      "community": 82,
+      "norm_label": "index.md"
+    },
+    {
+      "label": "Konzepte",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/index.md",
+      "source_location": "L1",
+      "id": "export_options_index_konzepte",
+      "community": 82,
+      "norm_label": "konzepte"
+    },
+    {
+      "label": "none.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/none.md",
+      "source_location": "L1",
+      "id": "export_options_none",
+      "community": 67,
+      "norm_label": "none.md"
+    },
+    {
+      "label": "`public static ExportOptions none()`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/none.md",
+      "source_location": "L10",
+      "id": "export_options_none_public_static_exportoptions_none",
+      "community": 67,
+      "norm_label": "`public static exportoptions none()`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/none.md",
+      "source_location": "L21",
+      "id": "export_options_none_citations",
+      "community": 67,
+      "norm_label": "citations"
+    },
+    {
+      "label": "with-footer.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-footer.md",
+      "source_location": "L1",
+      "id": "export_options_with_footer",
+      "community": 68,
+      "norm_label": "with-footer.md"
+    },
+    {
+      "label": "`public ExportOptions withFooter(String... lines)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-footer.md",
+      "source_location": "L10",
+      "id": "export_options_with_footer_public_exportoptions_withfooter_string_lines",
+      "community": 68,
+      "norm_label": "`public exportoptions withfooter(string... lines)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-footer.md",
+      "source_location": "L25",
+      "id": "export_options_with_footer_citations",
+      "community": 68,
+      "norm_label": "citations"
+    },
+    {
+      "label": "with-parallel.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-parallel.md",
+      "source_location": "L1",
+      "id": "export_options_with_parallel",
+      "community": 69,
+      "norm_label": "with-parallel.md"
+    },
+    {
+      "label": "`public ExportOptions withParallel(boolean enabled)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-parallel.md",
+      "source_location": "L10",
+      "id": "export_options_with_parallel_public_exportoptions_withparallel_boolean_enabled",
+      "community": 69,
+      "norm_label": "`public exportoptions withparallel(boolean enabled)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-parallel.md",
+      "source_location": "L20",
+      "id": "export_options_with_parallel_citations",
+      "community": 69,
+      "norm_label": "citations"
+    },
+    {
+      "label": "with-sum-columns.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-sum-columns.md",
+      "source_location": "L1",
+      "id": "export_options_with_sum_columns",
+      "community": 70,
+      "norm_label": "with-sum-columns.md"
+    },
+    {
+      "label": "`public ExportOptions withSumColumns(String... columns)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-sum-columns.md",
+      "source_location": "L10",
+      "id": "export_options_with_sum_columns_public_exportoptions_withsumcolumns_string_columns",
+      "community": 70,
+      "norm_label": "`public exportoptions withsumcolumns(string... columns)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-sum-columns.md",
+      "source_location": "L27",
+      "id": "export_options_with_sum_columns_citations",
+      "community": 70,
+      "norm_label": "citations"
+    },
+    {
+      "label": "build-column-groups.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/build-column-groups.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_build_column_groups",
+      "community": 71,
+      "norm_label": "build-column-groups.md"
+    },
+    {
+      "label": "`private List<ColumnGroup> buildColumnGroups()`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/build-column-groups.md",
+      "source_location": "L10",
+      "id": "grid_excel_exporter_build_column_groups_private_list_columngroup_buildcolumngroups",
+      "community": 71,
+      "norm_label": "`private list<columngroup> buildcolumngroups()`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/build-column-groups.md",
+      "source_location": "L28",
+      "id": "grid_excel_exporter_build_column_groups_citations",
+      "community": 71,
+      "norm_label": "citations"
+    },
+    {
+      "label": "constructor.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/constructor.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_constructor",
+      "community": 72,
+      "norm_label": "constructor.md"
+    },
+    {
+      "label": "`private GridExcelExporter(String sheetName, List<Column<T>> columns)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/constructor.md",
+      "source_location": "L11",
+      "id": "grid_excel_exporter_constructor_private_gridexcelexporter_string_sheetname_list_column_t_columns",
+      "community": 72,
+      "norm_label": "`private gridexcelexporter(string sheetname, list<column<t>> columns)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/constructor.md",
+      "source_location": "L30",
+      "id": "grid_excel_exporter_constructor_citations",
+      "community": 72,
+      "norm_label": "citations"
+    },
+    {
+      "label": "export.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_export",
+      "community": 45,
+      "norm_label": "export.md"
+    },
+    {
+      "label": "`public void export(DataProvider<T, ?> dataProvider, OutputStream out) throws IOException`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L10",
+      "id": "grid_excel_exporter_export_public_void_export_dataprovider_t_dataprovider_outputstream_out_throws_ioexception",
+      "community": 45,
+      "norm_label": "`public void export(dataprovider<t, ?> dataprovider, outputstream out) throws ioexception`"
+    },
+    {
+      "label": "`public void export(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort, OutputStream out) throws IOException`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L26",
+      "id": "grid_excel_exporter_export_public_void_export_dataprovider_t_dataprovider_comparator_t_inmemorysort_outputstream_out_throws_ioexception",
+      "community": 45,
+      "norm_label": "`public void export(dataprovider<t, ?> dataprovider, comparator<t> inmemorysort, outputstream out) throws ioexception`"
+    },
+    {
+      "label": "`public void export(de.makno.xlsxbuilder.DataProvider<T> data, OutputStream out) throws IOException`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L56",
+      "id": "grid_excel_exporter_export_public_void_export_de_makno_xlsxbuilder_dataprovider_t_data_outputstream_out_throws_ioexception",
+      "community": 45,
+      "norm_label": "`public void export(de.makno.xlsxbuilder.dataprovider<t> data, outputstream out) throws ioexception`"
+    },
+    {
+      "label": "`public void export(de.makno.xlsxbuilder.DataProvider<T> data, OutputStream out, ExportOptions options) throws IOException`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L69",
+      "id": "grid_excel_exporter_export_public_void_export_de_makno_xlsxbuilder_dataprovider_t_data_outputstream_out_exportoptions_options_throws_ioexception",
+      "community": 45,
+      "norm_label": "`public void export(de.makno.xlsxbuilder.dataprovider<t> data, outputstream out, exportoptions options) throws ioexception`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L120",
+      "id": "grid_excel_exporter_export_citations",
+      "community": 45,
+      "norm_label": "citations"
+    },
+    {
+      "label": "fetch-all.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/fetch-all.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_fetch_all",
+      "community": 73,
+      "norm_label": "fetch-all.md"
+    },
+    {
+      "label": "`private static <T> Stream<T> fetchAll(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/fetch-all.md",
+      "source_location": "L10",
+      "id": "grid_excel_exporter_fetch_all_private_static_t_stream_t_fetchall_dataprovider_t_dataprovider_comparator_t_inmemorysort",
+      "community": 73,
+      "norm_label": "`private static <t> stream<t> fetchall(dataprovider<t, ?> dataprovider, comparator<t> inmemorysort)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/fetch-all.md",
+      "source_location": "L36",
+      "id": "grid_excel_exporter_fetch_all_citations",
+      "community": 73,
+      "norm_label": "citations"
+    },
+    {
+      "label": "from.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_from",
+      "community": 48,
+      "norm_label": "from.md"
+    },
+    {
+      "label": "`public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L10",
+      "id": "grid_excel_exporter_from_public_static_t_gridexcelexporter_t_from_string_sheetname_grid_t_grid",
+      "community": 48,
+      "norm_label": "`public static <t> gridexcelexporter<t> from(string sheetname, grid<t> grid)`"
+    },
+    {
+      "label": "`public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid, List<String> columnKeyOrder)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L33",
+      "id": "grid_excel_exporter_from_public_static_t_gridexcelexporter_t_from_string_sheetname_grid_t_grid_list_string_columnkeyorder",
+      "community": 48,
+      "norm_label": "`public static <t> gridexcelexporter<t> from(string sheetname, grid<t> grid, list<string> columnkeyorder)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L70",
+      "id": "grid_excel_exporter_from_citations",
+      "community": 48,
+      "norm_label": "citations"
+    },
+    {
+      "label": "grid-excel-exporter.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_grid_excel_exporter",
+      "community": 44,
+      "norm_label": "grid-excel-exporter.md"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L10",
+      "id": "grid_excel_exporter_grid_excel_exporter_overview",
+      "community": 44,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Fields",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L26",
+      "id": "grid_excel_exporter_grid_excel_exporter_fields",
+      "community": 44,
+      "norm_label": "fields"
+    },
+    {
+      "label": "Thread-Safety",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L36",
+      "id": "grid_excel_exporter_grid_excel_exporter_thread_safety",
+      "community": 44,
+      "norm_label": "thread-safety"
+    },
+    {
+      "label": "Serialization",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L47",
+      "id": "grid_excel_exporter_grid_excel_exporter_serialization",
+      "community": 44,
+      "norm_label": "serialization"
+    },
+    {
+      "label": "equals/hashCode/toString",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L54",
+      "id": "grid_excel_exporter_grid_excel_exporter_equals_hashcode_tostring",
+      "community": 44,
+      "norm_label": "equals/hashcode/tostring"
+    },
+    {
+      "label": "Inheritance Hierarchy",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L62",
+      "id": "grid_excel_exporter_grid_excel_exporter_inheritance_hierarchy",
+      "community": 44,
+      "norm_label": "inheritance hierarchy"
+    },
+    {
+      "label": "Constructors",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L93",
+      "id": "grid_excel_exporter_grid_excel_exporter_constructors",
+      "community": 44,
+      "norm_label": "constructors"
+    },
+    {
+      "label": "Methods",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L97",
+      "id": "grid_excel_exporter_grid_excel_exporter_methods",
+      "community": 44,
+      "norm_label": "methods"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L110",
+      "id": "grid_excel_exporter_grid_excel_exporter_citations",
+      "community": 44,
+      "norm_label": "citations"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/index.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_index",
+      "community": 83,
+      "norm_label": "index.md"
+    },
+    {
+      "label": "Konzepte",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/index.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_index_konzepte",
+      "community": 83,
+      "norm_label": "konzepte"
+    },
+    {
+      "label": "new-sheet-with-columns.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/new-sheet-with-columns.md",
+      "source_location": "L1",
+      "id": "grid_excel_exporter_new_sheet_with_columns",
+      "community": 74,
+      "norm_label": "new-sheet-with-columns.md"
+    },
+    {
+      "label": "`private XlsxBuilder<T> newSheetWithColumns(ExportOptions options)`",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/new-sheet-with-columns.md",
+      "source_location": "L10",
+      "id": "grid_excel_exporter_new_sheet_with_columns_private_xlsxbuilder_t_newsheetwithcolumns_exportoptions_options",
+      "community": 74,
+      "norm_label": "`private xlsxbuilder<t> newsheetwithcolumns(exportoptions options)`"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/new-sheet-with-columns.md",
+      "source_location": "L28",
+      "id": "grid_excel_exporter_new_sheet_with_columns_citations",
+      "community": 74,
+      "norm_label": "citations"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/index.md",
+      "source_location": "L1",
+      "id": "api_reference_index",
+      "community": 75,
+      "norm_label": "index.md"
+    },
+    {
+      "label": "Unterbereiche",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/index.md",
+      "source_location": "L1",
+      "id": "api_reference_index_unterbereiche",
+      "community": 75,
+      "norm_label": "unterbereiche"
     },
     {
       "label": "index.md",
@@ -3640,6 +5107,114 @@
       "norm_label": "konzepte"
     },
     {
+      "label": "okf-entwicklerdoku.md",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L1",
+      "id": "conventions_okf_entwicklerdoku",
+      "community": 38,
+      "norm_label": "okf-entwicklerdoku.md"
+    },
+    {
+      "label": "\u00dcberblick",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L10",
+      "id": "conventions_okf_entwicklerdoku_\u00fcberblick",
+      "community": 38,
+      "norm_label": "uberblick"
+    },
+    {
+      "label": "Bundle-Struktur dieses Projekts",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L25",
+      "id": "conventions_okf_entwicklerdoku_bundle_struktur_dieses_projekts",
+      "community": 38,
+      "norm_label": "bundle-struktur dieses projekts"
+    },
+    {
+      "label": "api-reference/ vs. components/",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L50",
+      "id": "conventions_okf_entwicklerdoku_api_reference_vs_components",
+      "community": 38,
+      "norm_label": "api-reference/ vs. components/"
+    },
+    {
+      "label": "Frontmatter-Konvention",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L99",
+      "id": "conventions_okf_entwicklerdoku_frontmatter_konvention",
+      "community": 38,
+      "norm_label": "frontmatter-konvention"
+    },
+    {
+      "label": "Neues Konzept anlegen",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L121",
+      "id": "conventions_okf_entwicklerdoku_neues_konzept_anlegen",
+      "community": 38,
+      "norm_label": "neues konzept anlegen"
+    },
+    {
+      "label": "Automatisierung",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L134",
+      "id": "conventions_okf_entwicklerdoku_automatisierung",
+      "community": 38,
+      "norm_label": "automatisierung"
+    },
+    {
+      "label": "Graphify-Zusammenspiel",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L157",
+      "id": "conventions_okf_entwicklerdoku_graphify_zusammenspiel",
+      "community": 38,
+      "norm_label": "graphify-zusammenspiel"
+    },
+    {
+      "label": "Pre-Commit-Routine",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L169",
+      "id": "conventions_okf_entwicklerdoku_pre_commit_routine",
+      "community": 38,
+      "norm_label": "pre-commit-routine"
+    },
+    {
+      "label": "Bekannte Stolpersteine",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L179",
+      "id": "conventions_okf_entwicklerdoku_bekannte_stolpersteine",
+      "community": 38,
+      "norm_label": "bekannte stolpersteine"
+    },
+    {
+      "label": "Verifikation vor dem Commit",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L194",
+      "id": "conventions_okf_entwicklerdoku_verifikation_vor_dem_commit",
+      "community": 38,
+      "norm_label": "verifikation vor dem commit"
+    },
+    {
+      "label": "Citations",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L201",
+      "id": "conventions_okf_entwicklerdoku_citations",
+      "community": 38,
+      "norm_label": "citations"
+    },
+    {
       "label": "index.md",
       "file_type": "document",
       "source_file": "docs/okf/vaadinexcelexport/index.md",
@@ -3661,7 +5236,7 @@
       "label": "Historie",
       "file_type": "document",
       "source_file": "docs/okf/vaadinexcelexport/index.md",
-      "source_location": "L11",
+      "source_location": "L12",
       "id": "vaadinexcelexport_index_historie",
       "community": 34,
       "norm_label": "historie"
@@ -3685,10 +5260,55 @@
       "norm_label": "update log"
     },
     {
-      "label": "2026-07-04",
+      "label": "2026-07-08",
       "file_type": "document",
       "source_file": "docs/okf/vaadinexcelexport/log.md",
       "source_location": "L3",
+      "id": "vaadinexcelexport_log_2026_07_08",
+      "community": 33,
+      "norm_label": "2026-07-08"
+    },
+    {
+      "label": "2026-07-07 (2)",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L17",
+      "id": "vaadinexcelexport_log_2026_07_07_2",
+      "community": 33,
+      "norm_label": "2026-07-07 (2)"
+    },
+    {
+      "label": "2026-07-07",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L28",
+      "id": "vaadinexcelexport_log_2026_07_07",
+      "community": 33,
+      "norm_label": "2026-07-07"
+    },
+    {
+      "label": "2026-07-06 (2)",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L46",
+      "id": "vaadinexcelexport_log_2026_07_06_2",
+      "community": 33,
+      "norm_label": "2026-07-06 (2)"
+    },
+    {
+      "label": "2026-07-06",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L53",
+      "id": "vaadinexcelexport_log_2026_07_06",
+      "community": 33,
+      "norm_label": "2026-07-06"
+    },
+    {
+      "label": "2026-07-04",
+      "file_type": "document",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L64",
       "id": "vaadinexcelexport_log_2026_07_04",
       "community": 33,
       "norm_label": "2026-07-04"
@@ -3697,7 +5317,7 @@
       "label": "2026-07-05",
       "file_type": "document",
       "source_file": "docs/okf/vaadinexcelexport/log.md",
-      "source_location": "L14",
+      "source_location": "L75",
       "id": "vaadinexcelexport_log_2026_07_05",
       "community": 33,
       "norm_label": "2026-07-05"
@@ -3746,6 +5366,42 @@
       "id": "comparison_pdf_readme_pflege",
       "community": 17,
       "norm_label": "pflege"
+    },
+    {
+      "label": "Projekt-Konventionen - VaadinExcelExport",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "community": 28,
+      "norm_label": "projekt-konventionen - vaadinexcelexport",
+      "id": "claude_projekt_konventionen_vaadinexcelexport"
+    },
+    {
+      "label": "Knowledge Base (graphify + OKF)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L7",
+      "community": 28,
+      "norm_label": "knowledge base (graphify + okf)",
+      "id": "claude_knowledge_base_graphify_okf"
+    },
+    {
+      "label": "Graph-First-Regel",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L18",
+      "community": 28,
+      "norm_label": "graph-first-regel",
+      "id": "claude_graph_first_regel"
+    },
+    {
+      "label": "End-of-Session-Routine (Pflicht bei Code-/Architektur\u00e4nderungen)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L24",
+      "community": 28,
+      "norm_label": "end-of-session-routine (pflicht bei code-/architekturanderungen)",
+      "id": "claude_end_of_session_routine_pflicht_bei_code_architektur\u00e4nderungen"
     },
     {
       "label": ".hyperlinkFormula()",
@@ -4584,9 +6240,9 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/MainView.java",
       "source_location": "L215",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_mainview_mainview",
-      "target": "app_mainview_mainview_formatrowcount",
-      "confidence_score": 1.0
+      "target": "app_mainview_mainview_formatrowcount"
     },
     {
       "relation": "method",
@@ -4910,9 +6566,9 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/MainView.java",
       "source_location": "L196",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_mainview_mainview_regeneratedata",
-      "target": "app_mainview_mainview_formatrowcount",
-      "confidence_score": 1.0
+      "target": "app_mainview_mainview_formatrowcount"
     },
     {
       "relation": "calls",
@@ -4954,9 +6610,9 @@
       "source_location": "L215",
       "weight": 1.0,
       "context": "return_type",
+      "confidence_score": 1.0,
       "source": "app_mainview_mainview_formatrowcount",
-      "target": "app_src_main_java_de_makno_vaadinexcelexport_app_mainview_java_string",
-      "confidence_score": 1.0
+      "target": "app_src_main_java_de_makno_vaadinexcelexport_app_mainview_java_string"
     },
     {
       "relation": "calls",
@@ -4976,9 +6632,9 @@
       "source_file": "app/src/main/java/de/makno/vaadinexcelexport/app/MainView.java",
       "source_location": "L372",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_mainview_mainview_reportmetrics",
-      "target": "app_mainview_mainview_formatrowcount",
-      "confidence_score": 1.0
+      "target": "app_mainview_mainview_formatrowcount"
     },
     {
       "relation": "references",
@@ -8217,9 +9873,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ColumnValueExtractor.java",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_columnvalueextractor",
-      "target": "field",
-      "confidence_score": 1.0
+      "target": "field"
     },
     {
       "relation": "imports",
@@ -8259,9 +9915,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ColumnValueExtractor.java",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_columnvalueextractor_columnvalueextractor",
-      "target": "vaadinexcelexport_columnvalueextractor_columnvalueextractor_columnvalueextractor",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_columnvalueextractor_columnvalueextractor_columnvalueextractor"
     },
     {
       "relation": "method",
@@ -8299,9 +9955,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ColumnValueExtractor.java",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_columnvalueextractor_columnvalueextractor",
-      "target": "vaadinexcelexport_columnvalueextractor_columnvalueextractor_resolvecolumnpathproviderfield",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_columnvalueextractor_columnvalueextractor_resolvecolumnpathproviderfield"
     },
     {
       "relation": "references",
@@ -8310,9 +9966,9 @@
       "source_location": "L41",
       "weight": 1.0,
       "context": "return_type",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_columnvalueextractor_columnvalueextractor_resolvecolumnpathproviderfield",
-      "target": "field",
-      "confidence_score": 1.0
+      "target": "field"
     },
     {
       "relation": "references",
@@ -8485,9 +10141,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas",
-      "target": "vaadinexcelexport_excelformulas_excelformulas",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas"
     },
     {
       "relation": "method",
@@ -8495,9 +10151,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas",
-      "target": "vaadinexcelexport_excelformulas_excelformulas_escape",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas_escape"
     },
     {
       "relation": "method",
@@ -8505,9 +10161,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas",
-      "target": "vaadinexcelexport_excelformulas_excelformulas_excelformulas",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas_excelformulas"
     },
     {
       "relation": "method",
@@ -8515,9 +10171,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas",
-      "target": "vaadinexcelexport_excelformulas_excelformulas_hyperlink",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas_hyperlink"
     },
     {
       "relation": "method",
@@ -8525,9 +10181,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas",
-      "target": "vaadinexcelexport_excelformulas_excelformulas_sanitizeurl",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas_sanitizeurl"
     },
     {
       "relation": "references",
@@ -8536,9 +10192,9 @@
       "source_location": "L40",
       "weight": 1.0,
       "context": "return_type",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas_hyperlink",
-      "target": "library_src_main_java_de_makno_vaadinexcelexport_excelformulas_java_string",
-      "confidence_score": 1.0
+      "target": "library_src_main_java_de_makno_vaadinexcelexport_excelformulas_java_string"
     },
     {
       "relation": "calls",
@@ -8547,9 +10203,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas_hyperlink",
-      "target": "vaadinexcelexport_excelformulas_excelformulas_escape",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas_escape"
     },
     {
       "relation": "calls",
@@ -8558,9 +10214,9 @@
       "source_file": "library/src/main/java/de/makno/vaadinexcelexport/ExcelFormulas.java",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas_hyperlink",
-      "target": "vaadinexcelexport_excelformulas_excelformulas_sanitizeurl",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulas_excelformulas_sanitizeurl"
     },
     {
       "relation": "calls",
@@ -8646,9 +10302,9 @@
       "source_location": "L46",
       "weight": 1.0,
       "context": "return_type",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas_escape",
-      "target": "library_src_main_java_de_makno_vaadinexcelexport_excelformulas_java_string",
-      "confidence_score": 1.0
+      "target": "library_src_main_java_de_makno_vaadinexcelexport_excelformulas_java_string"
     },
     {
       "relation": "references",
@@ -8657,9 +10313,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "context": "return_type",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulas_excelformulas_sanitizeurl",
-      "target": "library_src_main_java_de_makno_vaadinexcelexport_excelformulas_java_string",
-      "confidence_score": 1.0
+      "target": "library_src_main_java_de_makno_vaadinexcelexport_excelformulas_java_string"
     },
     {
       "relation": "imports",
@@ -10033,9 +11689,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "contains",
@@ -10043,9 +11699,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest"
     },
     {
       "relation": "method",
@@ -10053,9 +11709,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest_acceptshttphttpsandmailtoschemes",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest_acceptshttphttpsandmailtoschemes"
     },
     {
       "relation": "method",
@@ -10063,9 +11719,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest_buildsescapedhyperlinkformulaforplainvalues",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest_buildsescapedhyperlinkformulaforplainvalues"
     },
     {
       "relation": "method",
@@ -10073,9 +11729,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest_doublesembeddedquotessovaluescannotbreakoutoftheformula",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest_doublesembeddedquotessovaluescannotbreakoutoftheformula"
     },
     {
       "relation": "method",
@@ -10083,9 +11739,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest_dropsdangerousschemestoanemptytarget",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest_dropsdangerousschemestoanemptytarget"
     },
     {
       "relation": "method",
@@ -10093,9 +11749,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest_rejectsnulldisplayname",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest_rejectsnulldisplayname"
     },
     {
       "relation": "method",
@@ -10103,9 +11759,9 @@
       "source_file": "library/src/test/java/de/makno/vaadinexcelexport/ExcelFormulasTest.java",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest",
-      "target": "vaadinexcelexport_excelformulastest_excelformulastest_treatsnullurlasemptytarget",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_excelformulastest_excelformulastest_treatsnullurlasemptytarget"
     },
     {
       "relation": "references",
@@ -10114,9 +11770,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "context": "attribute",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest_buildsescapedhyperlinkformulaforplainvalues",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "references",
@@ -10125,9 +11781,9 @@
       "source_location": "L28",
       "weight": 1.0,
       "context": "attribute",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest_acceptshttphttpsandmailtoschemes",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "references",
@@ -10136,9 +11792,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "context": "attribute",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest_doublesembeddedquotessovaluescannotbreakoutoftheformula",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "references",
@@ -10147,9 +11803,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "context": "attribute",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest_dropsdangerousschemestoanemptytarget",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "references",
@@ -10158,9 +11814,9 @@
       "source_location": "L48",
       "weight": 1.0,
       "context": "attribute",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest_rejectsnulldisplayname",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "references",
@@ -10169,9 +11825,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "context": "attribute",
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_excelformulastest_excelformulastest_treatsnullurlasemptytarget",
-      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test",
-      "confidence_score": 1.0
+      "target": "library_src_test_java_de_makno_vaadinexcelexport_excelformulastest_java_test"
     },
     {
       "relation": "imports",
@@ -11291,11 +12947,41 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
+      "source_file": "AGENTS.md",
       "source_location": "L7",
       "weight": 1.0,
-      "source": "claude",
-      "target": "claude_knowledge_base_graphify_okf",
+      "source": "agents",
+      "target": "agents_knowledge_base_graphify_okf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "agents",
+      "target": "agents_projekt_konventionen_vaadinexcelexport",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "agents_knowledge_base_graphify_okf",
+      "target": "agents_graph_first_regel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "agents_knowledge_base_graphify_okf",
+      "target": "agents_pre_commit_routine_pflicht_vor_jedem_commit_mit_code_architektur\u00e4nderungen",
       "confidence_score": 1.0
     },
     {
@@ -11305,28 +12991,28 @@
       "source_location": "L1",
       "weight": 1.0,
       "source": "claude",
-      "target": "claude_projekt_konventionen_vaadinexcelexport",
+      "target": "claude_claude_code_projekt_instruktionen",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L24",
+      "source_location": "L7",
       "weight": 1.0,
-      "source": "claude_knowledge_base_graphify_okf",
-      "target": "claude_end_of_session_routine_pflicht_bei_code_architektur\u00e4nderungen",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "claude",
+      "target": "claude_knowledge_base_graphify_okf"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
-      "source_location": "L18",
+      "source_location": "L1",
       "weight": 1.0,
-      "source": "claude_knowledge_base_graphify_okf",
-      "target": "claude_graph_first_regel",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "claude",
+      "target": "claude_projekt_konventionen_vaadinexcelexport"
     },
     {
       "relation": "contains",
@@ -11404,9 +13090,9 @@
       "source_file": "README.md",
       "source_location": "L232",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "readme_vaadinexcelexport",
-      "target": "readme_knowledge_base",
-      "confidence_score": 1.0
+      "target": "readme_knowledge_base"
     },
     {
       "relation": "contains",
@@ -11531,12 +13217,1192 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_constructors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_equals_hashcode_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_fields",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_inheritance_hierarchy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_methods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_overview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_serialization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/column-value-extractor.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "column_value_extractor_column_value_extractor",
+      "target": "column_value_extractor_column_value_extractor_thread_safety",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/constructor.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "column_value_extractor_constructor",
+      "target": "column_value_extractor_constructor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-column-path-renderer.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "column_value_extractor_extract_from_column_path_renderer",
+      "target": "column_value_extractor_extract_from_column_path_renderer_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-column-path-renderer.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "column_value_extractor_extract_from_column_path_renderer",
+      "target": "column_value_extractor_extract_from_column_path_renderer_private_static_t_object_extractfromcolumnpathrenderer_t_item_columnpathrenderer_t_renderer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-lit-renderer.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "column_value_extractor_extract_from_lit_renderer",
+      "target": "column_value_extractor_extract_from_lit_renderer_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract-from-lit-renderer.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "column_value_extractor_extract_from_lit_renderer",
+      "target": "column_value_extractor_extract_from_lit_renderer_private_static_t_object_extractfromlitrenderer_t_item_litrenderer_t_renderer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "column_value_extractor_extract",
+      "target": "column_value_extractor_extract_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/extract.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "column_value_extractor_extract",
+      "target": "column_value_extractor_extract_static_t_object_extract_t_item_column_t_column",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/index.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "column_value_extractor_index",
+      "target": "column_value_extractor_index_konzepte",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/resolve-column-path-provider-field.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "column_value_extractor_resolve_column_path_provider_field",
+      "target": "column_value_extractor_resolve_column_path_provider_field_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/column-value-extractor/resolve-column-path-provider-field.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "column_value_extractor_resolve_column_path_provider_field",
+      "target": "column_value_extractor_resolve_column_path_provider_field_private_static_field_resolvecolumnpathproviderfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/constructor.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "excel_formulas_constructor",
+      "target": "excel_formulas_constructor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/escape.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "excel_formulas_escape",
+      "target": "excel_formulas_escape_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/escape.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_formulas_escape",
+      "target": "excel_formulas_escape_private_static_string_escape_string_value",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_constructors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_equals_hashcode_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_fields",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_inheritance_hierarchy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_methods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_overview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_serialization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/excel-formulas.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "excel_formulas_excel_formulas",
+      "target": "excel_formulas_excel_formulas_thread_safety",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/hyperlink.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "excel_formulas_hyperlink",
+      "target": "excel_formulas_hyperlink_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/hyperlink.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_formulas_hyperlink",
+      "target": "excel_formulas_hyperlink_public_static_string_hyperlink_string_url_string_displayname",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/index.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "excel_formulas_index",
+      "target": "excel_formulas_index_konzepte",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/sanitize-url.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "excel_formulas_sanitize_url",
+      "target": "excel_formulas_sanitize_url_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-formulas/sanitize-url.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_formulas_sanitize_url",
+      "target": "excel_formulas_sanitize_url_private_static_string_sanitizeurl_string_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-constructor.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_builder_constructor",
+      "target": "excel_meta_builder_constructor_builder_column_t_column_package_private_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-constructor.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "excel_meta_builder_constructor",
+      "target": "excel_meta_builder_constructor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-converter.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "excel_meta_builder_converter",
+      "target": "excel_meta_builder_converter_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-converter.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_builder_converter",
+      "target": "excel_meta_builder_converter_public_builder_t_converter_function_object_converter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-format.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "excel_meta_builder_format",
+      "target": "excel_meta_builder_format_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-format.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_builder_format",
+      "target": "excel_meta_builder_format_public_builder_t_format_string_format",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-group.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "excel_meta_builder_group",
+      "target": "excel_meta_builder_group_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/builder-group.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_builder_group",
+      "target": "excel_meta_builder_group_public_builder_t_group_string_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/constructor.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "excel_meta_constructor",
+      "target": "excel_meta_constructor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_constructors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_equals_hashcode_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_fields",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_inheritance_hierarchy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_methods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_nested_class_excelmeta_builder_t",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_overview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_serialization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/excel-meta.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "excel_meta_excel_meta",
+      "target": "excel_meta_excel_meta_thread_safety",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-converter.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "excel_meta_get_converter",
+      "target": "excel_meta_get_converter_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-converter.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_get_converter",
+      "target": "excel_meta_get_converter_static_t_function_object_getconverter_column_t_column",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-format.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "excel_meta_get_format",
+      "target": "excel_meta_get_format_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-format.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_get_format",
+      "target": "excel_meta_get_format_static_string_getformat_column_column",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-group.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "excel_meta_get_group",
+      "target": "excel_meta_get_group_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-group.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_get_group",
+      "target": "excel_meta_get_group_static_string_getgroup_column_column",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-type.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "excel_meta_get_type",
+      "target": "excel_meta_get_type_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-type.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_get_type",
+      "target": "excel_meta_get_type_static_columntype_gettype_column_column",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-value-provider.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "excel_meta_get_value_provider",
+      "target": "excel_meta_get_value_provider_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/get-value-provider.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_get_value_provider",
+      "target": "excel_meta_get_value_provider_static_t_valueprovider_t_getvalueprovider_column_t_column",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/group.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "excel_meta_group",
+      "target": "excel_meta_group_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/group.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_group",
+      "target": "excel_meta_group_public_static_void_group_column_column_string_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/index.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "excel_meta_index",
+      "target": "excel_meta_index_konzepte",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "excel_meta_type",
+      "target": "excel_meta_type_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "excel_meta_type",
+      "target": "excel_meta_type_public_static_t_builder_t_type_column_t_column_columntype_type",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/excel-meta/type.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "excel_meta_type",
+      "target": "excel_meta_type_public_static_t_builder_t_type_column_t_column_columntype_type_valueprovider_t_valueprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/constructor.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "export_options_constructor",
+      "target": "export_options_constructor_canonical_constructor_compact_form_public_exportoptions_list_string_footerlines_list_string_sumcolumns_boolean_parallel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/constructor.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "export_options_constructor",
+      "target": "export_options_constructor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_constructors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_equals_hashcode_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_fields",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_inheritance_hierarchy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_methods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_overview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_serialization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/export-options.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "export_options_export_options",
+      "target": "export_options_export_options_thread_safety",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/index.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "export_options_index",
+      "target": "export_options_index_konzepte",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/none.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "export_options_none",
+      "target": "export_options_none_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/none.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "export_options_none",
+      "target": "export_options_none_public_static_exportoptions_none",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-footer.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "export_options_with_footer",
+      "target": "export_options_with_footer_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-footer.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "export_options_with_footer",
+      "target": "export_options_with_footer_public_exportoptions_withfooter_string_lines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-parallel.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "export_options_with_parallel",
+      "target": "export_options_with_parallel_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-parallel.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "export_options_with_parallel",
+      "target": "export_options_with_parallel_public_exportoptions_withparallel_boolean_enabled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-sum-columns.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "export_options_with_sum_columns",
+      "target": "export_options_with_sum_columns_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/export-options/with-sum-columns.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "export_options_with_sum_columns",
+      "target": "export_options_with_sum_columns_public_exportoptions_withsumcolumns_string_columns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/build-column-groups.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_build_column_groups",
+      "target": "grid_excel_exporter_build_column_groups_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/build-column-groups.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_build_column_groups",
+      "target": "grid_excel_exporter_build_column_groups_private_list_columngroup_buildcolumngroups",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/constructor.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_constructor",
+      "target": "grid_excel_exporter_constructor_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/constructor.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_constructor",
+      "target": "grid_excel_exporter_constructor_private_gridexcelexporter_string_sheetname_list_column_t_columns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_export",
+      "target": "grid_excel_exporter_export_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_export",
+      "target": "grid_excel_exporter_export_public_void_export_dataprovider_t_dataprovider_comparator_t_inmemorysort_outputstream_out_throws_ioexception",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_export",
+      "target": "grid_excel_exporter_export_public_void_export_dataprovider_t_dataprovider_outputstream_out_throws_ioexception",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_export",
+      "target": "grid_excel_exporter_export_public_void_export_de_makno_xlsxbuilder_dataprovider_t_data_outputstream_out_exportoptions_options_throws_ioexception",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/export.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_export",
+      "target": "grid_excel_exporter_export_public_void_export_de_makno_xlsxbuilder_dataprovider_t_data_outputstream_out_throws_ioexception",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/fetch-all.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_fetch_all",
+      "target": "grid_excel_exporter_fetch_all_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/fetch-all.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_fetch_all",
+      "target": "grid_excel_exporter_fetch_all_private_static_t_stream_t_fetchall_dataprovider_t_dataprovider_comparator_t_inmemorysort",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_from",
+      "target": "grid_excel_exporter_from_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_from",
+      "target": "grid_excel_exporter_from_public_static_t_gridexcelexporter_t_from_string_sheetname_grid_t_grid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/from.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_from",
+      "target": "grid_excel_exporter_from_public_static_t_gridexcelexporter_t_from_string_sheetname_grid_t_grid_list_string_columnkeyorder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_constructors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_equals_hashcode_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_fields",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_inheritance_hierarchy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_methods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_overview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_serialization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/grid-excel-exporter.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_grid_excel_exporter",
+      "target": "grid_excel_exporter_grid_excel_exporter_thread_safety",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/index.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_index",
+      "target": "grid_excel_exporter_index_konzepte",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/new-sheet-with-columns.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_new_sheet_with_columns",
+      "target": "grid_excel_exporter_new_sheet_with_columns_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/grid-excel-exporter/new-sheet-with-columns.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "grid_excel_exporter_new_sheet_with_columns",
+      "target": "grid_excel_exporter_new_sheet_with_columns_private_xlsxbuilder_t_newsheetwithcolumns_exportoptions_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/api-reference/index.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "api_reference_index",
+      "target": "api_reference_index_unterbereiche",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/okf/vaadinexcelexport/architecture/index.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_index",
-      "target": "architecture_index_konzepte",
-      "confidence_score": 1.0
+      "target": "architecture_index_konzepte"
     },
     {
       "relation": "contains",
@@ -11544,9 +14410,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/module-structure.md",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_module_structure",
-      "target": "architecture_module_structure_citations",
-      "confidence_score": 1.0
+      "target": "architecture_module_structure_citations"
     },
     {
       "relation": "contains",
@@ -11554,9 +14420,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/module-structure.md",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_module_structure",
-      "target": "architecture_module_structure_guardrails",
-      "confidence_score": 1.0
+      "target": "architecture_module_structure_guardrails"
     },
     {
       "relation": "contains",
@@ -11564,9 +14430,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/module-structure.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_module_structure",
-      "target": "architecture_module_structure_overview",
-      "confidence_score": 1.0
+      "target": "architecture_module_structure_overview"
     },
     {
       "relation": "contains",
@@ -11574,9 +14440,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/module-structure.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_module_structure",
-      "target": "architecture_module_structure_the_xlsxbuilder_dependency",
-      "confidence_score": 1.0
+      "target": "architecture_module_structure_the_xlsxbuilder_dependency"
     },
     {
       "relation": "contains",
@@ -11584,9 +14450,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/out-of-core-export.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_out_of_core_export",
-      "target": "architecture_out_of_core_export_benchmark",
-      "confidence_score": 1.0
+      "target": "architecture_out_of_core_export_benchmark"
     },
     {
       "relation": "contains",
@@ -11594,9 +14460,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/out-of-core-export.md",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_out_of_core_export",
-      "target": "architecture_out_of_core_export_citations",
-      "confidence_score": 1.0
+      "target": "architecture_out_of_core_export_citations"
     },
     {
       "relation": "contains",
@@ -11604,9 +14470,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/out-of-core-export.md",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_out_of_core_export",
-      "target": "architecture_out_of_core_export_examples",
-      "confidence_score": 1.0
+      "target": "architecture_out_of_core_export_examples"
     },
     {
       "relation": "contains",
@@ -11614,9 +14480,9 @@
       "source_file": "docs/okf/vaadinexcelexport/architecture/out-of-core-export.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "architecture_out_of_core_export",
-      "target": "architecture_out_of_core_export_overview",
-      "confidence_score": 1.0
+      "target": "architecture_out_of_core_export_overview"
     },
     {
       "relation": "contains",
@@ -11624,9 +14490,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/demo-app.md",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_demo_app",
-      "target": "components_demo_app_benchmark_architektur",
-      "confidence_score": 1.0
+      "target": "components_demo_app_benchmark_architektur"
     },
     {
       "relation": "contains",
@@ -11634,9 +14500,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/demo-app.md",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_demo_app",
-      "target": "components_demo_app_citations",
-      "confidence_score": 1.0
+      "target": "components_demo_app_citations"
     },
     {
       "relation": "contains",
@@ -11644,9 +14510,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/demo-app.md",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_demo_app",
-      "target": "components_demo_app_schema",
-      "confidence_score": 1.0
+      "target": "components_demo_app_schema"
     },
     {
       "relation": "contains",
@@ -11654,9 +14520,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/demo-app.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_demo_app",
-      "target": "components_demo_app_\u00fcberblick",
-      "confidence_score": 1.0
+      "target": "components_demo_app_\u00fcberblick"
     },
     {
       "relation": "contains",
@@ -11664,9 +14530,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-formulas.md",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_formulas",
-      "target": "components_excel_formulas_citations",
-      "confidence_score": 1.0
+      "target": "components_excel_formulas_citations"
     },
     {
       "relation": "contains",
@@ -11674,9 +14540,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-formulas.md",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_formulas",
-      "target": "components_excel_formulas_examples",
-      "confidence_score": 1.0
+      "target": "components_excel_formulas_examples"
     },
     {
       "relation": "contains",
@@ -11684,9 +14550,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-formulas.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_formulas",
-      "target": "components_excel_formulas_overview",
-      "confidence_score": 1.0
+      "target": "components_excel_formulas_overview"
     },
     {
       "relation": "contains",
@@ -11694,9 +14560,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-formulas.md",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_formulas",
-      "target": "components_excel_formulas_schema",
-      "confidence_score": 1.0
+      "target": "components_excel_formulas_schema"
     },
     {
       "relation": "contains",
@@ -11704,9 +14570,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-meta.md",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_meta",
-      "target": "components_excel_meta_citations",
-      "confidence_score": 1.0
+      "target": "components_excel_meta_citations"
     },
     {
       "relation": "contains",
@@ -11714,9 +14580,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-meta.md",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_meta",
-      "target": "components_excel_meta_examples",
-      "confidence_score": 1.0
+      "target": "components_excel_meta_examples"
     },
     {
       "relation": "contains",
@@ -11724,9 +14590,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-meta.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_meta",
-      "target": "components_excel_meta_overview",
-      "confidence_score": 1.0
+      "target": "components_excel_meta_overview"
     },
     {
       "relation": "contains",
@@ -11734,9 +14600,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/excel-meta.md",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_excel_meta",
-      "target": "components_excel_meta_schema",
-      "confidence_score": 1.0
+      "target": "components_excel_meta_schema"
     },
     {
       "relation": "contains",
@@ -11744,9 +14610,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/grid-excel-exporter.md",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_grid_excel_exporter",
-      "target": "components_grid_excel_exporter_citations",
-      "confidence_score": 1.0
+      "target": "components_grid_excel_exporter_citations"
     },
     {
       "relation": "contains",
@@ -11754,9 +14620,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/grid-excel-exporter.md",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_grid_excel_exporter",
-      "target": "components_grid_excel_exporter_examples",
-      "confidence_score": 1.0
+      "target": "components_grid_excel_exporter_examples"
     },
     {
       "relation": "contains",
@@ -11764,9 +14630,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/grid-excel-exporter.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_grid_excel_exporter",
-      "target": "components_grid_excel_exporter_overview",
-      "confidence_score": 1.0
+      "target": "components_grid_excel_exporter_overview"
     },
     {
       "relation": "contains",
@@ -11774,9 +14640,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/grid-excel-exporter.md",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_grid_excel_exporter",
-      "target": "components_grid_excel_exporter_schema",
-      "confidence_score": 1.0
+      "target": "components_grid_excel_exporter_schema"
     },
     {
       "relation": "contains",
@@ -11784,9 +14650,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/grid-excel-exporter.md",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_grid_excel_exporter_schema",
-      "target": "components_grid_excel_exporter_columnvalueextractor_internal_fallback_chain",
-      "confidence_score": 1.0
+      "target": "components_grid_excel_exporter_columnvalueextractor_internal_fallback_chain"
     },
     {
       "relation": "contains",
@@ -11794,9 +14660,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/grid-excel-exporter.md",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_grid_excel_exporter_schema",
-      "target": "components_grid_excel_exporter_exportoptions_immutable",
-      "confidence_score": 1.0
+      "target": "components_grid_excel_exporter_exportoptions_immutable"
     },
     {
       "relation": "contains",
@@ -11804,9 +14670,9 @@
       "source_file": "docs/okf/vaadinexcelexport/components/index.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_index",
-      "target": "components_index_konzepte",
-      "confidence_score": 1.0
+      "target": "components_index_konzepte"
     },
     {
       "relation": "contains",
@@ -11814,9 +14680,9 @@
       "source_file": "docs/okf/vaadinexcelexport/conventions/build-and-release.md",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "conventions_build_and_release",
-      "target": "conventions_build_and_release_citations",
-      "confidence_score": 1.0
+      "target": "conventions_build_and_release_citations"
     },
     {
       "relation": "contains",
@@ -11824,9 +14690,9 @@
       "source_file": "docs/okf/vaadinexcelexport/conventions/build-and-release.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "conventions_build_and_release",
-      "target": "conventions_build_and_release_commands",
-      "confidence_score": 1.0
+      "target": "conventions_build_and_release_commands"
     },
     {
       "relation": "contains",
@@ -11834,9 +14700,9 @@
       "source_file": "docs/okf/vaadinexcelexport/conventions/build-and-release.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "conventions_build_and_release",
-      "target": "conventions_build_and_release_rules",
-      "confidence_score": 1.0
+      "target": "conventions_build_and_release_rules"
     },
     {
       "relation": "contains",
@@ -11844,8 +14710,118 @@
       "source_file": "docs/okf/vaadinexcelexport/conventions/index.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "conventions_index",
-      "target": "conventions_index_konzepte",
+      "target": "conventions_index_konzepte"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_automatisierung",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L179",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_bekannte_stolpersteine",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_bundle_struktur_dieses_projekts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L201",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_citations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_frontmatter_konvention",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L157",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_graphify_zusammenspiel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_neues_konzept_anlegen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L169",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_pre_commit_routine",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L194",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_verifikation_vor_dem_commit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku",
+      "target": "conventions_okf_entwicklerdoku_\u00fcberblick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/conventions/okf-entwicklerdoku.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "conventions_okf_entwicklerdoku_bundle_struktur_dieses_projekts",
+      "target": "conventions_okf_entwicklerdoku_api_reference_vs_components",
       "confidence_score": 1.0
     },
     {
@@ -11854,9 +14830,9 @@
       "source_file": "docs/okf/vaadinexcelexport/index.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_index",
-      "target": "vaadinexcelexport_index_historie",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_index_historie"
     },
     {
       "relation": "contains",
@@ -11864,9 +14840,9 @@
       "source_file": "docs/okf/vaadinexcelexport/index.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_index",
-      "target": "vaadinexcelexport_index_unterbereiche",
-      "confidence_score": 1.0
+      "target": "vaadinexcelexport_index_unterbereiche"
     },
     {
       "relation": "contains",
@@ -11874,8 +14850,68 @@
       "source_file": "docs/okf/vaadinexcelexport/log.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vaadinexcelexport_log",
-      "target": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_update_log"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_2026_07_04"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_2026_07_05"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_2026_07_06",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_2026_07_06_2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_2026_07_07",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/okf/vaadinexcelexport/log.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "vaadinexcelexport_log_update_log",
+      "target": "vaadinexcelexport_log_2026_07_07_2",
       "confidence_score": 1.0
     },
     {
@@ -11885,17 +14921,7 @@
       "source_location": "L3",
       "weight": 1.0,
       "source": "vaadinexcelexport_log_update_log",
-      "target": "vaadinexcelexport_log_2026_07_04",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/okf/vaadinexcelexport/log.md",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "vaadinexcelexport_log_update_log",
-      "target": "vaadinexcelexport_log_2026_07_05",
+      "target": "vaadinexcelexport_log_2026_07_08",
       "confidence_score": 1.0
     },
     {
@@ -11937,8 +14963,28 @@
       "confidence_score": 1.0,
       "source": "comparison_pdf_readme_vergleichs_pdf_generator",
       "target": "comparison_pdf_readme_voraussetzung"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_knowledge_base_graphify_okf",
+      "target": "claude_end_of_session_routine_pflicht_bei_code_architektur\u00e4nderungen"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_knowledge_base_graphify_okf",
+      "target": "claude_graph_first_regel"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1e1c8a8e8bd769a2a271228bd9b2bda0686b2e3a"
+  "built_at_commit": "b8f693372909dbc7d3d9ed1cb20d6c99ff0c1a32"
 }

@@ -1,16 +1,16 @@
-# Graph Report - VaadinExcelExport  (2026-07-04)
+# Graph Report - VaadinExcelExport  (2026-07-05)
 
 ## Corpus Check
-- 47 files · ~20,093 words
+- 92 files · ~31,300 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 417 nodes · 767 edges · 38 communities (33 shown, 5 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 101 edges (avg confidence: 0.8)
+- 601 nodes · 906 edges · 84 communities (44 shown, 40 thin omitted)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 101 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1e1c8a8e`
+- Built from commit: `b8f69337`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -48,6 +48,52 @@
 - [[_COMMUNITY_Community 35|Community 35]]
 - [[_COMMUNITY_Community 36|Community 36]]
 - [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_Community 38|Community 38]]
+- [[_COMMUNITY_Community 39|Community 39]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
+- [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
+- [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
+- [[_COMMUNITY_Community 49|Community 49]]
+- [[_COMMUNITY_Community 50|Community 50]]
+- [[_COMMUNITY_Community 51|Community 51]]
+- [[_COMMUNITY_Community 52|Community 52]]
+- [[_COMMUNITY_Community 53|Community 53]]
+- [[_COMMUNITY_Community 54|Community 54]]
+- [[_COMMUNITY_Community 55|Community 55]]
+- [[_COMMUNITY_Community 56|Community 56]]
+- [[_COMMUNITY_Community 57|Community 57]]
+- [[_COMMUNITY_Community 58|Community 58]]
+- [[_COMMUNITY_Community 59|Community 59]]
+- [[_COMMUNITY_Community 60|Community 60]]
+- [[_COMMUNITY_Community 61|Community 61]]
+- [[_COMMUNITY_Community 62|Community 62]]
+- [[_COMMUNITY_Community 63|Community 63]]
+- [[_COMMUNITY_Community 64|Community 64]]
+- [[_COMMUNITY_Community 65|Community 65]]
+- [[_COMMUNITY_Community 66|Community 66]]
+- [[_COMMUNITY_Community 67|Community 67]]
+- [[_COMMUNITY_Community 68|Community 68]]
+- [[_COMMUNITY_Community 69|Community 69]]
+- [[_COMMUNITY_Community 70|Community 70]]
+- [[_COMMUNITY_Community 71|Community 71]]
+- [[_COMMUNITY_Community 72|Community 72]]
+- [[_COMMUNITY_Community 73|Community 73]]
+- [[_COMMUNITY_Community 74|Community 74]]
+- [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 76|Community 76]]
+- [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 78|Community 78]]
+- [[_COMMUNITY_Community 79|Community 79]]
+- [[_COMMUNITY_Community 80|Community 80]]
+- [[_COMMUNITY_Community 81|Community 81]]
+- [[_COMMUNITY_Community 82|Community 82]]
+- [[_COMMUNITY_Community 83|Community 83]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `MainView` - 22 edges
@@ -62,32 +108,33 @@
 10. `Stream` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
-- None detected - all connections are within the same source files.
+- `TestDataDatabase` --implements--> `AutoCloseable`  [EXTRACTED]
+  app/src/main/java/de/makno/vaadinexcelexport/app/TestDataDatabase.java →   _Bridges community 0 → community 3_
 
 ## Import Cycles
 - None detected.
 
-## Communities (38 total, 5 thin omitted)
+## Communities (84 total, 40 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.08
-Nodes (20): SampleData, SampleRow, List, Object, Override, Path, ResultSet, SampleRow (+12 more)
+Cohesion: 0.09
+Nodes (16): SampleData, SampleRow, List, Object, Override, Path, SampleRow, String (+8 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.10
-Nodes (19): Anchor, allocatedText(), durationText(), outputText(), EngineTask, MainView, String, List (+11 more)
+Cohesion: 0.09
+Nodes (20): Anchor, allocatedText(), durationText(), outputText(), EngineTask, MainView, String, List (+12 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.18
 Nodes (11): Builder, Function, Column, ColumnType, Object, String, SuppressWarnings, T (+3 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.11
-Nodes (21): SampleDataProvider, Grid, SampleRow, String, TestDataDatabase, ColumnGroup, Comparator, ConfigurableFilterDataProvider (+13 more)
+Cohesion: 0.13
+Nodes (19): isEmpty(), ResultSet, StreamingResult, AutoCloseable, ColumnGroup, Comparator, DataProvider, Column (+11 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.19
-Nodes (10): Grid, List, String, Test, Person, Row, Sheet, Stream (+2 more)
+Cohesion: 0.20
+Nodes (9): Grid, List, String, Test, Person, Row, Sheet, V (+1 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.19
@@ -95,7 +142,7 @@ Nodes (13): avgMillis(), ExcelExporterBenchmarkTest, ExportEngine, medianMillis(
 
 ### Community 6 - "Community 6"
 Cohesion: 0.22
-Nodes (10): SampleGrid, ColumnType, Grid, List, SampleRow, String, ValueProvider, GridSortOrder (+2 more)
+Nodes (10): SampleGrid, ColumnType, Grid, List, SampleRow, String, ValueProvider, Query (+2 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.18
@@ -110,8 +157,8 @@ Cohesion: 0.21
 Nodes (7): ExcelExport, ExportMeasurement, ThreadMeter, OutputStream, Result, String, ThreadMXBean
 
 ### Community 10 - "Community 10"
-Cohesion: 0.24
-Nodes (6): isEmpty(), SampleSearch, SampleSearchTest, String, Test, WhereClause
+Cohesion: 0.26
+Nodes (5): SampleSearch, SampleSearchTest, String, Test, WhereClause
 
 ### Community 11 - "Community 11"
 Cohesion: 0.28
@@ -158,8 +205,8 @@ Cohesion: 0.40
 Nodes (4): Benchmark, Citations, Examples, Overview
 
 ### Community 28 - "Community 28"
-Cohesion: 0.40
-Nodes (4): End-of-Session-Routine (Pflicht bei Code-/Architekturänderungen), Graph-First-Regel, Knowledge Base (graphify + OKF), Projekt-Konventionen - VaadinExcelExport
+Cohesion: 0.33
+Nodes (5): Claude Code – Projekt-Instruktionen, End-of-Session-Routine (Pflicht bei Code-/Architekturänderungen), Graph-First-Regel, Knowledge Base (graphify + OKF), Projekt-Konventionen - VaadinExcelExport
 
 ### Community 29 - "Community 29"
 Cohesion: 0.40
@@ -178,26 +225,72 @@ Cohesion: 0.50
 Nodes (3): Citations, Commands, Rules
 
 ### Community 33 - "Community 33"
+Cohesion: 0.22
+Nodes (8): 2026-07-04, 2026-07-05, 2026-07-06, 2026-07-06 (2), 2026-07-07, 2026-07-07 (2), 2026-07-08, Update Log
+
+### Community 38 - "Community 38"
+Cohesion: 0.17
+Nodes (11): api-reference/ vs. components/, Automatisierung, Bekannte Stolpersteine, Bundle-Struktur dieses Projekts, Citations, Frontmatter-Konvention, Graphify-Zusammenspiel, Neues Konzept anlegen (+3 more)
+
+### Community 39 - "Community 39"
+Cohesion: 0.18
+Nodes (10): Citations, Constructors, equals/hashCode/toString, Fields, Inheritance Hierarchy, Methods, Nested class: `ExcelMeta.Builder<T>`, Overview (+2 more)
+
+### Community 40 - "Community 40"
+Cohesion: 0.24
+Nodes (7): SampleDataProvider, Grid, SampleRow, String, TestDataDatabase, ConfigurableFilterDataProvider, Void
+
+### Community 41 - "Community 41"
+Cohesion: 0.20
+Nodes (9): Citations, Constructors, equals/hashCode/toString, Fields, Inheritance Hierarchy, Methods, Overview, Serialization (+1 more)
+
+### Community 42 - "Community 42"
+Cohesion: 0.20
+Nodes (9): Citations, Constructors, equals/hashCode/toString, Fields, Inheritance Hierarchy, Methods, Overview, Serialization (+1 more)
+
+### Community 43 - "Community 43"
+Cohesion: 0.20
+Nodes (9): Citations, Constructors, equals/hashCode/toString, Fields, Inheritance Hierarchy, Methods, Overview, Serialization (+1 more)
+
+### Community 44 - "Community 44"
+Cohesion: 0.20
+Nodes (9): Citations, Constructors, equals/hashCode/toString, Fields, Inheritance Hierarchy, Methods, Overview, Serialization (+1 more)
+
+### Community 45 - "Community 45"
+Cohesion: 0.33
+Nodes (5): Citations, `public void export(DataProvider<T, ?> dataProvider, Comparator<T> inMemorySort, OutputStream out) throws IOException`, `public void export(DataProvider<T, ?> dataProvider, OutputStream out) throws IOException`, `public void export(de.makno.xlsxbuilder.DataProvider<T> data, OutputStream out, ExportOptions options) throws IOException`, `public void export(de.makno.xlsxbuilder.DataProvider<T> data, OutputStream out) throws IOException`
+
+### Community 46 - "Community 46"
+Cohesion: 0.40
+Nodes (4): Graph-First-Regel, Knowledge Base (graphify + OKF), Pre-Commit-Routine (Pflicht vor JEDEM Commit mit Code-/Architekturänderungen), Projekt-Konventionen - VaadinExcelExport
+
+### Community 47 - "Community 47"
 Cohesion: 0.50
-Nodes (3): 2026-07-04, 2026-07-05, Update Log
+Nodes (3): Citations, `public static <T> Builder<T> type(Column<T> column, ColumnType type)`, `public static <T> Builder<T> type(Column<T> column, ColumnType type, ValueProvider<T, ?> valueProvider)`
+
+### Community 48 - "Community 48"
+Cohesion: 0.50
+Nodes (3): Citations, `public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid)`, `public static <T> GridExcelExporter<T> from(String sheetName, Grid<T> grid, List<String> columnKeyOrder)`
 
 ## Knowledge Gaps
-- **86 isolated node(s):** `version`, `configurations`, `String`, `String`, `Result` (+81 more)
+- **223 isolated node(s):** `version`, `configurations`, `String`, `String`, `Result` (+218 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **40 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Stream` connect `Community 4` to `Community 0`, `Community 3`, `Community 5`, `Community 6`?**
-  _High betweenness centrality (0.050) - this node is a cross-community bridge._
+- **Why does `Stream` connect `Community 3` to `Community 40`, `Community 4`, `Community 5`, `Community 6`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+- **Why does `TestDataDatabase` connect `Community 0` to `Community 3`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **What connects `version`, `configurations`, `String` to the rest of the system?**
-  _92 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _229 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.08194905869324474 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09365079365079365 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.09634551495016612 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09302325581395349 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.1103448275862069 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1349206349206349 - nodes in this community are weakly interconnected._
 - **Should `Community 8` be split into smaller, more focused modules?**
   _Cohesion score 0.125 - nodes in this community are weakly interconnected._
