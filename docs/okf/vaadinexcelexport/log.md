@@ -1,5 +1,19 @@
 # Update Log
 
+## 2026-07-08
+
+* **Restructure**: `api-reference/` moved from one flat file per class to **one folder
+  per class with one file per method** (5 class folders). Method overloads (same name,
+  different signature) share a single file; all constructors of a class live in
+  `constructor.md`. Added four new mandatory sections per class overview file:
+  `# Fields`, `# Thread-Safety`, `# Serialization` (none of the 5 classes implement
+  `Serializable`, verified individually), and `# equals/hashCode/toString` (`ExportOptions`
+  is a record — component-based, no field duplication). The nested class
+  `ExcelMeta.Builder<T>` was not caught by the automated split and was added manually
+  (`builder-constructor.md`, `builder-format.md`, `builder-converter.md`,
+  `builder-group.md`). Cross-links across the bundle migrated to the new paths, several
+  precise to a specific method (e.g. `ColumnValueExtractor.extract`, `ExportOptions.none()`).
+
 ## 2026-07-07 (2)
 
 * **Update**: all 5 `api-reference/*.md` files extended with a verified

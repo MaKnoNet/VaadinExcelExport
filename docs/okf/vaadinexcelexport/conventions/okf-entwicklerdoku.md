@@ -32,8 +32,12 @@ docs/okf/vaadinexcelexport/
 │   └── index.md          # GENERIERT
 ├── components/           # Narrative Übersicht über Klassen/Komponenten
 │   └── index.md          # GENERIERT
-├── api-reference/         # Erschöpfende, verifizierte Methoden-Ebene (siehe unten)
-│   └── index.md          # GENERIERT
+├── api-reference/         # Erschöpfende, verifizierte Methoden-Ebene (siehe unten) -
+│   │                       # ein Ordner pro Klasse
+│   └── <klasse>/
+│       ├── <klasse>.md    # Klassen-Uebersicht (Felder, Vererbung, Vertraege, ...)
+│       ├── constructor.md # alle Konstruktoren der Klasse
+│       └── <methode>.md   # 1 Datei pro Methoden-NAME, Ueberladungen zusammen
 └── conventions/          # Build/Release/Code-Stil/Prozess (auch diese Datei)
     └── index.md          # GENERIERT
 ```
@@ -47,10 +51,13 @@ Wissensdokument). `index.md`-Dateien fassen den Inhalt eines Verzeichnisses zusa
 
 `components/` (bzw. `architecture/`) beschreibt eine Klasse/ein Konzept **narrativ**:
 Zweck, Design-Entscheidungen, Beispiele — üblicherweise mehrere Klassen pro Datei
-gebündelt. `api-reference/` ist die **erschöpfende Methoden-Ebene**: eine Datei pro
-Klasse (`type: API Reference`), die **jeden** Konstruktor und jede öffentliche/
-paketsichtbare Methode auflistet — mit Parametern, ob `null` erlaubt ist, Rückgabewert-
-Semantik und tatsächlich geworfenen Exceptions.
+gebündelt. `api-reference/` ist die **erschöpfende Methoden-Ebene**: **ein Ordner pro
+Klasse** (`api-reference/<kebab-case-klasse>/`), darin eine Klassen-Übersichtsdatei
+(`<klasse>.md`), eine `constructor.md` für alle Konstruktoren und **eine Datei pro
+Methoden-Name** (`<methode>.md`) — Überladungen (gleicher Name, andere Signatur) landen
+zusammen in derselben Datei. Verschachtelte Klassen (z. B. `ExcelMeta.Builder<T>`)
+bekommen eigene Dateien mit Präfix (`builder-constructor.md`, `builder-format.md`, …),
+von der Übersichtsdatei aus verlinkt.
 
 **Zwingend: gegen den echten Code verifizieren, nicht nur Javadoc kopieren.** Javadoc-
 Kommentare können veraltet, unvollständig oder schlicht falsch sein (in diesem Projekt
@@ -58,18 +65,36 @@ wurden bereits mehrere solcher Fälle gefunden und in den jeweiligen `api-refere
 Dateien richtiggestellt — z. B. eine irreführende gemeinsame Fehlermeldung in
 `GridExcelExporter.from(...)`, wenn Grid ohne exportierbare Spalten vs. nicht
 passende `columnKeyOrder` unterschieden werden sollten, aber dieselbe Meldung
-liefern). Bei jeder Änderung an einer Methoden-Signatur, einem Null-Check oder einer
-geworfenen Exception **muss** die zugehörige `api-reference/`-Datei aktualisiert
-werden — Teil der Pre-Commit-Routine (siehe unten).
+liefern). Bei jeder Änderung an einer Methoden-Signatur, einem Null-Check, einem Feld
+oder einer geworfenen Exception **muss** die zugehörige `api-reference/`-Datei
+aktualisiert werden — Teil der Pre-Commit-Routine (siehe unten).
 
-**Jede `api-reference/`-Datei enthält direkt nach `# Overview` einen Pflichtabschnitt
-`# Inheritance Hierarchy`:** die eigene `extends`/`implements`-Deklaration (vorwärts) sowie
-— per Grep über den gesamten Quellbaum verifiziert — welche anderen Klassen/Interfaces im
-Projekt diesen Typ erweitern/implementieren (rückwärts), bundle-root-absolut verlinkt.
-Fehlende Implementierer sind ein genauso relevanter, explizit festzuhaltender Befund wie
-vorhandene (z. B. `GridExcelExporter` nutzt xlsxBuilder-/Vaadin-Typen ausschließlich per
-Komposition, keine Vererbung). Bei jeder neuen Ober-/Unterklassen-Beziehung im Code
-**muss** dieser Abschnitt aktualisiert werden — ebenfalls Teil der Pre-Commit-Routine.
+**Jede Klassen-Übersichtsdatei (`<klasse>.md`) enthält, direkt nach `# Overview`, diese
+Pflichtabschnitte** (immer vorhanden, auch wenn der Inhalt nur "kein besonderer Vertrag"
+ist):
+- **`# Fields`** — Tabelle `| Field | Type | Meaning | null-allowed |` für jedes Feld der
+  Klasse; bei Records (z. B. `ExportOptions`) Verweis auf die Record-Komponenten in
+  `constructor.md` statt Duplikat.
+- **`# Thread-Safety`** — auch bei zustandslosen Klassen explizit festhalten.
+- **`# Serialization`** — bei `implements Serializable` der tatsächliche
+  `serialVersionUID`-Wert, sonst "Not `Serializable`" (in diesem Projekt implementiert
+  aktuell keine der 5 Klassen `Serializable`, verifiziert je Klasse einzeln).
+- **`# equals/hashCode/toString`** — bei Records komponentenbasiert, sonst
+  Identitätssemantik von `Object` explizit vermerken (nicht weglassen).
+- **`# Inheritance Hierarchy`** — die eigene `extends`/`implements`-Deklaration
+  (vorwärts) sowie — per Grep über den gesamten Quellbaum verifiziert — welche anderen
+  Klassen/Interfaces im Projekt diesen Typ erweitern/implementieren (rückwärts),
+  bundle-root-absolut verlinkt. Fehlende Implementierer sind ein genauso relevanter,
+  explizit festzuhaltender Befund wie vorhandene (z. B. `GridExcelExporter` nutzt
+  xlsxBuilder-/Vaadin-Typen ausschließlich per Komposition, keine Vererbung).
+
+Bei jeder neuen Ober-/Unterklassen-Beziehung, einem neuen/entfernten Feld oder einer
+geänderten Serialisierbarkeit im Code **muss** der jeweilige Abschnitt aktualisiert
+werden — ebenfalls Teil der Pre-Commit-Routine.
+
+Hinweis: Die `api-reference/`-Inhalte selbst folgen dem bestehenden Sprachstil dieses
+Bundles (Englisch — `# Overview`/`# Fields`/`# Constructors`/`# Methods`), auch nach der
+Umstellung auf die Ordner-pro-Klasse-Struktur.
 
 # Frontmatter-Konvention
 
