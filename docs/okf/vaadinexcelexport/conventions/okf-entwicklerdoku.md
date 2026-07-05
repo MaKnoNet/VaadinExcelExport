@@ -62,6 +62,15 @@ liefern). Bei jeder Änderung an einer Methoden-Signatur, einem Null-Check oder 
 geworfenen Exception **muss** die zugehörige `api-reference/`-Datei aktualisiert
 werden — Teil der Pre-Commit-Routine (siehe unten).
 
+**Jede `api-reference/`-Datei enthält direkt nach `# Overview` einen Pflichtabschnitt
+`# Inheritance Hierarchy`:** die eigene `extends`/`implements`-Deklaration (vorwärts) sowie
+— per Grep über den gesamten Quellbaum verifiziert — welche anderen Klassen/Interfaces im
+Projekt diesen Typ erweitern/implementieren (rückwärts), bundle-root-absolut verlinkt.
+Fehlende Implementierer sind ein genauso relevanter, explizit festzuhaltender Befund wie
+vorhandene (z. B. `GridExcelExporter` nutzt xlsxBuilder-/Vaadin-Typen ausschließlich per
+Komposition, keine Vererbung). Bei jeder neuen Ober-/Unterklassen-Beziehung im Code
+**muss** dieser Abschnitt aktualisiert werden — ebenfalls Teil der Pre-Commit-Routine.
+
 # Frontmatter-Konvention
 
 ```yaml
